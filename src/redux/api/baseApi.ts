@@ -9,9 +9,10 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { loggedInUser, loggedOutUser } from "../features/auth/authSlice";
+import { baseUrl } from "../../config";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_APP_REACT_APP_API_URL,
+  baseUrl: baseUrl.BASE_URL,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -29,7 +30,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 401) {
-    const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
+    const res = await fetch(`${baseUrl.AUTH_REFRESH_URL}`, {
       method: "POST",
       credentials: "include",
     });
