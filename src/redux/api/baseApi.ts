@@ -48,7 +48,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       api.dispatch(loggedOutUser());
     }
   }
-  return result;
+  return result;     
 };
 
 export const baseApi = createApi({

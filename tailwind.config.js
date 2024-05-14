@@ -3,8 +3,15 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   corePlugins: { preflight: false },
-  theme: {
-    extend: {},
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#0ABAC3",
+          secondary: "#BDFCFF",
+        },
+      },
+    ],
   },
   plugins: [require("daisyui")],
 };
