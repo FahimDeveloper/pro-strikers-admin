@@ -1,3 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Manrope", sans-serif;
+}
+
+:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
+  .ant-menu-submenu-title,
+:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
+  .ant-menu-title-content {
+  @apply text-[#4B4B4B] transition-none;
+}
+
+:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
+  .ant-menu-item-selected {
+  @apply bg-primary transition-none;
+}
+
+:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
+  .ant-menu-submenu-selected
+  .ant-menu-submenu-title
+  .ant-menu-title-content {
+  @apply text-primary;
+}
+
+:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
+  .ant-menu-item-selected
+  .ant-menu-title-content {
+  @apply bg-primary text-white transition-none;
+}
+
+:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
+  .ant-menu-title-content:hover {
+  @apply text-white transition-none;
+}
+
+:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
+  .ant-menu-submenu-selected
+  .ant-menu-submenu-title:hover
+  .ant-menu-title-content {
+  @apply text-white transition-none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e6fffc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0abac3;
+}

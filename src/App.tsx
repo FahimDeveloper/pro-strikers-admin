@@ -1,5 +1,5 @@
 import { ConfigProvider } from "antd";
-import { Outlet } from "react-router-dom";
+import MainLayout from "./components/layout/MainLayout";
 
 const App = () => {
   return (
@@ -7,11 +7,17 @@ const App = () => {
       theme={{
         token: {
           colorPrimary: "#0ABAC3",
-          borderRadius: 2,
+          borderRadius: 5,
+        },
+        components: {
+          Menu: {
+            itemHoverBg: "#0ABAC3",
+            itemHoverColor: "#ffffff",
+          },
         },
       }}
     >
-      <Outlet />
+      <MainLayout />
     </ConfigProvider>
   );
 };

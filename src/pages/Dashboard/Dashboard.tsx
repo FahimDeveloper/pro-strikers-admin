@@ -1,7 +1,10 @@
+import { DatePicker } from "antd";
+
 const Dashboard = () => {
+  const { RangePicker } = DatePicker;
   return (
     <div>
-      <h2>Welcome to the Dashboard page</h2>
+      <RangePicker />
     </div>
   );
 };

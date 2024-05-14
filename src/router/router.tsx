@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Login/Login";
 import App from "../App";
 import { routesGenerator } from "../utils/routesGenerator";
-import { superAdminRoutes } from "./super-admin.routes";
-import { adminRoutes } from "./admin.routes";
+import { superAdminPaths } from "./super-admin.routes";
+import { adminPaths } from "./admin.routes";
 
 const router = createBrowserRouter([
   {
@@ -13,12 +13,12 @@ const router = createBrowserRouter([
   {
     path: "/super-admin",
     element: <App />,
-    children: routesGenerator(superAdminRoutes),
+    children: routesGenerator(superAdminPaths),
   },
   {
     path: "/admin",
     element: <App />,
-    children: routesGenerator(adminRoutes),
+    children: routesGenerator(adminPaths),
   },
 ]);
 

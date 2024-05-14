@@ -1,20 +1,59 @@
-import Coaches from "../pages/Coaches/Coaches";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import Events from "../pages/Events/Events";
-import Post from "../pages/Post/Post";
-import AppointmentReservation from "../pages/Reservations/AppointmentReservation/AppointmentReservation";
-import ClassesReservation from "../pages/Reservations/ClassesReservation/ClassesReservation";
-import CoursesReservation from "../pages/Reservations/CoursesReservation/CoursesReservation";
-import FacilityReservation from "../pages/Reservations/FacilityReservation/FacilityReservation";
-import AppointmentScheduling from "../pages/Scheduling/AppointmentScheduling/AppointmentScheduling";
-import ClassesScheduling from "../pages/Scheduling/ClassesScheduling/ClassesScheduling";
-import CoursesScheduling from "../pages/Scheduling/CoursesScheduling/CoursesScheduling";
-import FacilityScheduling from "../pages/Scheduling/FacilityScheduling/FacilityScheduling";
-import TeamMembers from "../pages/TeamMembers/TeamMembers";
-import Users from "../pages/Users/Users";
-import Voucher from "../pages/Voucher/Voucher";
+/* eslint-disable react-refresh/only-export-components */
+import { lazy } from "react";
+import LazyLoad from "../common/LozyLoad";
 
-export const adminRoutes = [
+const Coaches = LazyLoad(lazy(() => import("../pages/Coaches/Coaches")));
+const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
+const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
+const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
+const AppointmentReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/AppointmentReservation/AppointmentReservation"
+      )
+  )
+);
+const ClassesReservation = LazyLoad(
+  lazy(
+    () => import("../pages/Reservations/ClassesReservation/ClassesReservation")
+  )
+);
+const CoursesReservation = LazyLoad(
+  lazy(
+    () => import("../pages/Reservations/CoursesReservation/CoursesReservation")
+  )
+);
+const FacilityReservation = LazyLoad(
+  lazy(
+    () =>
+      import("../pages/Reservations/FacilityReservation/FacilityReservation")
+  )
+);
+const AppointmentScheduling = LazyLoad(
+  lazy(
+    () =>
+      import("../pages/Scheduling/AppointmentScheduling/AppointmentScheduling")
+  )
+);
+const ClassesScheduling = LazyLoad(
+  lazy(() => import("../pages/Scheduling/ClassesScheduling/ClassesScheduling"))
+);
+const CoursesScheduling = LazyLoad(
+  lazy(() => import("../pages/Scheduling/CoursesScheduling/CoursesScheduling"))
+);
+const FacilityScheduling = LazyLoad(
+  lazy(
+    () => import("../pages/Scheduling/FacilityScheduling/FacilityScheduling")
+  )
+);
+const TeamMembers = LazyLoad(
+  lazy(() => import("../pages/TeamMembers/TeamMembers"))
+);
+const Users = LazyLoad(lazy(() => import("../pages/Users/Users")));
+const Voucher = LazyLoad(lazy(() => import("../pages/Voucher/Voucher")));
+
+export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
