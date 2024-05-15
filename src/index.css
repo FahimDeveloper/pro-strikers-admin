@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,40 +10,35 @@ body {
   font-family: "Manrope", sans-serif;
 }
 
-:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
-  .ant-menu-submenu-title,
-:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
-  .ant-menu-title-content {
-  @apply text-[#4B4B4B] transition-none;
+.font-poppins {
+  font-family: "Poppins", sans-serif;
 }
 
-:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
-  .ant-menu-item-selected {
-  @apply bg-primary transition-none;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
-  .ant-menu-submenu-selected
-  .ant-menu-submenu-title
-  .ant-menu-title-content {
-  @apply text-primary;
+.ant-menu-submenu-selected .ant-menu-submenu-title .ant-menu-title-content,
+.ant-menu-submenu-selected .ant-menu-submenu-title .ant-menu-submenu-arrow {
+  @apply text-primary transition-none;
 }
 
-:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
-  .ant-menu-item-selected
-  .ant-menu-title-content {
-  @apply bg-primary text-white transition-none;
+.ant-menu-item-only-child .ant-menu-title-content {
+  @apply transition-none;
 }
 
-:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
-  .ant-menu-title-content:hover {
+.ant-menu-submenu-selected
+  .ant-menu-submenu-title:hover
+  .ant-menu-title-content,
+.ant-menu-submenu-selected
+  .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow {
   @apply text-white transition-none;
 }
 
-:where(.css-dev-only-do-not-override-x0s4uv).ant-menu-light
-  .ant-menu-submenu-selected
-  .ant-menu-submenu-title:hover
-  .ant-menu-title-content {
+.ant-menu-submenu .ant-menu-submenu-title:hover .ant-menu-title-content,
+.ant-menu-submenu .ant-menu-submenu-title:hover .ant-menu-submenu-arrow {
   @apply text-white transition-none;
 }
 
@@ -56,4 +52,8 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #0abac3;
+}
+
+.primary-btn {
+  @apply btn bg-primary hover:bg-primary text-white font-["Poppins"] font-bold text-base tracking-[0.3px];
 }
