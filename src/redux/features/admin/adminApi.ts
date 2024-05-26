@@ -3,18 +3,19 @@ import { adminApiSlice } from "../../api/httpsSlice";
 
 const adminApi = adminApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    adminList: builder.query<any, any>({
+    admins: builder.query<any, any>({
       query: () => ({
         url: "/admins",
         method: "GET",
       }),
-      providesTags: ["adminList"],
+      providesTags: ["admins"],
     }),
-    singleAdmin: builder.query<any, any>({
+    admin: builder.query<any, any>({
       query: (id) => ({
         url: `/admins/${id}`,
         method: "GET",
       }),
+      providesTags: ["admin"],
     }),
     createAdmin: builder.mutation<any, any>({
       query: (body) => ({
@@ -22,7 +23,7 @@ const adminApi = adminApiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["adminList"],
+      invalidatesTags: ["admins"],
     }),
     updateAdmin: builder.mutation<any, any>({
       query: ({ id, body }) => ({
@@ -30,22 +31,21 @@ const adminApi = adminApiSlice.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["adminList"],
+      invalidatesTags: ["admins", "admin"],
     }),
     deleteAdmin: builder.mutation<any, any>({
-      query: ({ id, body }) => ({
+      query: (id) => ({
         url: `/admins/delete/${id}`,
         method: "DELETE",
-        body,
       }),
-      invalidatesTags: ["adminList"],
+      invalidatesTags: ["admins"],
     }),
   }),
 });
 
 export const {
-  useAdminListQuery,
-  useSingleAdminQuery,
+  useAdminsQuery,
+  useAdminQuery,
   useCreateAdminMutation,
   useUpdateAdminMutation,
   useDeleteAdminMutation,
