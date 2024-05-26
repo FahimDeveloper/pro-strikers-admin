@@ -165,7 +165,7 @@ const AppointmentScheduling = () => {
       </div>
       <div className="flex gap-2 items-center">
         <Input.Search
-          placeholder="Search Classes"
+          placeholder="Search Appointment"
           className="text-sm font-medium text-[#5D5D5D]"
         />
         <div className="flex gap-2 items-center">

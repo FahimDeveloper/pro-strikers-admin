@@ -64,6 +64,9 @@ const CoursesReports = LazyLoad(
 const FacilityReports = LazyLoad(
   lazy(() => import("../pages/Reports/FacilityReports/FacilityReports"))
 );
+const Membership = LazyLoad(
+  lazy(() => import("../pages/Membership/Membership"))
+);
 
 export const superAdminPaths = [
   {
@@ -130,6 +133,11 @@ export const superAdminPaths = [
     name: "Team Members",
     path: "team-members",
     element: <TeamMembers />,
+  },
+  {
+    name: "Membership",
+    path: "membership",
+    element: <Membership />,
   },
   {
     name: "Coaches",

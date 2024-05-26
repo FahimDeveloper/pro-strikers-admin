@@ -52,6 +52,9 @@ const TeamMembers = LazyLoad(
 );
 const Users = LazyLoad(lazy(() => import("../pages/Users/Users")));
 const Voucher = LazyLoad(lazy(() => import("../pages/Voucher/Voucher")));
+const Membership = LazyLoad(
+  lazy(() => import("../pages/Membership/Membership"))
+);
 
 export const adminPaths = [
   {
@@ -118,6 +121,11 @@ export const adminPaths = [
     name: "Team Members",
     path: "team-members",
     element: <TeamMembers />,
+  },
+  {
+    name: "Membership",
+    path: "membership",
+    element: <Membership />,
   },
   {
     name: "Coaches",

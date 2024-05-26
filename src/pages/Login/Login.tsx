@@ -21,12 +21,12 @@ const Login = () => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      dispatch(loggedInUser(data?.result));
+      dispatch(loggedInUser(data?.results));
     }
     if (isError) {
       Swal.fire({
         title: "Oops..",
-        text: `${(error as any).data.message}`,
+        text: `${(error as any)?.data?.message}`,
         icon: "error",
         confirmButtonColor: "#0ABAC3",
       });
