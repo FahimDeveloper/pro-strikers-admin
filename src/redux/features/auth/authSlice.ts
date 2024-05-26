@@ -1,7 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
-const initialState = {
+interface TState {
+  user: any;
+  token: string | null;
+}
+
+const initialState: TState = {
   user: null,
   token: null,
 };
@@ -10,9 +16,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loggedInUser: (state, action) => {
-      const { user, token } = action.payload;
+      const { user, accessToken } = action.payload;
       state.user = user;
-      state.token = token;
+      state.token = accessToken;
     },
     loggedOutUser: (state) => {
       state.user = null;

@@ -1,10 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import logo from "../../assets/icon/login-logo.svg";
 import { AiOutlineLock, AiOutlineUser } from "react-icons/ai";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
+import { useAppDispatch } from "../../hooks/useAppHooks";
+import { loggedInUser } from "../../redux/features/auth/authSlice";
 const Login = () => {
+  const dispatch = useAppDispatch();
+  const [login, { data, isLoading, isError, isSuccess, error }] =
+    useLoginMutation();
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire({
+        title: "Success",
+        text: `${data?.message}`,
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+        iconColor: "#0ABAC3",
+      });
+      dispatch(loggedInUser(data?.result));
+    }
+    if (isError) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${(error as any).data.message}`,
+        icon: "error",
+        confirmButtonColor: "#0ABAC3",
+      });
+    }
+  }, [isError, isSuccess, error, data, dispatch]);
   const onFinish = (values: any) => {
-    console.log(values);
+    login(values);
   };
   return (
     <div className="flex">
@@ -46,11 +75,12 @@ const Login = () => {
                 placeholder="Password"
               />
             </Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
             <Form.Item>
-              <Button className="primary-btn w-full" htmlType="submit">
+              <Button
+                loading={isLoading}
+                className="primary-btn w-full"
+                htmlType="submit"
+              >
                 Login
               </Button>
             </Form.Item>

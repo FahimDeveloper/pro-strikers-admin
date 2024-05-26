@@ -4,8 +4,11 @@ import { Content, Header } from "antd/es/layout/layout";
 import { Outlet, useLocation } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useMemo, useState } from "react";
+import { useAppDispatch } from "../../hooks/useAppHooks";
+import { loggedOutUser } from "../../redux/features/auth/authSlice";
 
 const MainLayout = () => {
+  const dispatch = useAppDispatch();
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
@@ -25,6 +28,7 @@ const MainLayout = () => {
           <Button
             type="text"
             icon={<AiOutlineLogout />}
+            onClick={() => dispatch(loggedOutUser())}
             style={{
               fontSize: "16px",
               width: 50,

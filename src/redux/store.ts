@@ -6,6 +6,7 @@ import {
   PURGE,
   REGISTER,
   REHYDRATE,
+  persistStore,
 } from "redux-persist";
 import { rootMiddlewares, rootReducers } from "./features/rootFeature";
 
@@ -19,7 +20,7 @@ const store = configureStore({
     }).concat(rootMiddlewares),
 });
 
-export default store;
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const persistor = persistStore(store);
+export default store;
