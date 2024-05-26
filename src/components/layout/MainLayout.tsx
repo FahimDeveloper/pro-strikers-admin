@@ -36,7 +36,7 @@ const MainLayout = () => {
           style={{
             margin: "5px 0",
             marginRight: "5px",
-            paddingLeft: 20,
+            padding: 20,
             overflowY: "auto",
             background: "white",
             borderRadius: borderRadiusLG,

@@ -15,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           token: {
             colorPrimary: "#0ABAC3",
             borderRadius: 5,
+            fontFamily: "Manrope",
           },
           components: {
             Menu: {

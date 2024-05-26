@@ -4,7 +4,6 @@ import {
   BaseQueryFn,
   DefinitionType,
   FetchArgs,
-  createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
@@ -23,7 +22,7 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithRefreshToken: BaseQueryFn<
+export const baseQueryWithRefreshToken: BaseQueryFn<
   FetchArgs,
   BaseQueryApi,
   DefinitionType
@@ -48,11 +47,5 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       api.dispatch(loggedOutUser());
     }
   }
-  return result;     
+  return result;
 };
-
-export const baseApi = createApi({
-  reducerPath: "baseApi",
-  baseQuery: baseQueryWithRefreshToken,
-  endpoints: () => ({}),
-});

@@ -1,10 +1,10 @@
-import { baseApi } from "../../api/baseApi";
+import { authApiSlice } from "../../api/httpsSlice";
 
-const authApi = baseApi.injectEndpoints({
+const authApi = authApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
-        url: "/auth/login",
+        url: "/auth/admin/login",
         method: "POST",
         body: credentials,
       }),

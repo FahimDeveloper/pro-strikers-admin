@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
-import LazyLoad from "../common/LozyLoad";
+import LazyLoad from "../components/common/LozyLoad";
 
 const Coaches = LazyLoad(lazy(() => import("../pages/Coaches/Coaches")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
