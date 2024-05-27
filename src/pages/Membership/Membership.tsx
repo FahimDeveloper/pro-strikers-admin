@@ -9,7 +9,7 @@ const Membership = () => {
   const [membership, setMembership] = useState<string | null>(null);
   const [active, setActive] = useState<boolean | null>(null);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
+  const [limit, setLimit] = useState(30);
   const plansData = [
     {
       _id: "123",
@@ -69,7 +69,7 @@ const Membership = () => {
       dataIndex: "_id",
       key: "_id",
       render: (_, _record, index) => {
-        return <>{page * pageSize + index + 1 - pageSize}</>;
+        return <>{page * limit + index + 1 - limit}</>;
       },
     },
     {
@@ -147,7 +147,7 @@ const Membership = () => {
   ];
   const handlePageChange = (page: number, size: number) => {
     setPage(page);
-    setPageSize(size);
+    setLimit(size);
   };
 
   const filterOption = (
@@ -265,7 +265,7 @@ const Membership = () => {
         <DataPagination
           onChange={handlePageChange}
           page={page}
-          pageSize={pageSize}
+          limit={limit}
           total={data?.count || 0}
         />
       </div>

@@ -9,10 +9,18 @@ import {
   TimePicker,
 } from "antd";
 
-const CourseForm = ({ record, onFinish }: any) => {
+type TProp = {
+  record?: any;
+  onFinish: any;
+  form: any;
+  loading: boolean;
+};
+
+const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
   return (
     <>
       <Form
+        form={form}
         initialValues={{
           course_name: record?.course_name,
           sport: record?.sport,
@@ -31,12 +39,12 @@ const CourseForm = ({ record, onFinish }: any) => {
       >
         <div className="flex gap-x-5">
           <Form.Item
-            name="facility_name"
+            name="course_name"
             className="w-full m-0"
-            label="Facility Name"
+            label="Course Name"
             rules={[{ required: true }]}
           >
-            <Input placeholder="Enter facility name" />
+            <Input placeholder="Enter course name" />
           </Form.Item>
           <Form.Item
             name="sport"
@@ -160,7 +168,11 @@ const CourseForm = ({ record, onFinish }: any) => {
         </Form.Item>
         <div className="flex justify-end">
           <Form.Item className="m-0">
-            <Button htmlType="submit" className="btn primary-btn">
+            <Button
+              htmlType="submit"
+              loading={loading}
+              className="btn primary-btn"
+            >
               Create Course
             </Button>
           </Form.Item>

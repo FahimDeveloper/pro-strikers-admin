@@ -5,47 +5,23 @@ import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
 import AddCourseModal from "../../../components/ui/modal/AddCourseModal";
+import { useCoursesQuery } from "../../../redux/features/schedule/courseScheduleApi";
+import { ICourseSchedule } from "../../../types/couseSchedule.types";
 
 const CourseScheduling = () => {
-  // const [startDate,setStartDate]=useState()
-  const [facility, setFacility] = useState("");
-  const [sport, setSport] = useState("");
-  const [trainer, setTrainer] = useState("");
+  const [search, setSearch] = useState<string | undefined>(undefined);
+  const [sport, setSport] = useState<string | undefined>(undefined);
+  const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
-  const data = {
-    count: 90,
-    results: [
-      {
-        _id: "123",
-        course_name: "Kids Training",
-        sport: "Cricket",
-        trainer: "Kavindu",
-        start_date: "20-01-2024",
-        end_date: "20-01-2022",
-        price: 50,
-      },
-      {
-        _id: "124",
-        course_name: "Group Training",
-        sport: "Soccer",
-        trainer: "Fahim",
-        start_date: "20-01-2023",
-        end_date: "20-01-2023",
-        price: 55,
-      },
-      {
-        _id: "125",
-        course_name: "One on One Training",
-        sport: "Baseball",
-        trainer: "Hasan",
-        start_date: "20-01-2022",
-        end_date: "20-01-2024",
-        price: 45,
-      },
-    ],
-  };
-  const columns: ColumnsType<any> = [
+  const [limit, setLimit] = useState(30);
+  const { data, isLoading } = useCoursesQuery({
+    search,
+    page,
+    limit,
+    sport,
+    trainer,
+  });
+  const columns: ColumnsType<ICourseSchedule> = [
     {
       width: 70,
       align: "center",
@@ -53,7 +29,7 @@ const CourseScheduling = () => {
       dataIndex: "_id",
       key: "_id",
       render: (_, _record, index) => {
-        return <>{page * pageSize + index + 1 - pageSize}</>;
+        return <>{page * limit + index + 1 - limit}</>;
       },
     },
     {
@@ -64,7 +40,7 @@ const CourseScheduling = () => {
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-      sorter: (a, b) => a.coruse_name.localeCompare(b.coruse_name),
+      sorter: (a, b) => a.course_name.localeCompare(b.course_name),
     },
     {
       title: "Sport",
@@ -94,8 +70,6 @@ const CourseScheduling = () => {
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-      sorter: (a: { start_date: string }, b: { start_date: string }) =>
-        new Date(a.start_date).getTime() - new Date(b.start_date).getTime(),
     },
     {
       title: "End Date",
@@ -105,8 +79,6 @@ const CourseScheduling = () => {
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-      sorter: (a: { end_date: string }, b: { end_date: string }) =>
-        new Date(a.end_date).getTime() - new Date(b.end_date).getTime(),
     },
     {
       title: "Fee",
@@ -131,7 +103,7 @@ const CourseScheduling = () => {
   ];
   const handlePageChange = (page: number, size: number) => {
     setPage(page);
-    setPageSize(size);
+    setLimit(size);
   };
 
   const filterOption = (
@@ -140,14 +112,27 @@ const CourseScheduling = () => {
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const onChange = (value: string, filter: string) => {
-    if (filter === "facility") {
-      setFacility(value);
-    } else if (filter === "sport") {
-      setSport(value);
+    if (filter === "sport") {
+      if (value === "all") {
+        setSport(undefined);
+      } else {
+        setSport(value);
+      }
     } else if (filter === "trainer") {
-      setTrainer(value);
+      if (value === "all") {
+        setTrainer(undefined);
+      } else {
+        setTrainer(value);
+      }
     }
-    console.log(facility, sport, trainer);
+  };
+
+  const onSearch = (value: string) => {
+    if (value.length < 1) {
+      setSearch(undefined);
+    } else {
+      setSearch(value);
+    }
   };
 
   return (
@@ -165,6 +150,7 @@ const CourseScheduling = () => {
       </div>
       <div className="flex gap-2 items-center">
         <Input.Search
+          onSearch={onSearch}
           placeholder="Search Course"
           className="text-sm font-medium text-[#5D5D5D]"
         />
@@ -172,48 +158,14 @@ const CourseScheduling = () => {
           <Select
             className="w-full"
             showSearch
-            defaultValue={"all facility"}
-            optionFilterProp="children"
-            onChange={(value) => onChange(value, "facility")}
-            filterOption={filterOption}
-            options={[
-              {
-                label: "All Facility",
-                value: "all facility",
-              },
-              {
-                label: "Cricket Cage",
-                value: "cricket cage",
-              },
-              {
-                label: "Soccer Cage",
-                value: "soccer cage",
-              },
-              {
-                label: "Baseball Cage",
-                value: "baseball cage",
-              },
-              {
-                label: "Softball Cage",
-                value: "softball cage",
-              },
-              {
-                label: "Hockey Cage",
-                value: "hockey cage",
-              },
-            ]}
-          />
-          <Select
-            className="w-full"
-            showSearch
-            defaultValue={"all sport"}
+            defaultValue={"all"}
             optionFilterProp="children"
             onChange={(value) => onChange(value, "sport")}
             filterOption={filterOption}
             options={[
               {
                 label: "All Sport",
-                value: "all sport",
+                value: "all",
               },
               {
                 label: "Cricket",
@@ -240,14 +192,14 @@ const CourseScheduling = () => {
           <Select
             className="w-full"
             showSearch
-            defaultValue={"all trainer"}
+            defaultValue={"all"}
             optionFilterProp="children"
             onChange={(value) => onChange(value, "trainer")}
             filterOption={filterOption}
             options={[
               {
                 label: "All Trainer",
-                value: "all trainer",
+                value: "all",
               },
               {
                 label: "Kavindu",
@@ -265,11 +217,15 @@ const CourseScheduling = () => {
           />
         </div>
       </div>
-      <DataTable columns={columns} data={data?.results || []} loading={false} />
+      <DataTable
+        columns={columns}
+        data={data?.results || []}
+        loading={isLoading}
+      />
       <DataPagination
         onChange={handlePageChange}
         page={page}
-        pageSize={pageSize}
+        limit={limit}
         total={data?.count || 0}
       />
     </div>

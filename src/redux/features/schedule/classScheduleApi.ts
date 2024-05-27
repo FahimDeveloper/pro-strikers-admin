@@ -1,42 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  IClassSchedule,
+  IClassScheduleParams,
+} from "../../../types/classSchedule.types";
+import { IncomingQueryType } from "../../../types/index.types";
 import { classScheduleApiSlice } from "../../api/httpsSlice";
 
 const classScheduleApi = classScheduleApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    classes: builder.query<any, any>({
-      query: () => ({
-        url: "/classes",
+    classes: builder.query<
+      IncomingQueryType<IClassSchedule>,
+      IClassScheduleParams
+    >({
+      query: (params) => ({
+        url: "/schedule/classes",
         method: "GET",
+        params,
       }),
       providesTags: ["classes"],
     }),
-    class: builder.query<any, any>({
-      query: (id) => ({
-        url: `/classes/${id}`,
+    class: builder.query<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/schedule/classes/${id}`,
         method: "GET",
       }),
       providesTags: ["class"],
     }),
-    createClass: builder.mutation<any, any>({
+    createClass: builder.mutation<any, IClassSchedule>({
       query: (body) => ({
-        url: "/classes/create",
+        url: "/schedule/classes/create",
         method: "POST",
         body,
       }),
       invalidatesTags: ["classes"],
     }),
-    updateClass: builder.mutation<any, any>({
+    updateClass: builder.mutation<
+      any,
+      { id: string; body: Partial<IClassSchedule> }
+    >({
       query: ({ id, body }) => ({
-        url: `/classes/update/${id}`,
+        url: `/schedule/classes/update/${id}`,
         method: "PATCH",
         body,
       }),
       invalidatesTags: ["class", "classes"],
     }),
-    deleteClass: builder.mutation<any, any>({
-      query: (id) => ({
-        url: `/classes/delete/${id}`,
-        method: "POST",
+    deleteClass: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/schedule/classes/delete/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["classes"],
     }),

@@ -11,7 +11,7 @@ const ClassForm = ({ record, form }: any) => {
           description: record?.description,
           facility: record?.facility,
           trainer: record?.trainer,
-          lavel: record?.lavel,
+          level: record?.level,
           capacity: record?.capacity,
           price: record?.price,
         }}
@@ -128,12 +128,12 @@ const ClassForm = ({ record, form }: any) => {
           </Form.Item>
           <Form.Item
             rules={[{ required: true }]}
-            name="lavel"
+            name="level"
             className="w-full m-0"
-            label="Lavel"
+            label="Level"
           >
             <Select
-              placeholder="Select lavel"
+              placeholder="Select level"
               options={[
                 {
                   label: "Basic",

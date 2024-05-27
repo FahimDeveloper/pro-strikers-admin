@@ -14,6 +14,13 @@ import { useState } from "react";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
+type TProp = {
+  record?: any;
+  onFinish: any;
+  form: any;
+  loading: boolean;
+};
+
 const getBase64 = (file: FileType): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -22,7 +29,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const AdminForm = ({ record, onFinish }: any) => {
+const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -54,6 +61,7 @@ const AdminForm = ({ record, onFinish }: any) => {
   return (
     <div>
       <Form
+        form={form}
         layout="vertical"
         onFinish={onFinish}
         className="space-y-8"
@@ -178,7 +186,7 @@ const AdminForm = ({ record, onFinish }: any) => {
         </div>
         <div className="flex justify-end">
           <Form.Item className="m-0">
-            <Button htmlType="submit" className="primary-btn">
+            <Button htmlType="submit" loading={loading} className="primary-btn">
               Create Stuff
             </Button>
           </Form.Item>

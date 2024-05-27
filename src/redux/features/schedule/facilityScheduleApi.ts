@@ -1,43 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import {
+  IFacilitySchedule,
+  IFacilityScheduleParams,
+} from "../../../types/facilitySchedule.types";
+import { IncomingQueryType } from "../../../types/index.types";
 import { facilityScheduleApiSlice } from "../../api/httpsSlice";
 
 const facilityScheduleApi = facilityScheduleApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    facilities: builder.query<any, any>({
-      query: () => ({
-        url: "/facilities",
+    facilities: builder.query<
+      IncomingQueryType<IFacilitySchedule>,
+      IFacilityScheduleParams
+    >({
+      query: (params) => ({
+        url: "/schedule/facilities",
         method: "GET",
+        params,
       }),
       providesTags: ["facilities"],
     }),
-    facility: builder.query<any, any>({
-      query: (id) => ({
-        url: `/facilities/${id}`,
+    facility: builder.query<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/schedule/facilities/${id}`,
         method: "GET",
       }),
       providesTags: ["facility"],
     }),
-    createFacility: builder.mutation<any, any>({
+    createFacility: builder.mutation<any, IFacilitySchedule>({
       query: (body) => ({
-        url: "/facilities/create",
+        url: "/schedule/facilities/create",
         method: "POST",
         body,
       }),
       invalidatesTags: ["facilities"],
     }),
-    updateFacility: builder.mutation<any, any>({
+    updateFacility: builder.mutation<
+      any,
+      { id: string; body: Partial<IFacilitySchedule> }
+    >({
       query: ({ id, body }) => ({
-        url: `/facilities/update/${id}`,
+        url: `/schedule/facilities/update/${id}`,
         method: "PATCH",
         body,
       }),
       invalidatesTags: ["facility", "facilities"],
     }),
-    deleteFacility: builder.mutation<any, any>({
-      query: (id) => ({
-        url: `/facilities/delete/${id}`,
-        method: "POST",
+    deleteFacility: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/schedule/facilities/delete/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["facilities"],
     }),

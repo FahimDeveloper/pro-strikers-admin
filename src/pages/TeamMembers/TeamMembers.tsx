@@ -9,7 +9,7 @@ import AddAdminModal from "../../components/ui/modal/AddAdminModal";
 const TeamMembers = () => {
   const [role, setRole] = useState<string>();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
+  const [limit, setLimit] = useState(30);
   const data = {
     count: 90,
     results: [
@@ -47,7 +47,7 @@ const TeamMembers = () => {
       dataIndex: "_id",
       key: "_id",
       render: (_, _record, index) => {
-        return <>{page * pageSize + index + 1 - pageSize}</>;
+        return <>{page * limit + index + 1 - limit}</>;
       },
     },
     {
@@ -104,7 +104,7 @@ const TeamMembers = () => {
   ];
   const handlePageChange = (page: number, size: number) => {
     setPage(page);
-    setPageSize(size);
+    setLimit(size);
   };
 
   const filterOption = (
@@ -161,7 +161,7 @@ const TeamMembers = () => {
       <DataPagination
         onChange={handlePageChange}
         page={page}
-        pageSize={pageSize}
+        limit={limit}
         total={data?.count || 0}
       />
     </div>

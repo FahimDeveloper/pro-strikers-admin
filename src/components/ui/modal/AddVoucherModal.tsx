@@ -1,27 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
+import VoucherForm from "../form/VoucherForm";
 import Swal from "sweetalert2";
-import AdminForm from "../form/AdminForm";
-import { useCreateAdminMutation } from "../../../redux/features/admin/adminApi";
+import { useCreateVoucherMutation } from "../../../redux/features/voucher/voucherApi";
 import { useForm } from "antd/es/form/Form";
 
-const AddAdminModal = () => {
+const AddVoucherModal = () => {
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateAdminMutation();
+    useCreateVoucherMutation();
   const onFinish = (values: any) => {
-    if (values.password !== values.confirm_password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Passoword does not match",
-        confirmButtonColor: "#0ABAC3",
-      });
-    }
-    values.date_of_birth = values.date_of_birth.format("YYYY-MM-DD");
-    delete values.confirm_password;
+    values.start_date = values.start_date.format("DD/MM/YYYY");
+    values.end_date = values.end_date.format("DD/MM/YYYY");
     create(values);
   };
   useEffect(() => {
@@ -49,22 +41,20 @@ const AddAdminModal = () => {
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
-        Add Member
+        Create Voucher
       </button>
       <Modal
         width={800}
         footer={null}
-        title="Create New Admin"
+        title="Create New Voucher"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}
       >
-        <div className="my-5">
-          <AdminForm form={form} onFinish={onFinish} loading={isLoading} />
-        </div>
+        <VoucherForm form={form} loading={isLoading} onFinish={onFinish} />
       </Modal>
     </>
   );
 };
 
-export default AddAdminModal;
+export default AddVoucherModal;

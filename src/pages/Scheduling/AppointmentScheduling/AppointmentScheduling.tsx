@@ -5,46 +5,27 @@ import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
 import AddAppointmentModal from "../../../components/ui/modal/AddAppointmentModal";
+import { useAppointmentsQuery } from "../../../redux/features/schedule/appointmentScheduleApi";
+import { IAppointmentSchedule } from "../../../types/appointmentSchedule.types";
 
 const AppointmentScheduling = () => {
-  const [appointmentType, setAppointmentType] = useState("");
-  const [sport, setSport] = useState("");
-  const [trainer, setTrainer] = useState("");
+  const [search, setSearch] = useState<string | undefined>(undefined);
+  const [appointmentType, setAppointmentType] = useState<string | undefined>(
+    undefined
+  );
+  const [sport, setSport] = useState<string | undefined>(undefined);
+  const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
-  const data = {
-    count: 90,
-    results: [
-      {
-        _id: "123",
-        appointment_name: "Kids Training",
-        appointment_type: "Cricket Cage",
-        sport: "Cricket",
-        trainer: "Kavindu",
-        duration: 30,
-        price: 50,
-      },
-      {
-        _id: "124",
-        appointment_name: "Group Training",
-        appointment_type: "Soccer Cage",
-        sport: "Soccer",
-        trainer: "Fahim",
-        duration: 30,
-        price: 55,
-      },
-      {
-        _id: "125",
-        appointment_name: "One on One Training",
-        appointment_type: "Baseball Cage",
-        sport: "Baseball",
-        trainer: "Hasan",
-        duration: 60,
-        price: 45,
-      },
-    ],
-  };
-  const columns: ColumnsType<any> = [
+  const [limit, setLimit] = useState(30);
+  const { data, isLoading } = useAppointmentsQuery({
+    search,
+    page,
+    limit,
+    appointment_type: appointmentType,
+    trainer,
+    sport,
+  });
+  const columns: ColumnsType<IAppointmentSchedule> = [
     {
       width: 70,
       align: "center",
@@ -52,7 +33,7 @@ const AppointmentScheduling = () => {
       dataIndex: "_id",
       key: "_id",
       render: (_, _record, index) => {
-        return <>{page * pageSize + index + 1 - pageSize}</>;
+        return <>{page * limit + index + 1 - limit}</>;
       },
     },
     {
@@ -98,15 +79,14 @@ const AppointmentScheduling = () => {
     {
       title: "Duration",
       align: "center",
-      dataIndex: "duration",
-      key: "duration",
+      dataIndex: "appointment_duration",
+      key: "appointment_duration",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
           {text} minutes
         </p>
       ),
-      sorter: (a: { duration: number }, b: { duration: number }) =>
-        a.duration - b.duration,
+      sorter: (a, b) => a.appointment_duration - b.appointment_duration,
     },
     {
       title: "Fee",
@@ -131,7 +111,7 @@ const AppointmentScheduling = () => {
   ];
   const handlePageChange = (page: number, size: number) => {
     setPage(page);
-    setPageSize(size);
+    setLimit(size);
   };
 
   const filterOption = (
@@ -141,13 +121,31 @@ const AppointmentScheduling = () => {
 
   const onChange = (value: string, filter: string) => {
     if (filter === "appointment_type") {
-      setAppointmentType(value);
+      if (value === "all") {
+        setAppointmentType(undefined);
+      } else {
+        setAppointmentType(value);
+      }
     } else if (filter === "sport") {
-      setSport(value);
+      if (value === "all") {
+        setSport(undefined);
+      } else {
+        setSport(value);
+      }
     } else if (filter === "trainer") {
-      setTrainer(value);
+      if (value === "all") {
+        setTrainer(undefined);
+      } else {
+        setTrainer(value);
+      }
     }
-    console.log(appointmentType, sport, trainer);
+  };
+  const onSearch = (value: string) => {
+    if (value.length < 1) {
+      setSearch(undefined);
+    } else {
+      setSearch(value);
+    }
   };
 
   return (
@@ -165,6 +163,7 @@ const AppointmentScheduling = () => {
       </div>
       <div className="flex gap-2 items-center">
         <Input.Search
+          onSearch={onSearch}
           placeholder="Search Appointment"
           className="text-sm font-medium text-[#5D5D5D]"
         />
@@ -172,7 +171,7 @@ const AppointmentScheduling = () => {
           <Select
             className="w-full"
             showSearch
-            defaultValue={"all"}
+            defaultValue="all"
             optionFilterProp="children"
             onChange={(value) => onChange(value, "appointment_type")}
             filterOption={filterOption}
@@ -194,14 +193,14 @@ const AppointmentScheduling = () => {
           <Select
             className="w-full"
             showSearch
-            defaultValue={"all sport"}
+            defaultValue="all"
             optionFilterProp="children"
             onChange={(value) => onChange(value, "sport")}
             filterOption={filterOption}
             options={[
               {
                 label: "All Sport",
-                value: "all sport",
+                value: "all",
               },
               {
                 label: "Cricket",
@@ -228,14 +227,14 @@ const AppointmentScheduling = () => {
           <Select
             className="w-full"
             showSearch
-            defaultValue={"all trainer"}
+            defaultValue="all"
             optionFilterProp="children"
             onChange={(value) => onChange(value, "trainer")}
             filterOption={filterOption}
             options={[
               {
                 label: "All Trainer",
-                value: "all trainer",
+                value: "all",
               },
               {
                 label: "Kavindu",
@@ -253,11 +252,15 @@ const AppointmentScheduling = () => {
           />
         </div>
       </div>
-      <DataTable columns={columns} data={data?.results || []} loading={false} />
+      <DataTable
+        columns={columns}
+        data={data?.results || []}
+        loading={isLoading}
+      />
       <DataPagination
         onChange={handlePageChange}
         page={page}
-        pageSize={pageSize}
+        limit={limit}
         total={data?.count || 0}
       />
     </div>

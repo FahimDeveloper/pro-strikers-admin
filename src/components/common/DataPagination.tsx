@@ -3,11 +3,11 @@ import { Pagination } from "antd";
 type TProps = {
   onChange: (page: number, size: number) => void;
   page: number;
-  pageSize: number;
+  limit: number;
   total: number | undefined;
 };
 
-const DataPagination = ({ onChange, page, total, pageSize }: TProps) => {
+const DataPagination = ({ onChange, page, total, limit }: TProps) => {
   return (
     <>
       <Pagination
@@ -19,7 +19,7 @@ const DataPagination = ({ onChange, page, total, pageSize }: TProps) => {
         total={total}
         pageSizeOptions={[10, 20, 30, 50, 100]}
         current={page}
-        pageSize={pageSize}
+        pageSize={limit}
         showSizeChanger={true}
       />
     </>

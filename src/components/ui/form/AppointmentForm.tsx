@@ -52,7 +52,7 @@ const AppointmentForm = ({ record, form }: any) => {
         </div>
         <div className="grid grid-cols-3 gap-x-5">
           <Form.Item
-            name="duration"
+            name="appointment_duration"
             className="w-full m-0"
             label="Appointment Duratoin"
             rules={[{ required: true, message: "Please select Duration" }]}

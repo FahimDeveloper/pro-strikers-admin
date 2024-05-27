@@ -1,10 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Steps } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ScheduleForm from "../form/ScheduleForm";
 import AppointmentForm from "../form/AppointmentForm";
+import { useCreateAppointmentMutation } from "../../../redux/features/schedule/appointmentScheduleApi";
+import Swal from "sweetalert2";
 
-const AppointmentSteps = ({ record, setModalOpen }: any) => {
+type TProp = {
+  record?: any;
+  setModalOpen: any;
+};
+
+const AppointmentSteps = ({ record, setModalOpen }: TProp) => {
+  const [create, { data, isLoading, isSuccess, isError, error }] =
+    useCreateAppointmentMutation();
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const [formData, setFormData] = useState<any>({});
@@ -18,6 +27,29 @@ const AppointmentSteps = ({ record, setModalOpen }: any) => {
       content: <ScheduleForm record={record} form={form} />,
     },
   ];
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire({
+        title: "Success",
+        icon: "success",
+        text: `${data?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+        iconColor: "#0ABAC3",
+      });
+      setCurrent(0);
+      form.resetFields();
+      setModalOpen(false);
+    }
+    if (isError) {
+      Swal.fire({
+        title: "Oops!..",
+        icon: "error",
+        text: `${(error as any)?.data?.message}`,
+        confirmButtonColor: "#0ABAC3",
+      });
+    }
+  }, [data, isSuccess, isError, form, error, setModalOpen]);
   const next = () => {
     form.validateFields().then((values) => {
       setCurrent(current + 1);
@@ -25,28 +57,18 @@ const AppointmentSteps = ({ record, setModalOpen }: any) => {
     });
   };
   const onSubmit = () => {
-    formData.schedules = formData?.schedules?.map((schedule: any) => {
-      if (schedule.start_time && schedule.end_time) {
-        return {
-          day: schedule.day,
-          active: schedule.active,
-          start_time: schedule.start_time.format("HH:mm A"),
-          end_time: schedule.end_time.format("HH:mm A"),
-        };
-      }
-      return schedule;
-    });
-    console.log(formData);
-    setCurrent(0);
-    setModalOpen(false);
-    form.resetFields();
+    create(formData);
   };
 
   const onFinish = () => {
-    form.validateFields().then((values) => {
-      setFormData({ ...formData, ...values });
-      onSubmit();
-    });
+    form
+      .validateFields()
+      .then((values) => {
+        setFormData({ ...formData, ...values });
+      })
+      .then(() => {
+        onSubmit();
+      });
   };
 
   const prev = () => {
@@ -75,7 +97,11 @@ const AppointmentSteps = ({ record, setModalOpen }: any) => {
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button className="primary-btn" onClick={() => onFinish()}>
+          <Button
+            className="primary-btn"
+            loading={isLoading}
+            onClick={() => onFinish()}
+          >
             Create Appointment
           </Button>
         )}
