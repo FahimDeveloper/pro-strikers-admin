@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal } from "antd";
+import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
-import EventForm from "../form/EventForm";
-import { useCreateEventMutation } from "../../../redux/features/event/eventApi";
-import { useForm } from "antd/es/form/Form";
+import VoucherForm from "../form/VoucherForm";
 import Swal from "sweetalert2";
+import { useUpdateVoucherMutation } from "../../../redux/features/voucher/voucherApi";
+import { useForm } from "antd/es/form/Form";
+import { CiEdit } from "react-icons/ci";
 
-const AddEventModal = () => {
+const UpdateVoucherModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateEventMutation();
+  const [update, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateVoucherMutation();
   const onFinish = (values: any) => {
-    create(values);
+    update({ id: record?._id, body: values });
   };
   useEffect(() => {
     if (isSuccess) {
@@ -38,21 +39,30 @@ const AddEventModal = () => {
   }, [data, isSuccess, isError, form, error]);
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="primary-btn">
-        Create Event
-      </button>
+      <Button
+        type="primary"
+        onClick={() => setModalOpen(true)}
+        className="w-full flex gap-1 justify-center items-center"
+      >
+        <CiEdit className="size-5 text-white" /> Update
+      </Button>
       <Modal
         width={800}
         footer={null}
-        title="Create New Event"
+        title="Update Voucher"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}
       >
-        <EventForm form={form} loading={isLoading} onFinish={onFinish} />
+        <VoucherForm
+          record={record}
+          form={form}
+          loading={isLoading}
+          onFinish={onFinish}
+        />
       </Modal>
     </>
   );
 };
 
-export default AddEventModal;
+export default UpdateVoucherModal;

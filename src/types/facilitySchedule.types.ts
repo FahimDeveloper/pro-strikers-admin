@@ -1,5 +1,5 @@
 export interface IFacilitySchedule {
-  _id?: string;
+  _id: string;
   facility_name: string;
   sport: string;
   facility: string;

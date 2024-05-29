@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Modal } from "antd";
+import { Button, Form, Modal } from "antd";
 import { useEffect, useState } from "react";
 import UserForm from "../form/UserForm";
 import Swal from "sweetalert2";
-import { useCreateUserMutation } from "../../../redux/features/user/userApi";
+import { useUpdateUserMutation } from "../../../redux/features/user/userApi";
+import { CiEdit } from "react-icons/ci";
 
-const AddUserModal = () => {
+const UpdateUserModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
   const [form] = Form.useForm();
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateUserMutation();
+  const [update, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateUserMutation();
   const onFinish = (values: any) => {
     if (values.password !== values.confirm_password) {
       Swal.fire({
@@ -20,7 +21,7 @@ const AddUserModal = () => {
       });
     }
     delete values.confirm_password;
-    create(values);
+    update({ id: record?._id, body: values });
   };
   useEffect(() => {
     if (isSuccess) {
@@ -46,23 +47,32 @@ const AddUserModal = () => {
   }, [data, isSuccess, form, isError, error]);
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="primary-btn">
-        Add User
-      </button>
+      <Button
+        type="primary"
+        onClick={() => setModalOpen(true)}
+        className="w-full flex gap-1 justify-center items-center"
+      >
+        <CiEdit className="size-5 text-white" /> Update
+      </Button>
       <Modal
         width={800}
         footer={null}
-        title="Create New User"
+        title="Update User"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}
       >
         <div className="my-5">
-          <UserForm form={form} onFinish={onFinish} loading={isLoading} />
+          <UserForm
+            record={record}
+            form={form}
+            onFinish={onFinish}
+            loading={isLoading}
+          />
         </div>
       </Modal>
     </>
   );
 };
 
-export default AddUserModal;
+export default UpdateUserModal;

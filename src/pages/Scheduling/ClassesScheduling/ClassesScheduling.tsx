@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Select } from "antd";
+import { Dropdown, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
@@ -7,6 +7,9 @@ import { useState } from "react";
 import AddClassesModal from "../../../components/ui/modal/AddClassModal";
 import { useClassesQuery } from "../../../redux/features/schedule/classScheduleApi";
 import { IClassSchedule } from "../../../types/classSchedule.types";
+import { BsThreeDots } from "react-icons/bs";
+import DeleteClassPopup from "../../../components/ui/popup/DeleteClassPopup";
+import UpdateClassModal from "../../../components/ui/modal/UpdateClassModal";
 
 const ClassesScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -91,8 +94,22 @@ const ClassesScheduling = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => {
-        return <div></div>;
+      render: (_, record) => {
+        const items = [
+          {
+            key: "1",
+            label: <UpdateClassModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteClassPopup id={record?._id} />,
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }}>
+            <BsThreeDots className="size-5 cursor-pointer" />
+          </Dropdown>
+        );
       },
     },
   ];

@@ -20,7 +20,6 @@ const AddAdminModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-    values.date_of_birth = values.date_of_birth.format("YYYY-MM-DD");
     delete values.confirm_password;
     create(values);
   };
@@ -45,7 +44,7 @@ const AddAdminModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [data, isSuccess, isError, form, error, setModalOpen]);
+  }, [data, isSuccess, isError, form, error]);
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
@@ -54,7 +53,7 @@ const AddAdminModal = () => {
       <Modal
         width={800}
         footer={null}
-        title="Create New Admin"
+        title="Create New Member"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}

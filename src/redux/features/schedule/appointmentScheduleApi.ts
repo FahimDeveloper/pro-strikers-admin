@@ -19,8 +19,8 @@ const appointmentScheduleApi = appointmentScheduleApiSlice.injectEndpoints({
       }),
       providesTags: ["appointments"],
     }),
-    appointment: builder.query<any, { id: string }>({
-      query: ({ id }) => ({
+    appointment: builder.query<any, string>({
+      query: (id) => ({
         url: `/schedule/appointments/${id}`,
         method: "GET",
       }),
@@ -45,7 +45,7 @@ const appointmentScheduleApi = appointmentScheduleApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["appointment", "appointments"],
     }),
-    deleteAppointment: builder.mutation<any, { id: string }>({
+    deleteAppointment: builder.mutation<any, string>({
       query: (id) => ({
         url: `/schedule/appointments/delete/${id}`,
         method: "DELETE",

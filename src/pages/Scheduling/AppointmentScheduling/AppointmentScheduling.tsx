@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Select } from "antd";
+import { Dropdown, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
@@ -7,6 +7,9 @@ import DataPagination from "../../../components/common/DataPagination";
 import AddAppointmentModal from "../../../components/ui/modal/AddAppointmentModal";
 import { useAppointmentsQuery } from "../../../redux/features/schedule/appointmentScheduleApi";
 import { IAppointmentSchedule } from "../../../types/appointmentSchedule.types";
+import DeleteAppointmentPopup from "../../../components/ui/popup/DeleteAppointmentPopup";
+import UpdateAppointmentModal from "../../../components/ui/modal/UpdateAppointmentModal";
+import { BsThreeDots } from "react-icons/bs";
 
 const AppointmentScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -104,8 +107,22 @@ const AppointmentScheduling = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => {
-        return <div></div>;
+      render: (_, record) => {
+        const items = [
+          {
+            key: "1",
+            label: <UpdateAppointmentModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteAppointmentPopup id={record?._id} />,
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }}>
+            <BsThreeDots className="size-5 cursor-pointer" />
+          </Dropdown>
+        );
       },
     },
   ];

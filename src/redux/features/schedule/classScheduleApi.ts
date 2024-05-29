@@ -19,8 +19,8 @@ const classScheduleApi = classScheduleApiSlice.injectEndpoints({
       }),
       providesTags: ["classes"],
     }),
-    class: builder.query<any, { id: string }>({
-      query: ({ id }) => ({
+    class: builder.query<any, string>({
+      query: (id) => ({
         url: `/schedule/classes/${id}`,
         method: "GET",
       }),
@@ -45,8 +45,8 @@ const classScheduleApi = classScheduleApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["class", "classes"],
     }),
-    deleteClass: builder.mutation<any, { id: string }>({
-      query: ({ id }) => ({
+    deleteClass: builder.mutation<any, string>({
+      query: (id) => ({
         url: `/schedule/classes/delete/${id}`,
         method: "DELETE",
       }),

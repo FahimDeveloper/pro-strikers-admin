@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Select } from "antd";
+import { Dropdown, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
@@ -7,6 +7,9 @@ import DataPagination from "../../../components/common/DataPagination";
 import AddFacilityModal from "../../../components/ui/modal/AddFacilityModal";
 import { useFacilitiesQuery } from "../../../redux/features/schedule/facilityScheduleApi";
 import { IFacilitySchedule } from "../../../types/facilitySchedule.types";
+import UpdateFacilityModal from "../../../components/ui/modal/UpdateFacilityModal";
+import DeleteFacilityPopup from "../../../components/ui/popup/DeleteFacilityPopup";
+import { BsThreeDots } from "react-icons/bs";
 
 const FacilityScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -90,8 +93,22 @@ const FacilityScheduling = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => {
-        return <div></div>;
+      render: (_, record) => {
+        const items = [
+          {
+            key: "1",
+            label: <UpdateFacilityModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteFacilityPopup id={record?._id} />,
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }}>
+            <BsThreeDots />
+          </Dropdown>
+        );
       },
     },
   ];

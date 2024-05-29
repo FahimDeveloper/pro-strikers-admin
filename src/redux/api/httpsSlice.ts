@@ -14,6 +14,13 @@ export const adminApiSlice = createApi({
   endpoints: () => ({}),
 });
 
+export const userApiSlice = createApi({
+  reducerPath: "userApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["users", "user"],
+  endpoints: () => ({}),
+});
+
 export const appointmentScheduleApiSlice = createApi({
   reducerPath: "appointmentScheduleApi",
   baseQuery: baseQueryWithRefreshToken,

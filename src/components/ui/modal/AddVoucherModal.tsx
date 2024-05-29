@@ -12,8 +12,6 @@ const AddVoucherModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateVoucherMutation();
   const onFinish = (values: any) => {
-    values.start_date = values.start_date.format("DD/MM/YYYY");
-    values.end_date = values.end_date.format("DD/MM/YYYY");
     create(values);
   };
   useEffect(() => {
@@ -40,7 +38,7 @@ const AddVoucherModal = () => {
   }, [data, isSuccess, isError, form, error, setModalOpen]);
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="btn primary-btn">
+      <button onClick={() => setModalOpen(true)} className="primary-btn">
         Create Voucher
       </button>
       <Modal

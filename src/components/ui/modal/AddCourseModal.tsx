@@ -12,10 +12,6 @@ const AddCourseModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateCourseMutation();
   const onFinish = (values: any) => {
-    values.start_date = values.start_date.format("DD/MM/YYYY");
-    values.end_date = values.end_date.format("DD/MM/YYYY");
-    values.start_time = values.start_time.format("HH:mm A");
-    values.end_time = values.end_time.format("HH:mm A");
     create(values);
   };
   useEffect(() => {
@@ -39,7 +35,7 @@ const AddCourseModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [data, isSuccess, isError, form, error, setModalOpen]);
+  }, [data, isSuccess, isError, form, error]);
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">

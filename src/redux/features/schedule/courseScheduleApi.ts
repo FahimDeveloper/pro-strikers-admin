@@ -19,8 +19,8 @@ const courseScheduleApi = courseScheduleApiSlice.injectEndpoints({
       }),
       providesTags: ["courses"],
     }),
-    course: builder.query<any, { id: string }>({
-      query: ({ id }) => ({
+    course: builder.query<any, string>({
+      query: (id) => ({
         url: `/schedule/courses/${id}`,
         method: "GET",
       }),
@@ -45,7 +45,7 @@ const courseScheduleApi = courseScheduleApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["course", "courses"],
     }),
-    deleteCourse: builder.mutation<any, { id: string }>({
+    deleteCourse: builder.mutation<any, string>({
       query: (id) => ({
         url: `/schedule/courses/delete/${id}`,
         method: "DELETE",

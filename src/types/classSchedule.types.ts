@@ -1,5 +1,5 @@
 export interface IClassSchedule {
-  _id?: string;
+  _id: string;
   class_name: string;
   sport: string;
   description: string;

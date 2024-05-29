@@ -2,12 +2,12 @@
 import { Image, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
-import AddUserModal from "../../components/ui/modal/AddUserModal";
 import DataTable from "../../components/common/DataTable";
 import DataPagination from "../../components/common/DataPagination";
+import AddPostModal from "../../components/ui/modal/AddPostModal";
 
 const Post = () => {
-  const [sport, setSport] = useState<string>("");
+  const [category, setCategory] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const data = {
@@ -62,8 +62,8 @@ const Post = () => {
     {
       title: "Thumbnail",
       align: "center",
-      dataIndex: "image",
-      key: "image",
+      dataIndex: "thumbnail",
+      key: "thumbnail",
       render: (text) => <Image src={text} style={{ width: 40 }} />,
     },
     {
@@ -117,9 +117,9 @@ const Post = () => {
 
   const onChange = (value: string) => {
     if (value === "all") {
-      setSport("");
+      setCategory(undefined);
     } else {
-      setSport(value);
+      setCategory(value);
     }
   };
 
@@ -134,7 +134,7 @@ const Post = () => {
             {data?.count || 0} posts available
           </p>
         </div>
-        <AddUserModal />
+        <AddPostModal />
       </div>
       <div className="grid grid-cols-4 gap-2 items-center">
         <Input.Search
@@ -150,7 +150,7 @@ const Post = () => {
           filterOption={filterOption}
           options={[
             {
-              label: "All Sport",
+              label: "All Category",
               value: "all",
             },
             {

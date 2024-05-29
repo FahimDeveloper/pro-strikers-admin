@@ -1,5 +1,5 @@
 export interface ICourseSchedule {
-  _id?: string;
+  _id: string;
   course_name: string;
   sport: string;
   trainer: string;

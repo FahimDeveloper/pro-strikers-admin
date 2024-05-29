@@ -1,5 +1,5 @@
 export type IAppointmentSchedule = {
-  _id?: string;
+  _id: string;
   appointment_name: string;
   appointment_type: string;
   sport: string;

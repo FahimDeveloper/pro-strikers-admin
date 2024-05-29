@@ -20,8 +20,8 @@ const facilityScheduleApi = facilityScheduleApiSlice.injectEndpoints({
       }),
       providesTags: ["facilities"],
     }),
-    facility: builder.query<any, { id: string }>({
-      query: ({ id }) => ({
+    facility: builder.query<any, string>({
+      query: (id) => ({
         url: `/schedule/facilities/${id}`,
         method: "GET",
       }),
@@ -46,8 +46,8 @@ const facilityScheduleApi = facilityScheduleApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["facility", "facilities"],
     }),
-    deleteFacility: builder.mutation<any, { id: string }>({
-      query: ({ id }) => ({
+    deleteFacility: builder.mutation<any, string>({
+      query: (id) => ({
         url: `/schedule/facilities/delete/${id}`,
         method: "DELETE",
       }),

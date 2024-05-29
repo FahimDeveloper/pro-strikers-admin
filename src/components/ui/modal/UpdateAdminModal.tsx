@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Modal } from "antd";
+import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
-import UserForm from "../form/UserForm";
 import Swal from "sweetalert2";
-import { useCreateUserMutation } from "../../../redux/features/user/userApi";
+import AdminForm from "../form/AdminForm";
+import { useUpdateAdminMutation } from "../../../redux/features/admin/adminApi";
+import { useForm } from "antd/es/form/Form";
+import { CiEdit } from "react-icons/ci";
 
-const AddUserModal = () => {
+const UpdateAdminModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
-  const [form] = Form.useForm();
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateUserMutation();
+  const [form] = useForm();
+  const [update, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateAdminMutation();
   const onFinish = (values: any) => {
     if (values.password !== values.confirm_password) {
       Swal.fire({
@@ -20,7 +22,7 @@ const AddUserModal = () => {
       });
     }
     delete values.confirm_password;
-    create(values);
+    update({ id: record?._id, body: values });
   };
   useEffect(() => {
     if (isSuccess) {
@@ -32,8 +34,8 @@ const AddUserModal = () => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      form.resetFields();
       setModalOpen(false);
+      form.resetFields();
     }
     if (isError) {
       Swal.fire({
@@ -43,26 +45,35 @@ const AddUserModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [data, isSuccess, form, isError, error]);
+  }, [data, isSuccess, isError, form, error]);
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="primary-btn">
-        Add User
-      </button>
+      <Button
+        type="primary"
+        onClick={() => setModalOpen(true)}
+        className="w-full flex gap-1 justify-center items-center"
+      >
+        <CiEdit className="size-5 text-white" /> Update
+      </Button>
       <Modal
         width={800}
         footer={null}
-        title="Create New User"
+        title="Update member"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}
       >
         <div className="my-5">
-          <UserForm form={form} onFinish={onFinish} loading={isLoading} />
+          <AdminForm
+            form={form}
+            record={record}
+            onFinish={onFinish}
+            loading={isLoading}
+          />
         </div>
       </Modal>
     </>
   );
 };
 
-export default AddUserModal;
+export default UpdateAdminModal;

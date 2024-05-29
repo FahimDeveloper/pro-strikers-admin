@@ -23,7 +23,14 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const UserForm = ({ record, onFinish }: any) => {
+type TProp = {
+  record?: any;
+  onFinish: any;
+  form: any;
+  loading: boolean;
+};
+
+const UserForm = ({ form, record, onFinish, loading }: TProp) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -53,8 +60,9 @@ const UserForm = ({ record, onFinish }: any) => {
   };
 
   return (
-    <div>
+    <>
       <Form
+        form={form}
         layout="vertical"
         onFinish={onFinish}
         className="space-y-5"
@@ -243,7 +251,7 @@ const UserForm = ({ record, onFinish }: any) => {
         </div>
         <div className="flex justify-end">
           <Form.Item className="m-0">
-            <Button htmlType="submit" className="primary-btn">
+            <Button htmlType="submit" loading={loading} className="primary-btn">
               Create Client
             </Button>
           </Form.Item>
@@ -260,7 +268,7 @@ const UserForm = ({ record, onFinish }: any) => {
           src={previewImage}
         />
       )}
-    </div>
+    </>
   );
 };
 

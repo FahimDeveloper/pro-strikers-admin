@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Modal } from "antd";
+import Modal from "antd/es/modal/Modal";
 import { useEffect, useState } from "react";
-import FacilitySteps from "../step/FacilitySteps";
+import ClassSteps from "../step/ClassSteps";
+import { Button, Form } from "antd";
 import Swal from "sweetalert2";
-import { useCreateFacilityMutation } from "../../../redux/features/schedule/facilityScheduleApi";
+import { useUpdateClassMutation } from "../../../redux/features/schedule/classScheduleApi";
+import { CiEdit } from "react-icons/ci";
 
-const AddFacilityModal = () => {
+const UpdateClassModal = ({ record }: any) => {
   const [form] = Form.useForm();
   const [open, setModalOpen] = useState(false);
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateFacilityMutation();
+  const [update, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateClassMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -33,25 +35,34 @@ const AddFacilityModal = () => {
     }
   }, [data, isSuccess, isError, form, error]);
   const onSubmit = (values: any) => {
-    create(values);
+    update({ id: record?._id, body: values });
   };
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="primary-btn">
-        Create Facility
-      </button>
+      <Button
+        type="primary"
+        onClick={() => setModalOpen(true)}
+        className="w-full flex gap-1 justify-center items-center"
+      >
+        <CiEdit className="size-5 text-white" /> Update
+      </Button>
       <Modal
         width={800}
         footer={null}
-        title="Create New Facility"
+        title="Update Class"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}
       >
-        <FacilitySteps form={form} onSubmit={onSubmit} loading={isLoading} />
+        <ClassSteps
+          record={record}
+          form={form}
+          onSubmit={onSubmit}
+          loading={isLoading}
+        />
       </Modal>
     </>
   );
 };
 
-export default AddFacilityModal;
+export default UpdateClassModal;

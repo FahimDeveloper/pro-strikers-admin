@@ -187,7 +187,7 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
         <div className="flex justify-end">
           <Form.Item className="m-0">
             <Button htmlType="submit" loading={loading} className="primary-btn">
-              Create Stuff
+              Create Member
             </Button>
           </Form.Item>
         </div>

@@ -60,3 +60,7 @@ body {
 .primary-btn {
   @apply btn bg-primary font-[Manrope] hover:bg-primary text-white font-bold text-base;
 }
+
+.danger-btn {
+  @apply btn bg-error h-12 font-[Manrope] hover:bg-error text-white font-bold text-sm;
+}

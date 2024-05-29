@@ -10,7 +10,7 @@ const postApi = postApiSlice.injectEndpoints({
       }),
       providesTags: ["posts"],
     }),
-    post: builder.query<any, any>({
+    post: builder.query<any, string>({
       query: (id) => ({
         url: `/posts/${id}`,
         method: "GET",
@@ -33,7 +33,7 @@ const postApi = postApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["posts", "post"],
     }),
-    deletePost: builder.mutation<any, any>({
+    deletePost: builder.mutation<any, string>({
       query: (id) => ({
         url: `/posts/delete/${id}`,
         method: "DELETE",
