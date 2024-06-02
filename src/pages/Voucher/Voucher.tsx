@@ -35,6 +35,8 @@ const Voucher = () => {
       },
     },
     {
+      width: 180,
+      align: "center",
       title: "Voucher code",
       dataIndex: "voucher_code",
       key: "voucher_code",
@@ -45,15 +47,21 @@ const Voucher = () => {
       ),
     },
     {
+      width: 160,
+      align: "center",
       title: "Discount Type",
       dataIndex: "discount_type",
       key: "discount_type",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.discount_type.localeCompare(b.discount_type),
     },
     {
+      width: 120,
+      align: "center",
       title: "Discount",
       dataIndex: "discount_value",
       key: "discount_value",
@@ -63,6 +71,8 @@ const Voucher = () => {
       sorter: (a, b) => a.discount_value - b.discount_value,
     },
     {
+      width: 140,
+      align: "center",
       title: "Voucher Type",
       dataIndex: "voucher_type",
       key: "voucher_type",
@@ -74,6 +84,8 @@ const Voucher = () => {
       sorter: (a, b) => a.voucher_type.localeCompare(b.voucher_type),
     },
     {
+      width: 160,
+      align: "center",
       title: "Start Date",
       dataIndex: "start_date",
       key: "start_date",
@@ -85,6 +97,8 @@ const Voucher = () => {
       sorter: (a, b) => Number(a.start_date) - Number(b.start_date),
     },
     {
+      width: 160,
+      align: "center",
       title: "End Date",
       dataIndex: "end_date",
       key: "end_date",
@@ -96,6 +110,8 @@ const Voucher = () => {
       sorter: (a, b) => Number(a.end_date) - Number(b.end_date),
     },
     {
+      width: 120,
+      align: "center",
       title: "Used",
       dataIndex: "used",
       key: "used",
@@ -105,8 +121,9 @@ const Voucher = () => {
       sorter: (a, b) => a.used - b.used,
     },
     {
-      fixed: "right",
+      width: 80,
       align: "center",
+      fixed: "right",
       title: "Action",
       dataIndex: "action",
       key: "action",

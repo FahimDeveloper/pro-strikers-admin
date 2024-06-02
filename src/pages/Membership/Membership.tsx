@@ -43,6 +43,7 @@ const Membership = () => {
   const columns: ColumnsType<IUser> = [
     {
       width: 70,
+      align: "center",
       title: "S/N",
       dataIndex: "_id",
       key: "_id",
@@ -51,6 +52,8 @@ const Membership = () => {
       },
     },
     {
+      width: 260,
+      align: "center",
       title: "Client Name",
       dataIndex: "full_name",
       key: "full_name",
@@ -64,7 +67,9 @@ const Membership = () => {
       ),
     },
     {
-      title: "email",
+      width: 260,
+      align: "center",
+      title: "Email",
       dataIndex: "email",
       key: "email",
       render: (text) => (
@@ -72,6 +77,8 @@ const Membership = () => {
       ),
     },
     {
+      width: 220,
+      align: "center",
       title: "Membership",
       dataIndex: "package_name",
       key: "package_name",
@@ -82,7 +89,9 @@ const Membership = () => {
       ),
     },
     {
+      width: 120,
       title: "Plan",
+      align: "center",
       dataIndex: "plan",
       key: "plan",
       render: (text) => (
@@ -94,6 +103,28 @@ const Membership = () => {
         a.plan.localeCompare(b.plan),
     },
     {
+      width: 160,
+      align: "center",
+      title: "Issue Date",
+      dataIndex: "issue_date",
+      key: "issue_date",
+      render: (text) => (
+        <>
+          {text ? (
+            <p className="font-medium text-sm leading-5 text-[#151515]">
+              {moment(text).format("DD/MM/YYYY")}
+            </p>
+          ) : (
+            <p className="font-medium text-sm leading-5 text-[#151515]">
+              No Issue date
+            </p>
+          )}
+        </>
+      ),
+    },
+    {
+      width: 160,
+      align: "center",
       title: "Expiry Date",
       dataIndex: "expiry_date",
       key: "expiry_date",
@@ -112,6 +143,7 @@ const Membership = () => {
       ),
     },
     {
+      width: 120,
       title: "Status",
       dataIndex: "activity",
       align: "center",
@@ -130,6 +162,7 @@ const Membership = () => {
         Number(a.active) - Number(b.active),
     },
     {
+      width: 80,
       fixed: "right",
       align: "center",
       title: "Action",

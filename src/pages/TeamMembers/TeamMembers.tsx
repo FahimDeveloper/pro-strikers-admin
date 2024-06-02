@@ -31,12 +31,13 @@ const TeamMembers = () => {
       },
     },
     {
+      width: 260,
       title: "Member Name",
       align: "center",
       dataIndex: "full_name",
       key: "full_name",
       render: (_, record) => (
-        <div className="flex items-center ms-10 gap-5">
+        <div className="flex items-center ms-5 gap-5">
           <Image src={record?.image} style={{ width: 50 }} />
           <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
             {record?.first_name} {record?.last_name}
@@ -46,6 +47,7 @@ const TeamMembers = () => {
       sorter: (a, b) => a.full_name.localeCompare(b.full_name),
     },
     {
+      width: 120,
       title: "Role",
       align: "center",
       dataIndex: "role",
@@ -58,6 +60,7 @@ const TeamMembers = () => {
       sorter: (a, b) => a.role.localeCompare(b.role),
     },
     {
+      width: 260,
       title: "Email",
       align: "center",
       dataIndex: "email",
@@ -67,6 +70,7 @@ const TeamMembers = () => {
       ),
     },
     {
+      width: 160,
       title: "Phone",
       align: "center",
       dataIndex: "phone",
@@ -76,6 +80,7 @@ const TeamMembers = () => {
       ),
     },
     {
+      width: 80,
       fixed: "right",
       align: "center",
       title: "Action",

@@ -37,13 +37,16 @@ const Events = () => {
       },
     },
     {
-      title: "Thumbnail",
+      width: 120,
       align: "center",
+      title: "Thumbnail",
       dataIndex: "image",
       key: "image",
       render: (text) => <Image src={text} width={50} />,
     },
     {
+      width: 220,
+      align: "center",
       title: "Event name",
       dataIndex: "event_name",
       key: "event_name",
@@ -54,6 +57,8 @@ const Events = () => {
       ),
     },
     {
+      width: 140,
+      align: "center",
       title: "Event Type",
       dataIndex: "event_type",
       key: "event_type",
@@ -65,6 +70,8 @@ const Events = () => {
       sorter: (a, b) => a.event_type.localeCompare(b.event_type),
     },
     {
+      width: 120,
+      align: "center",
       title: "Sport",
       dataIndex: "sport",
       key: "sport",
@@ -76,6 +83,8 @@ const Events = () => {
       sorter: (a, b) => a.event_type.localeCompare(b.event_type),
     },
     {
+      width: 160,
+      align: "center",
       title: "Start Date",
       dataIndex: "start_date",
       key: "start_date",
@@ -87,6 +96,8 @@ const Events = () => {
       sorter: (a, b) => Number(a.start_date) - Number(b.start_date),
     },
     {
+      width: 160,
+      align: "center",
       title: "End Date",
       dataIndex: "end_date",
       key: "end_date",
@@ -98,8 +109,9 @@ const Events = () => {
       sorter: (a, b) => Number(a.end_date) - Number(b.end_date),
     },
     {
-      title: "Registration",
+      width: 140,
       align: "center",
+      title: "Registration",
       dataIndex: "registration",
       key: "registration",
       render: (text) => (
@@ -108,8 +120,9 @@ const Events = () => {
       sorter: (a, b) => a.registration - b.registration,
     },
     {
-      fixed: "right",
+      width: 80,
       align: "center",
+      fixed: "right",
       title: "Action",
       dataIndex: "action",
       key: "action",

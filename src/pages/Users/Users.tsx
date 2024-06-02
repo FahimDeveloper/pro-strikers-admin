@@ -35,12 +35,13 @@ const Users = () => {
       },
     },
     {
+      width: 260,
       title: "Client Name",
       align: "center",
       dataIndex: "full_name",
       key: "full_name",
       render: (_, record) => (
-        <div className="flex items-center ms-10 gap-5">
+        <div className="flex items-center ms-5 gap-5">
           <Image src={record?.image} style={{ width: 50 }} />
           <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
             {record?.first_name} {record?.last_name}
@@ -49,6 +50,7 @@ const Users = () => {
       ),
     },
     {
+      width: 260,
       title: "Email",
       align: "center",
       dataIndex: "email",
@@ -58,6 +60,7 @@ const Users = () => {
       ),
     },
     {
+      width: 120,
       title: "Gender",
       align: "center",
       dataIndex: "gender",
@@ -70,6 +73,7 @@ const Users = () => {
       sorter: (a, b) => a.gender.localeCompare(b.gender),
     },
     {
+      width: 160,
       title: "Phone",
       align: "center",
       dataIndex: "phone",
@@ -79,6 +83,7 @@ const Users = () => {
       ),
     },
     {
+      width: 140,
       title: "Date of Birth",
       align: "center",
       dataIndex: "date_of_birth",
@@ -88,8 +93,10 @@ const Users = () => {
           {moment(text).format("DD/MM/YYYY")}
         </p>
       ),
+      sorter: (a, b) => Number(a.date_of_birth) - Number(b.date_of_birth),
     },
     {
+      width: 130,
       title: "Membership",
       align: "center",
       dataIndex: "membership",
@@ -102,6 +109,7 @@ const Users = () => {
       sorter: (a, b) => Number(a.membership) - Number(b.membership),
     },
     {
+      width: 80,
       fixed: "right",
       align: "center",
       title: "Action",

@@ -35,15 +35,15 @@ const Post = () => {
       },
     },
     {
-      title: "Thumbnail",
       align: "center",
+      title: "Thumbnail",
       dataIndex: "image",
       key: "image",
       render: (text) => <Image src={text} style={{ width: 50 }} />,
     },
     {
-      title: "Post Title",
       align: "center",
+      title: "Post Title",
       dataIndex: "title",
       key: "title",
       render: (text) => (
@@ -75,6 +75,7 @@ const Post = () => {
       sorter: (a, b) => Number(a.createdAt) - Number(b.createdAt),
     },
     {
+      width: 80,
       fixed: "right",
       align: "center",
       title: "Action",
