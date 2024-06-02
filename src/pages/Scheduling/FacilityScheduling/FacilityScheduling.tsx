@@ -38,6 +38,7 @@ const FacilityScheduling = () => {
       },
     },
     {
+      width: 220,
       title: "Facility Name",
       align: "center",
       dataIndex: "facility_name",
@@ -48,6 +49,7 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.facility_name.localeCompare(b.facility_name),
     },
     {
+      width: 180,
       title: "Facility",
       align: "center",
       dataIndex: "facility",
@@ -60,6 +62,7 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.facility.localeCompare(b.facility),
     },
     {
+      width: 150,
       title: "Sport",
       align: "center",
       dataIndex: "sport",
@@ -72,6 +75,7 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
+      width: 130,
       title: "Duration",
       align: "center",
       dataIndex: "facility_duration",
@@ -84,6 +88,7 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.facility_duration - b.facility_duration,
     },
     {
+      width: 180,
       title: "Trainer",
       align: "center",
       dataIndex: "trainer",
@@ -96,6 +101,7 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
+      width: 80,
       title: "Fee",
       align: "center",
       dataIndex: "price",
@@ -106,6 +112,7 @@ const FacilityScheduling = () => {
       sorter: (a: { price: number }, b: { price: number }) => a.price - b.price,
     },
     {
+      width: 100,
       fixed: "right",
       align: "center",
       title: "Action",

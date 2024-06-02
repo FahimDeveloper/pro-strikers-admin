@@ -38,9 +38,6 @@ const UpdateVoucherModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
-    setModalOpen(false);
-  };
   return (
     <>
       <Button
@@ -56,7 +53,7 @@ const UpdateVoucherModal = ({ record }: any) => {
         title="Update Voucher"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={() => setModalOpen(false)}
         maskClosable={false}
       >
         <VoucherForm

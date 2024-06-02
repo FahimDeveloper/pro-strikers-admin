@@ -40,6 +40,7 @@ const AppointmentScheduling = () => {
       },
     },
     {
+      width: 220,
       title: "Appointment Name",
       align: "center",
       dataIndex: "appointment_name",
@@ -50,6 +51,7 @@ const AppointmentScheduling = () => {
       sorter: (a, b) => a.appointment_name.localeCompare(b.appointment_name),
     },
     {
+      width: 180,
       title: "Appointment Type",
       align: "center",
       dataIndex: "appointment_type",
@@ -62,6 +64,7 @@ const AppointmentScheduling = () => {
       sorter: (a, b) => a.appointment_type.localeCompare(b.appointment_type),
     },
     {
+      width: 150,
       title: "Sport",
       align: "center",
       dataIndex: "sport",
@@ -74,6 +77,7 @@ const AppointmentScheduling = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
+      width: 180,
       title: "Trainer",
       align: "center",
       dataIndex: "trainer",
@@ -86,6 +90,7 @@ const AppointmentScheduling = () => {
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
+      width: 140,
       title: "Duration",
       align: "center",
       dataIndex: "appointment_duration",
@@ -98,6 +103,7 @@ const AppointmentScheduling = () => {
       sorter: (a, b) => a.appointment_duration - b.appointment_duration,
     },
     {
+      width: 80,
       title: "Fee",
       align: "center",
       dataIndex: "price",
@@ -108,6 +114,7 @@ const AppointmentScheduling = () => {
       sorter: (a: { price: number }, b: { price: number }) => a.price - b.price,
     },
     {
+      width: 100,
       fixed: "right",
       align: "center",
       title: "Action",

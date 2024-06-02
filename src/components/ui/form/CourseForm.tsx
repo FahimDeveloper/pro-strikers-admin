@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import weekday from "dayjs/plugin/weekday";
+import localeData from "dayjs/plugin/localeData";
 import {
   Button,
   DatePicker,
@@ -19,6 +21,8 @@ type TProp = {
 };
 
 const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
+  dayjs.extend(weekday);
+  dayjs.extend(localeData);
   useEffect(() => {
     if (record) {
       form.setFieldsValue({

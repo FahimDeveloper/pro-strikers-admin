@@ -235,8 +235,8 @@ const Events = () => {
                 value: "softball",
               },
               {
-                label: "Hockey",
-                value: "hockey",
+                label: "Field Hockey",
+                value: "field hockey",
               },
             ]}
           />

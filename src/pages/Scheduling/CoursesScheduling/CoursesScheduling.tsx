@@ -37,6 +37,7 @@ const CourseScheduling = () => {
       },
     },
     {
+      width: 220,
       title: "Course Name",
       align: "center",
       dataIndex: "course_name",
@@ -47,6 +48,7 @@ const CourseScheduling = () => {
       sorter: (a, b) => a.course_name.localeCompare(b.course_name),
     },
     {
+      width: 150,
       title: "Sport",
       align: "center",
       dataIndex: "sport",
@@ -59,6 +61,7 @@ const CourseScheduling = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
+      width: 180,
       title: "Trainer",
       align: "center",
       dataIndex: "trainer",
@@ -71,6 +74,7 @@ const CourseScheduling = () => {
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
+      width: 140,
       title: "Start Date",
       align: "center",
       dataIndex: "start_date",
@@ -82,6 +86,7 @@ const CourseScheduling = () => {
       ),
     },
     {
+      width: 140,
       title: "End Date",
       align: "center",
       dataIndex: "end_date",
@@ -93,6 +98,7 @@ const CourseScheduling = () => {
       ),
     },
     {
+      width: 80,
       title: "Fee",
       align: "center",
       dataIndex: "price",
@@ -103,6 +109,7 @@ const CourseScheduling = () => {
       sorter: (a: { price: number }, b: { price: number }) => a.price - b.price,
     },
     {
+      width: 100,
       fixed: "right",
       align: "center",
       title: "Action",

@@ -47,9 +47,6 @@ const UpdatePostModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
-    setModalOpen(false);
-  };
   return (
     <>
       <Button
@@ -66,7 +63,7 @@ const UpdatePostModal = ({ record }: any) => {
         title="Update Post"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={() => setModalOpen(false)}
       >
         <PostForm
           fileList={fileList}

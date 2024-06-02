@@ -155,52 +155,54 @@ const Users = () => {
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex justify-between items-end">
-        <div className="space-y-1">
-          <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Clients
-          </h2>
-          <p className="text-[#838383] font-semibold text-lg">
-            {data?.count || 0} clients available
-          </p>
+    <div className="flex flex-col h-full justify-between">
+      <div className="space-y-5">
+        <div className="flex justify-between items-end">
+          <div className="space-y-1">
+            <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
+              Clients
+            </h2>
+            <p className="text-[#838383] font-semibold text-lg">
+              {data?.count || 0} clients available
+            </p>
+          </div>
+          <AddUserModal />
         </div>
-        <AddUserModal />
-      </div>
-      <div className="grid grid-cols-4 gap-2 items-center">
-        <Input.Search
-          placeholder="Search by user name or email"
-          onSearch={onSearch}
-          className="text-sm col-span-3 font-medium text-[#5D5D5D]"
+        <div className="grid grid-cols-4 gap-2 items-center">
+          <Input.Search
+            placeholder="Search by user name or email"
+            onSearch={onSearch}
+            className="text-sm col-span-3 font-medium text-[#5D5D5D]"
+          />
+          <Select
+            className="w-full col-span-1"
+            showSearch
+            defaultValue={"all"}
+            optionFilterProp="children"
+            onChange={(value) => onChange(value)}
+            filterOption={filterOption}
+            options={[
+              {
+                label: "All Client",
+                value: "all",
+              },
+              {
+                label: "Membership",
+                value: "membership",
+              },
+              {
+                label: "Non membership",
+                value: "non membership",
+              },
+            ]}
+          />
+        </div>
+        <DataTable
+          columns={columns}
+          data={data?.results || []}
+          loading={isLoading}
         />
-        <Select
-          className="w-full col-span-1"
-          showSearch
-          defaultValue={"all"}
-          optionFilterProp="children"
-          onChange={(value) => onChange(value)}
-          filterOption={filterOption}
-          options={[
-            {
-              label: "All Client",
-              value: "all",
-            },
-            {
-              label: "Membership",
-              value: "membership",
-            },
-            {
-              label: "Non membership",
-              value: "non membership",
-            },
-          ]}
-        />
       </div>
-      <DataTable
-        columns={columns}
-        data={data?.results || []}
-        loading={isLoading}
-      />
       <DataPagination
         onChange={handlePageChange}
         page={page}

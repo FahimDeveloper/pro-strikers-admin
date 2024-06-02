@@ -48,9 +48,6 @@ const UpdateAdminModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
-    setModalOpen(false);
-  };
   return (
     <>
       <Button
@@ -64,10 +61,10 @@ const UpdateAdminModal = ({ record }: any) => {
         width={800}
         footer={null}
         title="Update member"
+        className="z-0"
         centered
         open={open}
-        onCancel={onCancle}
-        maskClosable={false}
+        onCancel={() => setModalOpen(false)}
       >
         <div className="my-5">
           <AdminForm

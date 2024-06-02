@@ -77,9 +77,6 @@ const UpdateUserModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, form, isError, error]);
-  const onCancle = () => {
-    setModalOpen(false);
-  };
   return (
     <>
       <Button
@@ -95,7 +92,7 @@ const UpdateUserModal = ({ record }: any) => {
         title="Update User"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={() => setModalOpen(false)}
         maskClosable={false}
       >
         <div className="my-5">

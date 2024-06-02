@@ -46,15 +46,15 @@ body {
 }
 
 ::-webkit-scrollbar {
-  @apply w-[4px];
+  width: 4px !important;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-200;
+  background-color: #e5e7eb !important;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300;
+  background-color: #d1d5db !important;
 }
 
 .primary-btn {
@@ -63,4 +63,8 @@ body {
 
 .danger-btn {
   @apply btn bg-error h-12 font-[Manrope] hover:bg-error text-white font-bold text-sm;
+}
+
+.swal2-container {
+  z-index: 9999;
 }

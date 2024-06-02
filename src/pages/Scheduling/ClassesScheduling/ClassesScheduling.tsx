@@ -41,16 +41,20 @@ const ClassesScheduling = () => {
       },
     },
     {
+      width: 220,
       title: "Class Name",
       align: "center",
       dataIndex: "class_name",
       key: "class_name",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.class_name.localeCompare(b.class_name),
     },
     {
+      width: 180,
       title: "Facility",
       align: "center",
       dataIndex: "facility",
@@ -63,6 +67,7 @@ const ClassesScheduling = () => {
       sorter: (a, b) => a.facility.localeCompare(b.facility),
     },
     {
+      width: 150,
       title: "Sport",
       align: "center",
       dataIndex: "sport",
@@ -75,6 +80,7 @@ const ClassesScheduling = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
+      width: 160,
       title: "Level",
       align: "center",
       dataIndex: "level",
@@ -87,6 +93,7 @@ const ClassesScheduling = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
+      width: 180,
       title: "Trainer",
       align: "center",
       dataIndex: "trainer",
@@ -99,6 +106,7 @@ const ClassesScheduling = () => {
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
+      width: 80,
       title: "Fee",
       align: "center",
       dataIndex: "price",
@@ -109,6 +117,7 @@ const ClassesScheduling = () => {
       sorter: (a: { price: number }, b: { price: number }) => a.price - b.price,
     },
     {
+      width: 100,
       fixed: "right",
       align: "center",
       title: "Action",

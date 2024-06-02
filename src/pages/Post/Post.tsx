@@ -157,6 +157,18 @@ const Post = () => {
               value: "all",
             },
             {
+              label: "General",
+              value: "general",
+            },
+            {
+              label: "Tournament",
+              value: "tournament",
+            },
+            {
+              label: "League",
+              value: "league",
+            },
+            {
               label: "Cricket",
               value: "cricket",
             },

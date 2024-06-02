@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import weekday from "dayjs/plugin/weekday";
+import localeData from "dayjs/plugin/localeData";
 import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
 import dayjs from "dayjs";
 import { useEffect } from "react";
@@ -25,6 +27,8 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
       });
     }
   }, [record, form]);
+  dayjs.extend(weekday);
+  dayjs.extend(localeData);
   return (
     <Form
       form={form}

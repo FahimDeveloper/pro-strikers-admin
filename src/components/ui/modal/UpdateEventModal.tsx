@@ -48,9 +48,6 @@ const UpdateEventModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error, setModalOpen]);
-  const onCancle = () => {
-    setModalOpen(false);
-  };
   return (
     <>
       <Button
@@ -67,7 +64,7 @@ const UpdateEventModal = ({ record }: any) => {
         title="Update Event"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={() => setModalOpen(false)}
       >
         <EventForm
           fileList={fileList}

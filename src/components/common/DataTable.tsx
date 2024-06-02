@@ -12,12 +12,12 @@ type TProps = {
 const DataTable = memo(({ columns, data, loading }: TProps) => {
   const tableRef = useRef<any>(null);
   const props: any = {
-    title: undefined,
     bordered: true,
     loading: loading,
-    showHeader: true,
     pagination: false,
+    showHeader: true,
     size: "middle",
+    // scroll: { x: 1440, y: 768 },
   };
   return (
     <>
@@ -27,7 +27,7 @@ const DataTable = memo(({ columns, data, loading }: TProps) => {
         columns={columns}
         rowKey={(record) => record?.id}
         dataSource={data}
-        className="h-[calc(100vh-275px)] overflow-y-auto"
+        scroll={{ x: "calc(700px + 30%)", y: "calc(100vh - 23em)" }}
       />
     </>
   );

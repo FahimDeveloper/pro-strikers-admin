@@ -41,6 +41,7 @@ const MainLayout = () => {
             margin: "5px 0",
             marginRight: "5px",
             padding: 20,
+            paddingBottom: 10,
             overflowY: "auto",
             background: "white",
             borderRadius: borderRadiusLG,
