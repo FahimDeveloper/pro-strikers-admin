@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal } from "antd";
+import { Button, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import AdminForm from "../form/AdminForm";
@@ -9,20 +9,21 @@ import { CiEdit } from "react-icons/ci";
 
 const UpdateAdminModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateAdminMutation();
   const onFinish = (values: any) => {
-    if (values.password !== values.confirm_password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Passoword does not match",
-        confirmButtonColor: "#0ABAC3",
-      });
+    const formData = new FormData();
+    if (values.image[0].originFileObj) {
+      formData.append("image", values.image[0].originFileObj);
+      delete values.image;
+      formData.append("data", JSON.stringify(values));
+      update({ id: record?._id, body: formData });
+    } else {
+      delete values.image;
+      update({ id: record?._id, body: values });
     }
-    delete values.confirm_password;
-    update({ id: record?._id, body: values });
   };
   useEffect(() => {
     if (isSuccess) {
@@ -36,6 +37,7 @@ const UpdateAdminModal = ({ record }: any) => {
       });
       setModalOpen(false);
       form.resetFields();
+      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -46,6 +48,9 @@ const UpdateAdminModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+  };
   return (
     <>
       <Button
@@ -61,14 +66,17 @@ const UpdateAdminModal = ({ record }: any) => {
         title="Update member"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <div className="my-5">
           <AdminForm
             form={form}
-            record={record}
             onFinish={onFinish}
+            record={record}
             loading={isLoading}
+            fileList={fileList}
+            setFileList={setFileList}
           />
         </div>
       </Modal>

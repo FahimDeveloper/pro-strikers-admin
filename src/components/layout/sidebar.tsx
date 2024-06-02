@@ -4,15 +4,18 @@ import { superAdminPaths } from "../../router/super-admin.routes";
 import { navigationGenerator } from "../../utils/navigationGenerator";
 import { Menu } from "antd";
 import logo from "../../assets/icon/logo.svg";
+import { useAppSelector } from "../../hooks/useAppHooks";
 
 const userRole = {
   SUPER_ADMIN: "super-admin",
   ADMIN: "admin",
+  TRAINER: "trainer",
 };
 
 const Sidebar = ({ locationKey }: { locationKey: string }) => {
+  const { user } = useAppSelector((state) => state.auth);
   let sidebarItems;
-  switch ("admin") {
+  switch (user?.role) {
     case userRole.SUPER_ADMIN:
       sidebarItems = navigationGenerator(superAdminPaths, userRole.SUPER_ADMIN);
       break;

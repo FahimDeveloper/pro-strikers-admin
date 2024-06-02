@@ -1,31 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
+import dayjs from "dayjs";
+import { useEffect } from "react";
+import { IEvent } from "../../../types/event.types";
 
 type TProp = {
-  record?: any;
+  record?: IEvent;
   onFinish: any;
   form: any;
   loading: boolean;
 };
 const EventForm = ({ record, form, onFinish, loading }: TProp) => {
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        event_name: record?.event_name,
+        event_type: record?.event_type,
+        sport: record?.sport,
+        start_date:
+          record?.start_date && dayjs(record?.start_date, "DD/MM/YYYY"),
+        end_date: record?.end_date && dayjs(record?.end_date, "DD/MM/YYYY"),
+        location: record?.location,
+        registration_start:
+          record?.registration_start &&
+          dayjs(record?.registration_start, "DD/MM/YYYY"),
+        registration_end:
+          record?.registration_end &&
+          dayjs(record?.registration_end, "DD/MM/YYYY"),
+        allowed_registrations: record?.allowed_registrations,
+        description: record?.description,
+        price: record?.price,
+      });
+    }
+  }, [record, form]);
   return (
     <Form
       form={form}
       layout="vertical"
       onFinish={onFinish}
       className="space-y-5 mt-5"
-      initialValues={{
-        evnet_name: record?.evnet_name,
-        event_type: record?.event_type,
-        sport: record?.sport,
-        start_date: record?.start_date,
-        end_date: record?.end_date,
-        location: record?.location,
-        registration_open: record?.registration_open,
-        registration_close: record?.registration_close,
-        allowed_registrations: record?.allowed_registrations,
-        description: record?.description,
-      }}
     >
       <div className="grid grid-cols-3 gap-4">
         <Form.Item
@@ -91,7 +104,7 @@ const EventForm = ({ record, form, onFinish, loading }: TProp) => {
         <Form.Item
           name="start_date"
           className="m-0"
-          label="Validity Start"
+          label="Start Date"
           rules={[{ required: true, message: "Please select date" }]}
         >
           <DatePicker className="w-full" format={"DD/MM/YYYY"} />
@@ -99,7 +112,7 @@ const EventForm = ({ record, form, onFinish, loading }: TProp) => {
         <Form.Item
           name="end_date"
           className="m-0"
-          label="Validity End"
+          label="End Date"
           rules={[{ required: true, message: "Please select date" }]}
         >
           <DatePicker className="w-full" format={"DD/MM/YYYY"} />
@@ -113,7 +126,7 @@ const EventForm = ({ record, form, onFinish, loading }: TProp) => {
           <Input placeholder="Enter location" />
         </Form.Item>
         <Form.Item
-          name="registration_open"
+          name="registration_start"
           className="m-0"
           label="Registration Open"
           rules={[{ required: true, message: "Please select date" }]}
@@ -121,7 +134,7 @@ const EventForm = ({ record, form, onFinish, loading }: TProp) => {
           <DatePicker className="w-full" format={"DD/MM/YYYY"} />
         </Form.Item>
         <Form.Item
-          name="registration_close"
+          name="registration_end"
           className="m-0"
           label="Registration Close"
           rules={[{ required: true, message: "Please select date" }]}

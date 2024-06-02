@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const AddAppointmentModal = () => {
   const [form] = Form.useForm();
+  const [current, setCurrent] = useState(0);
   const [open, setModalOpen] = useState(false);
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateAppointmentMutation();
@@ -22,6 +23,7 @@ const AddAppointmentModal = () => {
       });
       form.resetFields();
       setModalOpen(false);
+      setCurrent(0);
     }
     if (isError) {
       Swal.fire({
@@ -32,6 +34,11 @@ const AddAppointmentModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+    setCurrent(0);
+    form.resetFields();
+  };
   const onSubmit = (values: any) => {
     create(values);
   };
@@ -46,9 +53,16 @@ const AddAppointmentModal = () => {
         title="Create New Appointment"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
-        <AppointmentSteps form={form} onSubmit={onSubmit} loading={isLoading} />
+        <AppointmentSteps
+          current={current}
+          setCurrent={setCurrent}
+          form={form}
+          onSubmit={onSubmit}
+          loading={isLoading}
+        />
       </Modal>
     </>
   );

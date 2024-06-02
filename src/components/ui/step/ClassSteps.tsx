@@ -9,10 +9,18 @@ type TProp = {
   form: any;
   onSubmit: any;
   loading: boolean;
+  current: any;
+  setCurrent: any;
 };
 
-const ClassSteps = ({ record, form, onSubmit, loading }: TProp) => {
-  const [current, setCurrent] = useState(0);
+const ClassSteps = ({
+  record,
+  form,
+  onSubmit,
+  loading,
+  current,
+  setCurrent,
+}: TProp) => {
   const [formData, setFormData] = useState<any>({});
   const steps = [
     {
@@ -26,30 +34,29 @@ const ClassSteps = ({ record, form, onSubmit, loading }: TProp) => {
   ];
   const next = () => {
     form.validateFields().then((values: any) => {
-      setCurrent(current + 1);
       setFormData({ ...formData, ...values });
+      setCurrent(current + 1);
     });
   };
 
   const onFinish = () => {
-    form
-      .validateFields()
-      .then((values: any) => {
-        setFormData({ ...formData, ...values });
-      })
-      .then(() => {
-        onSubmit(formData);
-      });
+    form.validateFields().then((values: any) => {
+      onSubmit({ ...formData, ...values });
+    });
   };
 
   const prev = () => {
     setCurrent(current - 1);
   };
   const onChange = (value: number) => {
-    form.validateFields().then((values: any) => {
-      setFormData({ ...formData, ...values });
+    if (value < current) {
       setCurrent(value);
-    });
+    } else {
+      form.validateFields().then((values: any) => {
+        setFormData({ ...formData, ...values });
+        setCurrent(value);
+      });
+    }
   };
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
   return (
@@ -73,7 +80,9 @@ const ClassSteps = ({ record, form, onSubmit, loading }: TProp) => {
             loading={loading}
             onClick={() => onFinish()}
           >
-            Create Class
+            {record && Object.keys(record).length > 1
+              ? "Update Class"
+              : "Create Class"}
           </Button>
         )}
         {current < steps.length - 1 && (

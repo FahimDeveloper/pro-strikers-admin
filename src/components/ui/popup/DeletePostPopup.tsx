@@ -36,8 +36,8 @@ const DeletePostPopup = ({ id }: { id: string }) => {
   return (
     <Popconfirm
       open={open}
-      title="Delete the post"
-      description="Are you sure to delete this post?"
+      title="Are you sure?"
+      description="You want to delete this post?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

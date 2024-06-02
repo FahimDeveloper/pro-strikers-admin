@@ -36,8 +36,8 @@ const DeleteVoucherPopup = ({ id }: { id: string }) => {
   return (
     <Popconfirm
       open={open}
-      title="Delete the voucher"
-      description="Are you sure to delete this voucher?"
+      title="Are you sure?"
+      description="You want to delete this voucher?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

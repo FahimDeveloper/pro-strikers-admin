@@ -2,7 +2,8 @@
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
 
-const Coaches = LazyLoad(lazy(() => import("../pages/Coaches/Coaches")));
+const Store = LazyLoad(lazy(() => import("../pages/Store/Store")));
+const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
 const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
 const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
@@ -128,19 +129,14 @@ export const adminPaths = [
     element: <Membership />,
   },
   {
-    name: "Coaches",
-    path: "coaches",
-    element: <Coaches />,
-  },
-  {
     name: "Store",
     path: "store",
-    element: <Coaches />,
+    element: <Store />,
   },
   {
     name: "Orders",
     path: "orders",
-    element: <Coaches />,
+    element: <Orders />,
   },
   {
     name: "Voucher",

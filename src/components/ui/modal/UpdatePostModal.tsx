@@ -37,6 +37,9 @@ const UpdatePostModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+  };
   return (
     <>
       <Button
@@ -48,11 +51,12 @@ const UpdatePostModal = ({ record }: any) => {
       </Button>
       <Modal
         width={1000}
+        maskClosable={false}
         footer={null}
         title="Update Post"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
       >
         <PostForm
           record={record}

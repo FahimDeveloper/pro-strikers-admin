@@ -13,6 +13,7 @@ const UpdateVoucherModal = ({ record }: any) => {
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateVoucherMutation();
   const onFinish = (values: any) => {
+    values.voucher_code = values.voucher_code.toUpperCase();
     update({ id: record?._id, body: values });
   };
   useEffect(() => {
@@ -37,6 +38,9 @@ const UpdateVoucherModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+  };
   return (
     <>
       <Button
@@ -52,7 +56,8 @@ const UpdateVoucherModal = ({ record }: any) => {
         title="Update Voucher"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <VoucherForm
           record={record}

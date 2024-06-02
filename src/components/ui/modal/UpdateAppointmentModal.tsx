@@ -8,6 +8,7 @@ import { CiEdit } from "react-icons/ci";
 
 const UpdateAppointmentModal = ({ record }: any) => {
   const [form] = Form.useForm();
+  const [current, setCurrent] = useState(0);
   const [open, setModalOpen] = useState(false);
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateAppointmentMutation();
@@ -23,6 +24,7 @@ const UpdateAppointmentModal = ({ record }: any) => {
       });
       form.resetFields();
       setModalOpen(false);
+      setCurrent(0);
     }
     if (isError) {
       Swal.fire({
@@ -36,6 +38,10 @@ const UpdateAppointmentModal = ({ record }: any) => {
   const onSubmit = (values: any) => {
     update({ id: record?._id, body: values });
   };
+  const onCancle = () => {
+    setModalOpen(false);
+    setCurrent(0);
+  };
   return (
     <>
       <Button
@@ -47,13 +53,16 @@ const UpdateAppointmentModal = ({ record }: any) => {
       </Button>
       <Modal
         width={800}
+        maskClosable={false}
         footer={null}
         title="Update Appointment"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
       >
         <AppointmentSteps
+          current={current}
+          setCurrent={setCurrent}
           record={record}
           form={form}
           onSubmit={onSubmit}

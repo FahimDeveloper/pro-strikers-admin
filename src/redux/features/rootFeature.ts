@@ -9,6 +9,7 @@ import {
   eventApiSlice,
   facilityScheduleApiSlice,
   postApiSlice,
+  userApiSlice,
   voucherApiSlice,
 } from "../api/httpsSlice";
 import storage from "redux-persist/lib/storage";
@@ -32,6 +33,7 @@ export const rootReducers = combineReducers({
   [eventApiSlice.reducerPath]: eventApiSlice.reducer,
   [postApiSlice.reducerPath]: postApiSlice.reducer,
   [voucherApiSlice.reducerPath]: voucherApiSlice.reducer,
+  [userApiSlice.reducerPath]: userApiSlice.reducer,
   auth: persistedAuthReducer,
 });
 
@@ -45,4 +47,5 @@ export const rootMiddlewares = [
   eventApiSlice.middleware,
   postApiSlice.middleware,
   voucherApiSlice.middleware,
+  userApiSlice.middleware,
 ];

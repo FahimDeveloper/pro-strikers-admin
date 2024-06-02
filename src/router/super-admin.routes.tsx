@@ -2,7 +2,8 @@
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
 
-const Coaches = LazyLoad(lazy(() => import("../pages/Coaches/Coaches")));
+const Store = LazyLoad(lazy(() => import("../pages/Store/Store")));
+const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
 const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
 const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
@@ -66,6 +67,12 @@ const FacilityReports = LazyLoad(
 );
 const Membership = LazyLoad(
   lazy(() => import("../pages/Membership/Membership"))
+);
+const MembershipReports = LazyLoad(
+  lazy(() => import("../pages/Reports/MembershipReports/MembershipReports"))
+);
+const StoreReports = LazyLoad(
+  lazy(() => import("../pages/Reports/StoreReports/StoreReports"))
 );
 
 export const superAdminPaths = [
@@ -140,19 +147,14 @@ export const superAdminPaths = [
     element: <Membership />,
   },
   {
-    name: "Coaches",
-    path: "Coaches",
-    element: <Coaches />,
-  },
-  {
     name: "Store",
     path: "store",
-    element: <Coaches />,
+    element: <Store />,
   },
   {
     name: "Orders",
     path: "orders",
-    element: <Coaches />,
+    element: <Orders />,
   },
   {
     name: "Voucher",
@@ -186,6 +188,16 @@ export const superAdminPaths = [
         name: "Courses",
         path: "reports/courses",
         element: <CoursesReports />,
+      },
+      {
+        name: "Memberships",
+        path: "reports/memberships",
+        element: <MembershipReports />,
+      },
+      {
+        name: "Store",
+        path: "reports/store",
+        element: <StoreReports />,
       },
     ],
   },

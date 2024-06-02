@@ -1,23 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Input, InputNumber, Select } from "antd";
+import { useEffect } from "react";
 
 const FacilityForm = ({ record, form }: any) => {
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        facility_name: record?.facility_name,
+        facility: record?.facility,
+        sport: record?.sport,
+        lane: record?.lane,
+        trainer: record?.trainer,
+        facility_duration: record?.facility_duration,
+        description: record?.description,
+        price: record?.price,
+      });
+    }
+  }, [record, form]);
   return (
     <>
-      <Form
-        initialValues={{
-          facility_name: record?.facility_name,
-          sport: record?.sport,
-          lane: record?.lane,
-          trainer: record?.trainer,
-          duration: record?.duration,
-          description: record?.description,
-          price: record?.price,
-        }}
-        form={form}
-        layout="vertical"
-        className="space-y-4"
-      >
+      <Form form={form} layout="vertical" className="space-y-4">
         <div className="flex gap-x-5">
           <Form.Item
             name="facility_name"
@@ -53,8 +55,8 @@ const FacilityForm = ({ record, form }: any) => {
                   value: "softball",
                 },
                 {
-                  label: "Hockey",
-                  value: "hockey",
+                  label: "Field Hockey",
+                  value: "field hockey",
                 },
               ]}
             />
@@ -122,7 +124,7 @@ const FacilityForm = ({ record, form }: any) => {
             />
           </Form.Item>
           <Form.Item
-            name="duration"
+            name="facility_duration"
             className="w-full m-0"
             label="Facility Duratoin"
             rules={[{ required: true, message: "Please select Duration" }]}
@@ -132,11 +134,11 @@ const FacilityForm = ({ record, form }: any) => {
               options={[
                 {
                   label: "30 minutes",
-                  value: "30",
+                  value: 30,
                 },
                 {
                   label: "60 minutes",
-                  value: "60",
+                  value: 60,
                 },
               ]}
             />

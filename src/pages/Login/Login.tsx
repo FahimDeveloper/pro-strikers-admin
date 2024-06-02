@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 import logo from "../../assets/icon/login-logo.svg";
 import { AiOutlineLock, AiOutlineUser } from "react-icons/ai";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
@@ -74,6 +74,9 @@ const Login = () => {
                 prefix={<AiOutlineLock className="size-5" />}
                 placeholder="Password"
               />
+            </Form.Item>
+            <Form.Item name="remember" valuePropName="checked">
+              <Checkbox>Remember me</Checkbox>
             </Form.Item>
             <Form.Item>
               <Button

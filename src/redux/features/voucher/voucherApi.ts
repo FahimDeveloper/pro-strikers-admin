@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IncomingQueryType } from "../../../types/index.types";
+import { IVoucher, IVoucherParams } from "../../../types/voucher.types";
 import { voucherApiSlice } from "../../api/httpsSlice";
 
 const voucherApi = voucherApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    vouchers: builder.query<any, any>({
-      query: () => ({
+    vouchers: builder.query<IncomingQueryType<IVoucher>, IVoucherParams>({
+      query: (params) => ({
         url: "/vouchers",
         method: "GET",
+        params,
       }),
       providesTags: ["vouchers"],
     }),

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
+import dayjs from "dayjs";
+import { useEffect } from "react";
 
 type TProp = {
   record?: any;
@@ -9,21 +11,26 @@ type TProp = {
 };
 
 const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        voucher_type: record?.voucher_type,
+        discount_type: record?.discount_type,
+        discount_value: record?.discount_value,
+        start_date:
+          record?.start_date && dayjs(record?.start_date, "DD/MM/YYYY"),
+        end_date: record?.end_date && dayjs(record?.end_date, "DD/MM/YYYY"),
+        voucher_code: record?.voucher_code,
+        description: record?.description,
+      });
+    }
+  }, [record, form]);
   return (
     <Form
       form={form}
       layout="vertical"
       onFinish={onFinish}
       className="space-y-5 mt-5"
-      initialValues={{
-        voucher_type: record?.voucher_type,
-        discount_type: record?.discount_type,
-        discount: record?.discount,
-        start_date: record?.start_date,
-        end_date: record?.end_date,
-        voucher: record?.voucher,
-        description: record?.description,
-      }}
     >
       <div className="grid grid-cols-3 gap-4">
         <Form.Item
@@ -36,6 +43,10 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
             placeholder="Select type"
             options={[
               {
+                label: "General",
+                value: "general",
+              },
+              {
                 label: "Membership",
                 value: "membership",
               },
@@ -46,6 +57,14 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
               {
                 label: "Facility",
                 value: "facility",
+              },
+              {
+                label: "Class",
+                value: "class",
+              },
+              {
+                label: "Course",
+                value: "course",
               },
             ]}
           />
@@ -64,14 +83,14 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
                 value: "percentage",
               },
               {
-                label: "Money",
-                value: "money",
+                label: "Ammount",
+                value: "ammount",
               },
             ]}
           />
         </Form.Item>
         <Form.Item
-          name="discount"
+          name="discount_value"
           className="m-0"
           label="Discount"
           rules={[{ required: true }]}
@@ -95,7 +114,7 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
           <DatePicker className="w-full" format={"DD/MM/YYYY"} />
         </Form.Item>
         <Form.Item
-          name="voucher"
+          name="voucher_code"
           className="m-0"
           label="Voucher Code"
           rules={[{ required: true }]}
@@ -113,7 +132,9 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
       </div>
       <Form.Item className="flex justify-end m-0">
         <Button htmlType="submit" loading={loading} className="primary-btn">
-          Create Voucher
+          {record && Object.keys(record).length > 0
+            ? "Update Voucher"
+            : "Create Voucher"}
         </Button>
       </Form.Item>
     </Form>

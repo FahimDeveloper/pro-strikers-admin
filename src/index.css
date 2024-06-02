@@ -50,11 +50,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-secondary;
+  @apply bg-gray-200;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary;
+  @apply bg-gray-300;
 }
 
 .primary-btn {

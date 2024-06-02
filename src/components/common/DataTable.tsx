@@ -27,6 +27,7 @@ const DataTable = memo(({ columns, data, loading }: TProps) => {
         columns={columns}
         rowKey={(record) => record?.id}
         dataSource={data}
+        className="h-[calc(100vh-275px)] overflow-y-auto"
       />
     </>
   );

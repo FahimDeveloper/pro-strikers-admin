@@ -1,15 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Select } from "antd";
+import { Dropdown, Image, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../components/common/DataTable";
 import DataPagination from "../../components/common/DataPagination";
+import { useMembershipUsersQuery } from "../../redux/features/user/userApi";
+import { IUser } from "../../types/user.type";
+import moment from "moment";
+import UpdateUserModal from "../../components/ui/modal/UpdateUserModal";
+import { BsThreeDots } from "react-icons/bs";
 
 const Membership = () => {
-  const [membership, setMembership] = useState<string | null>(null);
-  const [active, setActive] = useState<boolean | null>(null);
+  const [membership, setMembership] = useState<string | undefined>(undefined);
+  const [activity, setActivity] = useState<boolean | undefined>(undefined);
+  const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
+  const { data, isLoading } = useMembershipUsersQuery({
+    search,
+    package_name: membership,
+    activity,
+    limit,
+    page,
+  });
   const plansData = [
     {
       _id: "123",
@@ -27,42 +40,7 @@ const Membership = () => {
       member: 1546,
     },
   ];
-  const data = {
-    count: 90,
-    results: [
-      {
-        _id: "123",
-        full_name: "Hasan Basan",
-        email: "info@gmail.com",
-        phone: "01916160514",
-        active: true,
-        membership: "Individual Pro",
-        plan: "yearly",
-        expiry_date: "02-05-2026",
-      },
-      {
-        _id: "124",
-        full_name: "Fahim",
-        email: "info@gmail.com",
-        phone: "01916160514",
-        active: false,
-        membership: "Individual Pro",
-        plan: "monthly",
-        expiry_date: "02-05-2023",
-      },
-      {
-        _id: "125",
-        full_name: "Fuyad",
-        email: "info@gmail.com",
-        phone: "01916160514",
-        active: true,
-        membership: "Individual Pro",
-        plan: "yearly",
-        expiry_date: "02-05--2025",
-      },
-    ],
-  };
-  const columns: ColumnsType<any> = [
+  const columns: ColumnsType<IUser> = [
     {
       width: 70,
       title: "S/N",
@@ -76,10 +54,14 @@ const Membership = () => {
       title: "Client Name",
       dataIndex: "full_name",
       key: "full_name",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      render: (_, record) => (
+        <div className="flex items-center ms-10 gap-5">
+          <Image src={record?.image} style={{ width: 50 }} />
+          <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+            {record?.first_name} {record?.last_name}
+          </p>
+        </div>
       ),
-      sorter: (a, b) => a.full_name.localeCompare(b.full_name),
     },
     {
       title: "email",
@@ -91,10 +73,12 @@ const Membership = () => {
     },
     {
       title: "Membership",
-      dataIndex: "membership",
-      key: "membership",
+      dataIndex: "package_name",
+      key: "package_name",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
     },
     {
@@ -102,7 +86,9 @@ const Membership = () => {
       dataIndex: "plan",
       key: "plan",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a: { plan: string }, b: { plan: string }) =>
         a.plan.localeCompare(b.plan),
@@ -112,16 +98,24 @@ const Membership = () => {
       dataIndex: "expiry_date",
       key: "expiry_date",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <>
+          {text ? (
+            <p className="font-medium text-sm leading-5 text-[#151515]">
+              {moment(text).format("DD/MM/YYYY")}
+            </p>
+          ) : (
+            <p className="font-medium text-sm leading-5 text-[#151515]">
+              No Expiry date
+            </p>
+          )}
+        </>
       ),
-      sorter: (a: { expiry_date: string }, b: { expiry_date: string }) =>
-        a.expiry_date.localeCompare(b.expiry_date),
     },
     {
       title: "Status",
-      dataIndex: "active",
+      dataIndex: "activity",
       align: "center",
-      key: "active",
+      key: "activity",
       render: (text) =>
         text ? (
           <div className="w-full rounded-sm text-[#0F3808] bg-[#CFFFC8] py-1">
@@ -137,11 +131,22 @@ const Membership = () => {
     },
     {
       fixed: "right",
+      align: "center",
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => {
-        return <div></div>;
+      render: (_, record) => {
+        const items = [
+          {
+            key: "1",
+            label: <UpdateUserModal record={record} />,
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }}>
+            <BsThreeDots className="size-5 cursor-pointer" />
+          </Dropdown>
+        );
       },
     },
   ];
@@ -157,15 +162,27 @@ const Membership = () => {
 
   const onChange = (value: string, filter: string) => {
     if (filter === "membership") {
-      setMembership(value);
+      if (value === "all") {
+        setMembership(undefined);
+      } else {
+        setMembership(value);
+      }
     } else if (filter === "activeStatus") {
       if (value === "active") {
-        setActive(true);
+        setActivity(true);
       } else if (value == "in active") {
-        setActive(false);
-      } else {
-        setActive(null);
+        setActivity(false);
+      } else if (value === "all") {
+        setActivity(undefined);
       }
+    }
+  };
+
+  const onSearch = (value: string) => {
+    if (value.length < 1) {
+      setSearch(undefined);
+    } else {
+      setSearch(value);
     }
   };
 
@@ -202,11 +219,12 @@ const Membership = () => {
             Membership
           </h3>
           <p className="text-[#838383] font-semibold text-lg">
-            {data?.count || 0} membership available
+            {data?.count || 0} membership clients available
           </p>
         </div>
         <div className="grid grid-cols-9 gap-2 items-center">
           <Input.Search
+            onSearch={onSearch}
             placeholder="Search by name or email"
             className="text-sm col-span-6 font-medium text-[#5D5D5D]"
           />
@@ -230,6 +248,10 @@ const Membership = () => {
                 {
                   label: "Individual Pro Unlimited",
                   value: "individual pro unlimited",
+                },
+                {
+                  label: "Teams & Organizations",
+                  value: "teams & organizations",
                 },
               ]}
             />
@@ -260,7 +282,7 @@ const Membership = () => {
         <DataTable
           columns={columns}
           data={data?.results || []}
-          loading={false}
+          loading={isLoading}
         />
         <DataPagination
           onChange={handlePageChange}

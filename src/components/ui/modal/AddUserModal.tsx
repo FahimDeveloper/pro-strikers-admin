@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Modal } from "antd";
+import { Form, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
 import UserForm from "../form/UserForm";
 import Swal from "sweetalert2";
@@ -7,10 +7,12 @@ import { useCreateUserMutation } from "../../../redux/features/user/userApi";
 
 const AddUserModal = () => {
   const [open, setModalOpen] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = Form.useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateUserMutation();
   const onFinish = (values: any) => {
+    const formData = new FormData();
     if (values.password !== values.confirm_password) {
       Swal.fire({
         icon: "error",
@@ -18,9 +20,27 @@ const AddUserModal = () => {
         text: "Passoword does not match",
         confirmButtonColor: "#0ABAC3",
       });
+    } else {
+      if (
+        values.activity &&
+        values.package_name == "no package" &&
+        values.plan == "no plan"
+      ) {
+        values.membership = true;
+        const issueDate = new Date();
+        values.issue_date = issueDate.toISOString();
+        const expiryDate = new Date(issueDate);
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        values.expiry_date = expiryDate.toISOString();
+      } else {
+        values.membership = false;
+      }
+      formData.append("image", values.image[0].originFileObj);
+      delete values.confirm_password;
+      delete values.image;
+      formData.append("data", JSON.stringify(values));
+      create(formData);
     }
-    delete values.confirm_password;
-    create(values);
   };
   useEffect(() => {
     if (isSuccess) {
@@ -34,6 +54,7 @@ const AddUserModal = () => {
       });
       form.resetFields();
       setModalOpen(false);
+      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -44,6 +65,10 @@ const AddUserModal = () => {
       });
     }
   }, [data, isSuccess, form, isError, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+    form.resetFields();
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="primary-btn">
@@ -55,10 +80,17 @@ const AddUserModal = () => {
         title="Create New User"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <div className="my-5">
-          <UserForm form={form} onFinish={onFinish} loading={isLoading} />
+          <UserForm
+            fileList={fileList}
+            setFileList={setFileList}
+            form={form}
+            onFinish={onFinish}
+            loading={isLoading}
+          />
         </div>
       </Modal>
     </>

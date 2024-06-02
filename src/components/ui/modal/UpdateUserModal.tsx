@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Modal } from "antd";
+import { Button, Form, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
 import UserForm from "../form/UserForm";
 import Swal from "sweetalert2";
@@ -8,20 +8,51 @@ import { CiEdit } from "react-icons/ci";
 
 const UpdateUserModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = Form.useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation();
   const onFinish = (values: any) => {
-    if (values.password !== values.confirm_password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Passoword does not match",
-        confirmButtonColor: "#0ABAC3",
-      });
+    if (
+      values.activity &&
+      values.package_name !== "no package" &&
+      values.plan !== "no plan"
+    ) {
+      values.membership = true;
+      if (!record?.issue_date && !record?.expiry_date) {
+        const issueDate = new Date();
+        values.issue_date = issueDate.toISOString();
+        const expiryDate = new Date(issueDate);
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        values.expiry_date = expiryDate.toISOString();
+      } else if (record?.issue_date && record?.expiry_date) {
+        const newDate = new Date();
+        const expiryDate = new Date(record?.expiry_date);
+        if (newDate > expiryDate) {
+          const issueDate = new Date();
+          values.issue_date = issueDate.toISOString();
+          const expiryDate = new Date(issueDate);
+          expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+          values.expiry_date = expiryDate.toISOString();
+        }
+      }
+    } else if (
+      !values.activity &&
+      values.package_name == "no package" &&
+      values.plan == "no plan"
+    ) {
+      values.membership = false;
     }
-    delete values.confirm_password;
-    update({ id: record?._id, body: values });
+    const formData = new FormData();
+    if (values.image[0].originFileObj) {
+      formData.append("image", values.image[0].originFileObj);
+      delete values.image;
+      formData.append("data", JSON.stringify(values));
+      update({ id: record?._id, body: formData });
+    } else {
+      delete values.image;
+      update({ id: record?._id, body: values });
+    }
   };
   useEffect(() => {
     if (isSuccess) {
@@ -35,6 +66,7 @@ const UpdateUserModal = ({ record }: any) => {
       });
       form.resetFields();
       setModalOpen(false);
+      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -45,6 +77,9 @@ const UpdateUserModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, form, isError, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+  };
   return (
     <>
       <Button
@@ -60,10 +95,13 @@ const UpdateUserModal = ({ record }: any) => {
         title="Update User"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <div className="my-5">
           <UserForm
+            fileList={fileList}
+            setFileList={setFileList}
             record={record}
             form={form}
             onFinish={onFinish}

@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Input, InputNumber, Select } from "antd";
+import { useEffect } from "react";
 
 const AppointmentForm = ({ record, form }: any) => {
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        appointment_name: record?.appointment_name,
+        appointment_type: record?.appointment_type,
+        appointment_duration: record?.appointment_duration,
+        sport: record?.sport,
+        trainer: record?.trainer,
+        description: record?.description,
+        price: record?.price,
+      });
+    }
+  }, [record, form]);
   return (
     <>
-      <Form
-        initialValues={{
-          appointment_name: record?.appointment_name,
-          appointment_type: record?.appointment_type,
-          duration: record?.duration,
-          sport: record?.sport,
-          trainer: record?.trainer,
-          description: record?.description,
-          price: record?.price,
-        }}
-        form={form}
-        layout="vertical"
-        className="space-y-4"
-      >
+      <Form form={form} layout="vertical" className="space-y-4">
         <div className="flex gap-x-5">
           <Form.Item
             name="appointment_name"
@@ -62,11 +63,11 @@ const AppointmentForm = ({ record, form }: any) => {
               options={[
                 {
                   label: "30 minutes",
-                  value: "30",
+                  value: 30,
                 },
                 {
                   label: "60 minutes",
-                  value: "60",
+                  value: 60,
                 },
               ]}
             />
@@ -97,8 +98,8 @@ const AppointmentForm = ({ record, form }: any) => {
                   value: "softball",
                 },
                 {
-                  label: "Hockey",
-                  value: "hockey",
+                  label: "Field Hockey",
+                  value: "field hockey",
                 },
               ]}
             />

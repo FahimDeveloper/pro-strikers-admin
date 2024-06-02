@@ -10,6 +10,7 @@ import { ICourseSchedule } from "../../../types/couseSchedule.types";
 import { BsThreeDots } from "react-icons/bs";
 import UpdateCourseModal from "../../../components/ui/modal/UpdateCourseModal";
 import DeleteCoursePopup from "../../../components/ui/popup/DeleteCoursePopup";
+import moment from "moment";
 
 const CourseScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -51,7 +52,9 @@ const CourseScheduling = () => {
       dataIndex: "sport",
       key: "sport",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
@@ -61,7 +64,9 @@ const CourseScheduling = () => {
       dataIndex: "trainer",
       key: "trainer",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
@@ -71,7 +76,9 @@ const CourseScheduling = () => {
       dataIndex: "start_date",
       key: "start_date",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
       ),
     },
     {
@@ -80,7 +87,9 @@ const CourseScheduling = () => {
       dataIndex: "end_date",
       key: "end_date",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
       ),
     },
     {
@@ -112,7 +121,7 @@ const CourseScheduling = () => {
         ];
         return (
           <Dropdown menu={{ items }}>
-            <BsThreeDots />
+            <BsThreeDots className="size-5 cursor-pointer" />
           </Dropdown>
         );
       },
@@ -153,92 +162,94 @@ const CourseScheduling = () => {
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex justify-between items-end">
-        <div className="space-y-1">
-          <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Courses
-          </h2>
-          <p className="text-[#838383] font-semibold text-lg">
-            {data?.count || 0} courses available
-          </p>
+    <div className="flex flex-col h-full justify-between">
+      <div className="space-y-5">
+        <div className="flex justify-between items-end">
+          <div className="space-y-1">
+            <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
+              Courses
+            </h2>
+            <p className="text-[#838383] font-semibold text-lg">
+              {data?.count || 0} courses available
+            </p>
+          </div>
+          <AddCourseModal />
         </div>
-        <AddCourseModal />
-      </div>
-      <div className="flex gap-2 items-center">
-        <Input.Search
-          onSearch={onSearch}
-          placeholder="Search Course"
-          className="text-sm font-medium text-[#5D5D5D]"
-        />
         <div className="flex gap-2 items-center">
-          <Select
-            className="w-full"
-            showSearch
-            defaultValue={"all"}
-            optionFilterProp="children"
-            onChange={(value) => onChange(value, "sport")}
-            filterOption={filterOption}
-            options={[
-              {
-                label: "All Sport",
-                value: "all",
-              },
-              {
-                label: "Cricket",
-                value: "cricket",
-              },
-              {
-                label: "Soccer",
-                value: "soccer",
-              },
-              {
-                label: "Baseball",
-                value: "baseball",
-              },
-              {
-                label: "Softball",
-                value: "softball",
-              },
-              {
-                label: "Hockey",
-                value: "hockey",
-              },
-            ]}
+          <Input.Search
+            onSearch={onSearch}
+            placeholder="Search Course"
+            className="text-sm font-medium text-[#5D5D5D]"
           />
-          <Select
-            className="w-full"
-            showSearch
-            defaultValue={"all"}
-            optionFilterProp="children"
-            onChange={(value) => onChange(value, "trainer")}
-            filterOption={filterOption}
-            options={[
-              {
-                label: "All Trainer",
-                value: "all",
-              },
-              {
-                label: "Kavindu",
-                value: "kavindu",
-              },
-              {
-                label: "Fahim",
-                value: "fahim",
-              },
-              {
-                label: "Hasan",
-                value: "hasan",
-              },
-            ]}
-          />
+          <div className="flex gap-2 items-center">
+            <Select
+              className="w-full"
+              showSearch
+              defaultValue={"all"}
+              optionFilterProp="children"
+              onChange={(value) => onChange(value, "sport")}
+              filterOption={filterOption}
+              options={[
+                {
+                  label: "All Sport",
+                  value: "all",
+                },
+                {
+                  label: "Cricket",
+                  value: "cricket",
+                },
+                {
+                  label: "Soccer",
+                  value: "soccer",
+                },
+                {
+                  label: "Baseball",
+                  value: "baseball",
+                },
+                {
+                  label: "Softball",
+                  value: "softball",
+                },
+                {
+                  label: "Field Hockey",
+                  value: "field hockey",
+                },
+              ]}
+            />
+            <Select
+              className="w-full"
+              showSearch
+              defaultValue={"all"}
+              optionFilterProp="children"
+              onChange={(value) => onChange(value, "trainer")}
+              filterOption={filterOption}
+              options={[
+                {
+                  label: "All Trainer",
+                  value: "all",
+                },
+                {
+                  label: "Kavindu",
+                  value: "kavindu",
+                },
+                {
+                  label: "Fahim",
+                  value: "fahim",
+                },
+                {
+                  label: "Hasan",
+                  value: "hasan",
+                },
+              ]}
+            />
+          </div>
         </div>
+        <DataTable
+          columns={columns}
+          data={data?.results || []}
+          loading={isLoading}
+        />
       </div>
-      <DataTable
-        columns={columns}
-        data={data?.results || []}
-        loading={isLoading}
-      />
       <DataPagination
         onChange={handlePageChange}
         page={page}

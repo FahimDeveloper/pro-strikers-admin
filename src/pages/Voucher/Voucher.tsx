@@ -1,51 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Select } from "antd";
+import { Dropdown, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../components/common/DataTable";
 import DataPagination from "../../components/common/DataPagination";
 import AddVoucherModal from "../../components/ui/modal/AddVoucherModal";
+import { useVouchersQuery } from "../../redux/features/voucher/voucherApi";
+import { IVoucher } from "../../types/voucher.types";
+import UpdateVoucherModal from "../../components/ui/modal/UpdateVoucherModal";
+import DeleteVoucherPopup from "../../components/ui/popup/DeleteVoucherPopup";
+import { BsThreeDots } from "react-icons/bs";
+import moment from "moment";
 
 const Voucher = () => {
-  const [service, setService] = useState<string>();
+  const [service, setService] = useState<string | undefined>(undefined);
+  const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const data = {
-    count: 90,
-    results: [
-      {
-        _id: "123",
-        voucher: "SPRING5038",
-        discount: 20,
-        voucher_type: "membership",
-        discount_type: "percentage",
-        start_date: "25-02-2025",
-        end_date: "25-02-2025",
-        used: 60,
-      },
-      {
-        _id: "124",
-        voucher: "SPRING5038",
-        discount: 30,
-        voucher_type: "appointment",
-        discount_type: "money",
-        start_date: "25-02-2025",
-        end_date: "25-02-2025",
-        used: 60,
-      },
-      {
-        _id: "125",
-        voucher: "SPRING5038",
-        discount: 25,
-        voucher_type: "facility",
-        discount_type: "percentage",
-        start_date: "25-02-2025",
-        end_date: "25-02-2025",
-        used: 60,
-      },
-    ],
-  };
-  const columns: ColumnsType<any> = [
+  const { data, isLoading } = useVouchersQuery({
+    search,
+    voucher_type: service,
+    page,
+    limit,
+  });
+  const columns: ColumnsType<IVoucher> = [
     {
       width: 70,
       align: "center",
@@ -58,10 +36,12 @@ const Voucher = () => {
     },
     {
       title: "Voucher code",
-      dataIndex: "voucher",
-      key: "voucher",
+      dataIndex: "voucher_code",
+      key: "voucher_code",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
     },
     {
@@ -75,12 +55,12 @@ const Voucher = () => {
     },
     {
       title: "Discount",
-      dataIndex: "discount",
-      key: "discount",
+      dataIndex: "discount_value",
+      key: "discount_value",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-      sorter: (a, b) => a.discount - b.discount,
+      sorter: (a, b) => a.discount_value - b.discount_value,
     },
     {
       title: "Voucher Type",
@@ -98,18 +78,22 @@ const Voucher = () => {
       dataIndex: "start_date",
       key: "start_date",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
       ),
-      sorter: (a, b) => a.start_date.localeCompare(b.start_date),
+      sorter: (a, b) => Number(a.start_date) - Number(b.start_date),
     },
     {
       title: "End Date",
       dataIndex: "end_date",
       key: "end_date",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
       ),
-      sorter: (a, b) => a.end_date.localeCompare(b.end_date),
+      sorter: (a, b) => Number(a.end_date) - Number(b.end_date),
     },
     {
       title: "Used",
@@ -122,11 +106,26 @@ const Voucher = () => {
     },
     {
       fixed: "right",
+      align: "center",
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => {
-        return <div></div>;
+      render: (_, record) => {
+        const items = [
+          {
+            key: "1",
+            label: <UpdateVoucherModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteVoucherPopup id={record?._id} />,
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }}>
+            <BsThreeDots className="size-5 cursor-pointer" />
+          </Dropdown>
+        );
       },
     },
   ];
@@ -142,9 +141,16 @@ const Voucher = () => {
 
   const onChange = (value: string) => {
     if (value == "all") {
-      setService("");
+      setService(undefined);
     } else {
       setService(value);
+    }
+  };
+  const onSearch = (value: string) => {
+    if (value.length < 1) {
+      setSearch(undefined);
+    } else {
+      setSearch(value);
     }
   };
 
@@ -163,6 +169,7 @@ const Voucher = () => {
       </div>
       <div className="grid grid-cols-4 gap-2 items-center">
         <Input.Search
+          onSearch={onSearch}
           placeholder="Search voucher"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
@@ -179,6 +186,10 @@ const Voucher = () => {
               value: "all",
             },
             {
+              label: "General",
+              value: "general",
+            },
+            {
               label: "Membership",
               value: "membership",
             },
@@ -190,10 +201,22 @@ const Voucher = () => {
               label: "Facility",
               value: "facility",
             },
+            {
+              label: "Class",
+              value: "class",
+            },
+            {
+              label: "Course",
+              value: "course",
+            },
           ]}
         />
       </div>
-      <DataTable columns={columns} data={data?.results || []} loading={false} />
+      <DataTable
+        columns={columns}
+        data={data?.results || []}
+        loading={isLoading}
+      />
       <DataPagination
         onChange={handlePageChange}
         page={page}

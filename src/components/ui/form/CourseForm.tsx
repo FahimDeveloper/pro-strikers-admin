@@ -8,6 +8,8 @@ import {
   Select,
   TimePicker,
 } from "antd";
+import dayjs from "dayjs";
+import { useEffect } from "react";
 
 type TProp = {
   record?: any;
@@ -17,22 +19,30 @@ type TProp = {
 };
 
 const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        course_name: record?.course_name,
+        sport: record?.sport,
+        trainer: record?.trainer,
+        capacity: record?.capacity,
+        start_date: record?.start_date
+          ? dayjs(record?.start_date, "DD/MM/YYYY")
+          : "",
+        end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
+        start_time: record?.start_time
+          ? dayjs(record?.start_time, "HH:mm A")
+          : "",
+        end_time: record?.end_time ? dayjs(record?.end_time, "HH:mm A") : "",
+        description: record?.description,
+        price: record?.price,
+      });
+    }
+  }, [record, form]);
   return (
     <>
       <Form
         form={form}
-        initialValues={{
-          course_name: record?.course_name,
-          sport: record?.sport,
-          trainer: record?.trainer,
-          capacity: record?.capacity,
-          start_date: record?.start_date,
-          end_date: record?.end_date,
-          start_time: record?.start_time,
-          end_time: record?.end_time,
-          description: record?.description,
-          price: record?.price,
-        }}
         layout="vertical"
         className="space-y-4"
         onFinish={onFinish}
@@ -72,8 +82,8 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
                   value: "softball",
                 },
                 {
-                  label: "Hockey",
-                  value: "hockey",
+                  label: "Field Hockey",
+                  value: "field hockey",
                 },
               ]}
             />
@@ -123,7 +133,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
             label="Start Date"
             rules={[{ required: true }]}
           >
-            <DatePicker className="w-full" />
+            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
           </Form.Item>
           <Form.Item
             name="end_date"
@@ -131,7 +141,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
             label="End Date"
             rules={[{ required: true }]}
           >
-            <DatePicker className="w-full" />
+            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
           </Form.Item>
           <Form.Item
             name="start_time"

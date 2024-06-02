@@ -8,6 +8,7 @@ import { useUpdateClassMutation } from "../../../redux/features/schedule/classSc
 import { CiEdit } from "react-icons/ci";
 
 const UpdateClassModal = ({ record }: any) => {
+  const [current, setCurrent] = useState(0);
   const [form] = Form.useForm();
   const [open, setModalOpen] = useState(false);
   const [update, { data, isLoading, isSuccess, isError, error }] =
@@ -24,6 +25,7 @@ const UpdateClassModal = ({ record }: any) => {
       });
       form.resetFields();
       setModalOpen(false);
+      setCurrent(0);
     }
     if (isError) {
       Swal.fire({
@@ -36,6 +38,10 @@ const UpdateClassModal = ({ record }: any) => {
   }, [data, isSuccess, isError, form, error]);
   const onSubmit = (values: any) => {
     update({ id: record?._id, body: values });
+  };
+  const onCancle = () => {
+    setModalOpen(false);
+    setCurrent(0);
   };
   return (
     <>
@@ -52,9 +58,12 @@ const UpdateClassModal = ({ record }: any) => {
         title="Update Class"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <ClassSteps
+          current={current}
+          setCurrent={setCurrent}
           record={record}
           form={form}
           onSubmit={onSubmit}

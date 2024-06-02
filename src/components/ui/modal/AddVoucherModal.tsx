@@ -12,6 +12,8 @@ const AddVoucherModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateVoucherMutation();
   const onFinish = (values: any) => {
+    values.voucher_code = values.voucher_code.toUpperCase();
+    values.used = 0;
     create(values);
   };
   useEffect(() => {
@@ -36,6 +38,10 @@ const AddVoucherModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error, setModalOpen]);
+  const onCancle = () => {
+    setModalOpen(false);
+    form.resetFields();
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="primary-btn">
@@ -47,7 +53,8 @@ const AddVoucherModal = () => {
         title="Create New Voucher"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <VoucherForm form={form} loading={isLoading} onFinish={onFinish} />
       </Modal>

@@ -1,44 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Image, Input, Select } from "antd";
+import { Dropdown, Image, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../components/common/DataTable";
 import DataPagination from "../../components/common/DataPagination";
 import AddAdminModal from "../../components/ui/modal/AddAdminModal";
+import { useAdminsQuery } from "../../redux/features/admin/adminApi";
+import UpdateAdminModal from "../../components/ui/modal/UpdateAdminModal";
+import DeleteAdminPopup from "../../components/ui/popup/DeleteAdminPopup";
+import { BsThreeDots } from "react-icons/bs";
 
 const TeamMembers = () => {
   const [role, setRole] = useState<string>();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const data = {
-    count: 90,
-    results: [
-      {
-        _id: "123",
-        image: "https://avatar.iran.liara.run/public/boy",
-        full_name: "Hasan Basan",
-        role: "admin",
-        email: "info@gmail.com",
-        phone: "01916160514",
-      },
-      {
-        _id: "124",
-        image: "https://avatar.iran.liara.run/public/boy",
-        full_name: "Fahim",
-        role: "trainer",
-        email: "info@gmail.com",
-        phone: "01916160514",
-      },
-      {
-        _id: "125",
-        image: "https://avatar.iran.liara.run/public/boy",
-        full_name: "Fuyad",
-        role: "super admin",
-        email: "info@gmail.com",
-        phone: "01916160514",
-      },
-    ],
-  };
+  const { data, isLoading } = useAdminsQuery({
+    role,
+    page,
+    limit,
+  });
   const columns: ColumnsType<any> = [
     {
       width: 70,
@@ -51,14 +31,16 @@ const TeamMembers = () => {
       },
     },
     {
-      title: "Stuff name",
+      title: "Member Name",
       align: "center",
       dataIndex: "full_name",
       key: "full_name",
-      render: (text, record) => (
+      render: (_, record) => (
         <div className="flex items-center ms-10 gap-5">
           <Image src={record?.image} style={{ width: 50 }} />
-          <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+          <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+            {record?.first_name} {record?.last_name}
+          </p>
         </div>
       ),
       sorter: (a, b) => a.full_name.localeCompare(b.full_name),
@@ -69,12 +51,14 @@ const TeamMembers = () => {
       dataIndex: "role",
       key: "role",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.role.localeCompare(b.role),
     },
     {
-      title: "email",
+      title: "Email",
       align: "center",
       dataIndex: "email",
       key: "email",
@@ -97,8 +81,22 @@ const TeamMembers = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => {
-        return <div></div>;
+      render: (_, record) => {
+        const items = [
+          {
+            key: "1",
+            label: <UpdateAdminModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteAdminPopup id={record?._id} />,
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }}>
+            <BsThreeDots className="size-5 cursor-pointer" />
+          </Dropdown>
+        );
       },
     },
   ];
@@ -157,7 +155,11 @@ const TeamMembers = () => {
           ]}
         />
       </div>
-      <DataTable columns={columns} data={data?.results || []} loading={false} />
+      <DataTable
+        columns={columns}
+        data={data?.results || []}
+        loading={isLoading}
+      />
       <DataPagination
         onChange={handlePageChange}
         page={page}

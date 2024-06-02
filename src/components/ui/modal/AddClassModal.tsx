@@ -6,6 +6,7 @@ import { useCreateClassMutation } from "../../../redux/features/schedule/classSc
 import Swal from "sweetalert2";
 
 const AddClassesModal = () => {
+  const [current, setCurrent] = useState(0);
   const [form] = Form.useForm();
   const [open, setModalOpen] = useState(false);
   const [create, { data, isLoading, isSuccess, isError, error }] =
@@ -22,6 +23,7 @@ const AddClassesModal = () => {
       });
       form.resetFields();
       setModalOpen(false);
+      setCurrent(0);
     }
     if (isError) {
       Swal.fire({
@@ -35,6 +37,11 @@ const AddClassesModal = () => {
   const onSubmit = (values: any) => {
     create(values);
   };
+  const onCancle = () => {
+    setModalOpen(false);
+    setCurrent(0);
+    form.resetFields();
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
@@ -46,9 +53,16 @@ const AddClassesModal = () => {
         title="Create New Class"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
-        <ClassSteps form={form} onSubmit={onSubmit} loading={isLoading} />
+        <ClassSteps
+          current={current}
+          setCurrent={setCurrent}
+          form={form}
+          onSubmit={onSubmit}
+          loading={isLoading}
+        />
       </Modal>
     </>
   );

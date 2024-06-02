@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal } from "antd";
+import { Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import AdminForm from "../form/AdminForm";
@@ -8,10 +8,12 @@ import { useForm } from "antd/es/form/Form";
 
 const AddAdminModal = () => {
   const [open, setModalOpen] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateAdminMutation();
   const onFinish = (values: any) => {
+    const formData = new FormData();
     if (values.password !== values.confirm_password) {
       Swal.fire({
         icon: "error",
@@ -19,9 +21,13 @@ const AddAdminModal = () => {
         text: "Passoword does not match",
         confirmButtonColor: "#0ABAC3",
       });
+    } else {
+      formData.append("image", values.image[0].originFileObj);
+      delete values.confirm_password;
+      delete values.image;
+      formData.append("data", JSON.stringify(values));
+      create(formData);
     }
-    delete values.confirm_password;
-    create(values);
   };
   useEffect(() => {
     if (isSuccess) {
@@ -35,6 +41,7 @@ const AddAdminModal = () => {
       });
       setModalOpen(false);
       form.resetFields();
+      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -45,6 +52,10 @@ const AddAdminModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+    form.resetFields();
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
@@ -56,10 +67,17 @@ const AddAdminModal = () => {
         title="Create New Member"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <div className="my-5">
-          <AdminForm form={form} onFinish={onFinish} loading={isLoading} />
+          <AdminForm
+            form={form}
+            onFinish={onFinish}
+            loading={isLoading}
+            fileList={fileList}
+            setFileList={setFileList}
+          />
         </div>
       </Modal>
     </>

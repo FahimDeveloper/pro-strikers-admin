@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useCreateFacilityMutation } from "../../../redux/features/schedule/facilityScheduleApi";
 
 const AddFacilityModal = () => {
+  const [current, setCurrent] = useState(0);
   const [form] = Form.useForm();
   const [open, setModalOpen] = useState(false);
   const [create, { data, isLoading, isSuccess, isError, error }] =
@@ -22,6 +23,7 @@ const AddFacilityModal = () => {
       });
       form.resetFields();
       setModalOpen(false);
+      setCurrent(0);
     }
     if (isError) {
       Swal.fire({
@@ -35,6 +37,11 @@ const AddFacilityModal = () => {
   const onSubmit = (values: any) => {
     create(values);
   };
+  const onCancle = () => {
+    setModalOpen(false);
+    setCurrent(0);
+    form.resetFields();
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="primary-btn">
@@ -46,9 +53,16 @@ const AddFacilityModal = () => {
         title="Create New Facility"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
-        <FacilitySteps form={form} onSubmit={onSubmit} loading={isLoading} />
+        <FacilitySteps
+          current={current}
+          setCurrent={setCurrent}
+          form={form}
+          onSubmit={onSubmit}
+          loading={isLoading}
+        />
       </Modal>
     </>
   );

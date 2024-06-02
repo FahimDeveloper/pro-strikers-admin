@@ -1,45 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Select } from "antd";
+import { Dropdown, Image, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import AddUserModal from "../../components/ui/modal/AddUserModal";
 import DataTable from "../../components/common/DataTable";
 import DataPagination from "../../components/common/DataPagination";
+import { useUsersQuery } from "../../redux/features/user/userApi";
+import UpdateUserModal from "../../components/ui/modal/UpdateUserModal";
+import DeleteUserPopup from "../../components/ui/popup/DeleteUserPopup";
+import { BsThreeDots } from "react-icons/bs";
+import moment from "moment";
+import { IUser } from "../../types/user.type";
 
 const Users = () => {
-  const [membership, setMembership] = useState<boolean>();
+  const [membership, setMembership] = useState<boolean | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const data = {
-    count: 90,
-    results: [
-      {
-        _id: "123",
-        image: "https://avatar.iran.liara.run/public/boy",
-        full_name: "Hasan Basan",
-        email: "info@gmail.com",
-        phone: "01916160514",
-        membership: true,
-      },
-      {
-        _id: "124",
-        image: "https://avatar.iran.liara.run/public/boy",
-        full_name: "Fahim",
-        email: "info@gmail.com",
-        phone: "01916160514",
-        membership: false,
-      },
-      {
-        _id: "125",
-        image: "https://avatar.iran.liara.run/public/boy",
-        full_name: "Fuyad",
-        email: "info@gmail.com",
-        phone: "01916160514",
-        membership: true,
-      },
-    ],
-  };
-  const columns: ColumnsType<any> = [
+  const [search, setSearch] = useState<string | undefined>(undefined);
+  const { data, isLoading } = useUsersQuery({
+    search,
+    membership,
+    page,
+    limit,
+  });
+  const columns: ColumnsType<IUser> = [
     {
       width: 70,
       align: "center",
@@ -55,13 +39,17 @@ const Users = () => {
       align: "center",
       dataIndex: "full_name",
       key: "full_name",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      render: (_, record) => (
+        <div className="flex items-center ms-10 gap-5">
+          <Image src={record?.image} style={{ width: 50 }} />
+          <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+            {record?.first_name} {record?.last_name}
+          </p>
+        </div>
       ),
-      sorter: (a, b) => a.full_name.localeCompare(b.full_name),
     },
     {
-      title: "email",
+      title: "Email",
       align: "center",
       dataIndex: "email",
       key: "email",
@@ -70,12 +58,35 @@ const Users = () => {
       ),
     },
     {
+      title: "Gender",
+      align: "center",
+      dataIndex: "gender",
+      key: "gender",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
+      ),
+      sorter: (a, b) => a.gender.localeCompare(b.gender),
+    },
+    {
       title: "Phone",
       align: "center",
       dataIndex: "phone",
       key: "phone",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+    },
+    {
+      title: "Date of Birth",
+      align: "center",
+      dataIndex: "date_of_birth",
+      key: "date_of_birth",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
       ),
     },
     {
@@ -88,8 +99,7 @@ const Users = () => {
           {text === true ? "Yes" : "No"}
         </p>
       ),
-      sorter: (a: { membership: boolean }, b: { membership: boolean }) =>
-        Number(a.membership) - Number(b.membership),
+      sorter: (a, b) => Number(a.membership) - Number(b.membership),
     },
     {
       fixed: "right",
@@ -97,8 +107,22 @@ const Users = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => {
-        return <div></div>;
+      render: (_, record) => {
+        const items = [
+          {
+            key: "1",
+            label: <UpdateUserModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteUserPopup id={record?._id} />,
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }}>
+            <BsThreeDots className="size-5 cursor-pointer" />
+          </Dropdown>
+        );
       },
     },
   ];
@@ -115,8 +139,18 @@ const Users = () => {
   const onChange = (value: string) => {
     if (value === "membership") {
       setMembership(true);
-    } else if (value === "no membership") {
+    } else if (value === "non membership") {
       setMembership(false);
+    } else if (value === "all") {
+      setMembership(undefined);
+    }
+  };
+
+  const onSearch = (value: string) => {
+    if (value.length < 1) {
+      setSearch(undefined);
+    } else {
+      setSearch(value);
     }
   };
 
@@ -136,6 +170,7 @@ const Users = () => {
       <div className="grid grid-cols-4 gap-2 items-center">
         <Input.Search
           placeholder="Search by user name or email"
+          onSearch={onSearch}
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
         <Select
@@ -161,7 +196,11 @@ const Users = () => {
           ]}
         />
       </div>
-      <DataTable columns={columns} data={data?.results || []} loading={false} />
+      <DataTable
+        columns={columns}
+        data={data?.results || []}
+        loading={isLoading}
+      />
       <DataPagination
         onChange={handlePageChange}
         page={page}

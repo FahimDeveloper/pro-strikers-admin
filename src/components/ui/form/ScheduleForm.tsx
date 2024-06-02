@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, TimePicker, Switch, Input } from "antd";
+import dayjs from "dayjs";
 
 const ScheduleForm = ({ record, form }: any) => {
   const schedules = [
@@ -12,11 +13,23 @@ const ScheduleForm = ({ record, form }: any) => {
     { day: "Sunday", active: false, start_time: "", end_time: "" },
   ];
 
+  const initialValues = {
+    schedules:
+      record?.schedules.map((schedule: any) => ({
+        ...schedule,
+        start_time:
+          schedule?.start_time?.length > 1
+            ? dayjs(schedule.start_time, "HH:mm A")
+            : "",
+        end_time:
+          schedule?.end_time?.length > 1
+            ? dayjs(schedule.end_time, "HH:mm A")
+            : "",
+      })) || schedules,
+  };
+
   return (
-    <Form
-      form={form}
-      initialValues={{ schedules: record?.schedules || schedules }}
-    >
+    <Form form={form} initialValues={initialValues}>
       <Form.List name="schedules">
         {(fields) => (
           <>

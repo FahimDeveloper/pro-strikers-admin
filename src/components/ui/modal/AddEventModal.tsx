@@ -12,6 +12,7 @@ const AddEventModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateEventMutation();
   const onFinish = (values: any) => {
+    values.registration = 0;
     create(values);
   };
   useEffect(() => {
@@ -36,6 +37,10 @@ const AddEventModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+    form.resetFields();
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="primary-btn">
@@ -47,7 +52,8 @@ const AddEventModal = () => {
         title="Create New Event"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <EventForm form={form} loading={isLoading} onFinish={onFinish} />
       </Modal>

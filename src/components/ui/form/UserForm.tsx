@@ -11,7 +11,8 @@ import {
   UploadFile,
   UploadProps,
 } from "antd";
-import { useState } from "react";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -28,15 +29,25 @@ type TProp = {
   onFinish: any;
   form: any;
   loading: boolean;
+  fileList: any;
+  setFileList: any;
 };
 
-const UserForm = ({ form, record, onFinish, loading }: TProp) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+const UserForm = ({
+  form,
+  record,
+  onFinish,
+  loading,
+  fileList,
+  setFileList,
+}: TProp) => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    console.log(newFileList);
     setFileList(newFileList);
+  };
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -46,18 +57,48 @@ const UserForm = ({ form, record, onFinish, loading }: TProp) => {
     setPreviewOpen(true);
   };
 
-  const uploadButton = (
-    <button style={{ border: 0, background: "none" }} type="button">
-      +<div style={{ marginTop: 8 }}>Upload</div>
-    </button>
-  );
-
   const normFile = (e: { fileList: any }) => {
     if (Array.isArray(e)) {
       return e;
     }
     return e && e.fileList;
   };
+
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        first_name: record?.first_name,
+        last_name: record?.last_name,
+        email: record?.email,
+        gender: record?.gender,
+        phone: record?.phone,
+        image: record?.image && [
+          {
+            uid: "-1",
+            name: record?.image,
+            status: "done",
+            url: record?.image,
+          },
+        ],
+        date_of_birth: record?.date_of_birth
+          ? dayjs(record?.date_of_birth, "DD/MM/YYYY")
+          : "",
+        activity: record?.activity,
+        package_name: record?.package_name,
+        plan: record?.plan,
+      });
+    }
+    if (record?.image) {
+      setFileList([
+        {
+          uid: "-1",
+          name: record?.image,
+          status: "done",
+          url: record?.image,
+        },
+      ]);
+    }
+  }, [record, form, setFileList]);
 
   return (
     <>
@@ -66,14 +107,6 @@ const UserForm = ({ form, record, onFinish, loading }: TProp) => {
         layout="vertical"
         onFinish={onFinish}
         className="space-y-5"
-        initialValues={{
-          first_name: record?.first_name,
-          last_name: record?.last_name,
-          gender: record?.gender,
-          active: record?.active,
-          membership: record?.package_name,
-          plan: record?.plan,
-        }}
       >
         <div className="flex flex-col items-center justify-center">
           <Form.Item
@@ -91,7 +124,7 @@ const UserForm = ({ form, record, onFinish, loading }: TProp) => {
               onPreview={handlePreview}
               beforeUpload={() => false}
             >
-              {fileList.length >= 1 ? null : uploadButton}
+              {fileList.length < 1 && "+ Upload"}
             </Upload>
           </Form.Item>
           <p className="text-[#3A394B] text-sm">Upload Cleint Image</p>
@@ -136,7 +169,7 @@ const UserForm = ({ form, record, onFinish, loading }: TProp) => {
                 label="Email"
                 rules={[{ required: true }]}
               >
-                <Input placeholder="Enter your email" />
+                <Input readOnly placeholder="Enter your email" />
               </Form.Item>
               <Form.Item
                 className="w-full m-0"
@@ -152,7 +185,7 @@ const UserForm = ({ form, record, onFinish, loading }: TProp) => {
                 label="Date of Birth"
                 rules={[{ required: true }]}
               >
-                <DatePicker className="w-full" format={""} />
+                <DatePicker className="w-full" format={"DD/MM/YYYY"} />
               </Form.Item>
             </div>
           </div>
@@ -231,28 +264,32 @@ const UserForm = ({ form, record, onFinish, loading }: TProp) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-2">
-          <Form.Item
-            className="m-0 w-full"
-            name="password"
-            label="Password"
-            rules={[{ required: true }]}
-          >
-            <Input.Password placeholder="Enter your password" />
-          </Form.Item>
-          <Form.Item
-            className="m-0 w-full"
-            name="confirm_password"
-            label="Confirm Password"
-            rules={[{ required: true }]}
-          >
-            <Input.Password placeholder="Enter your password" />
-          </Form.Item>
-        </div>
+        {!record && (
+          <div className="flex gap-2">
+            <Form.Item
+              className="m-0 w-full"
+              name="password"
+              label="Password"
+              rules={[{ required: true }]}
+            >
+              <Input.Password placeholder="Enter your password" />
+            </Form.Item>
+            <Form.Item
+              className="m-0 w-full"
+              name="confirm_password"
+              label="Confirm Password"
+              rules={[{ required: true }]}
+            >
+              <Input.Password placeholder="Enter your password" />
+            </Form.Item>
+          </div>
+        )}
         <div className="flex justify-end">
           <Form.Item className="m-0">
             <Button htmlType="submit" loading={loading} className="primary-btn">
-              Create Client
+              {record && Object.keys(record).length > 0
+                ? "Update Client"
+                : "Create Client"}
             </Button>
           </Form.Item>
         </div>

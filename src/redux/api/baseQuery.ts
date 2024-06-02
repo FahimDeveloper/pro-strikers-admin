@@ -34,14 +34,8 @@ export const baseQueryWithRefreshToken: BaseQueryFn<
       credentials: "include",
     });
     const data = await res.json();
-    if (data.success) {
-      const user = (api.getState() as RootState).auth.user;
-      api.dispatch(
-        loggedInUser({
-          user,
-          token: data.data.accessToken,
-        })
-      );
+    if (data.results) {
+      api.dispatch(loggedInUser(data.results));
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(loggedOutUser());

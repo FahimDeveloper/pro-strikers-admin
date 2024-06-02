@@ -16,6 +16,7 @@ const ClassesScheduling = () => {
   const [facility, setFacility] = useState<string | undefined>(undefined);
   const [sport, setSport] = useState<string | undefined>(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
+  const [level, setLevel] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading } = useClassesQuery({
@@ -25,6 +26,7 @@ const ClassesScheduling = () => {
     sport,
     facility,
     trainer,
+    level,
   });
 
   const columns: ColumnsType<IClassSchedule> = [
@@ -54,7 +56,9 @@ const ClassesScheduling = () => {
       dataIndex: "facility",
       key: "facility",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.facility.localeCompare(b.facility),
     },
@@ -64,7 +68,21 @@ const ClassesScheduling = () => {
       dataIndex: "sport",
       key: "sport",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
+      ),
+      sorter: (a, b) => a.sport.localeCompare(b.sport),
+    },
+    {
+      title: "Level",
+      align: "center",
+      dataIndex: "level",
+      key: "level",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
@@ -74,7 +92,9 @@ const ClassesScheduling = () => {
       dataIndex: "trainer",
       key: "trainer",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
@@ -142,6 +162,12 @@ const ClassesScheduling = () => {
       } else {
         setTrainer(value);
       }
+    } else if (filter === "level") {
+      if (value === "all") {
+        setLevel(undefined);
+      } else {
+        setLevel(value);
+      }
     }
   };
 
@@ -154,126 +180,154 @@ const ClassesScheduling = () => {
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex justify-between items-end">
-        <div className="space-y-1">
-          <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Classes
-          </h2>
-          <p className="text-[#838383] font-semibold text-lg">
-            {data?.count || 0} classes available
-          </p>
+    <div className="flex flex-col h-full justify-between">
+      <div className="space-y-5">
+        <div className="flex justify-between items-end">
+          <div className="space-y-1">
+            <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
+              Classes
+            </h2>
+            <p className="text-[#838383] font-semibold text-lg">
+              {data?.count || 0} classes available
+            </p>
+          </div>
+          <AddClassesModal />
         </div>
-        <AddClassesModal />
-      </div>
-      <div className="flex gap-2 items-center">
-        <Input.Search
-          placeholder="Search Classes"
-          onSearch={onSearch}
-          className="text-sm font-medium text-[#5D5D5D]"
-        />
         <div className="flex gap-2 items-center">
-          <Select
-            className="w-full"
-            showSearch
-            defaultValue={"all"}
-            optionFilterProp="children"
-            onChange={(value) => onChange(value, "facility")}
-            filterOption={filterOption}
-            options={[
-              {
-                label: "All Facility",
-                value: "all",
-              },
-              {
-                label: "Cricket Cage",
-                value: "cricket cage",
-              },
-              {
-                label: "Soccer Cage",
-                value: "soccer cage",
-              },
-              {
-                label: "Baseball Cage",
-                value: "baseball cage",
-              },
-              {
-                label: "Softball Cage",
-                value: "softball cage",
-              },
-              {
-                label: "Hockey Cage",
-                value: "hockey cage",
-              },
-            ]}
+          <Input.Search
+            placeholder="Search Classes"
+            onSearch={onSearch}
+            className="text-sm font-medium text-[#5D5D5D]"
           />
-          <Select
-            className="w-full"
-            showSearch
-            defaultValue={"all"}
-            optionFilterProp="children"
-            onChange={(value) => onChange(value, "sport")}
-            filterOption={filterOption}
-            options={[
-              {
-                label: "All Sport",
-                value: "all",
-              },
-              {
-                label: "Cricket",
-                value: "cricket",
-              },
-              {
-                label: "Soccer",
-                value: "soccer",
-              },
-              {
-                label: "Baseball",
-                value: "baseball",
-              },
-              {
-                label: "Softball",
-                value: "softball",
-              },
-              {
-                label: "Hockey",
-                value: "hockey",
-              },
-            ]}
-          />
-          <Select
-            className="w-full"
-            showSearch
-            defaultValue={"all"}
-            optionFilterProp="children"
-            onChange={(value) => onChange(value, "trainer")}
-            filterOption={filterOption}
-            options={[
-              {
-                label: "All Trainer",
-                value: "all",
-              },
-              {
-                label: "Kavindu",
-                value: "kavindu",
-              },
-              {
-                label: "Fahim",
-                value: "fahim",
-              },
-              {
-                label: "Hasan",
-                value: "hasan",
-              },
-            ]}
-          />
+          <div className="flex gap-2 items-center">
+            <Select
+              className="w-full"
+              showSearch
+              defaultValue={"all"}
+              optionFilterProp="children"
+              onChange={(value) => onChange(value, "facility")}
+              filterOption={filterOption}
+              options={[
+                {
+                  label: "All Facility",
+                  value: "all",
+                },
+                {
+                  label: "Cricket Cage",
+                  value: "cricket cage",
+                },
+                {
+                  label: "Soccer Cage",
+                  value: "soccer cage",
+                },
+                {
+                  label: "Baseball Cage",
+                  value: "baseball cage",
+                },
+                {
+                  label: "Softball Cage",
+                  value: "softball cage",
+                },
+                {
+                  label: "Hockey Cage",
+                  value: "hockey cage",
+                },
+              ]}
+            />
+            <Select
+              className="w-full"
+              showSearch
+              defaultValue={"all"}
+              optionFilterProp="children"
+              onChange={(value) => onChange(value, "sport")}
+              filterOption={filterOption}
+              options={[
+                {
+                  label: "All Sport",
+                  value: "all",
+                },
+                {
+                  label: "Cricket",
+                  value: "cricket",
+                },
+                {
+                  label: "Soccer",
+                  value: "soccer",
+                },
+                {
+                  label: "Baseball",
+                  value: "baseball",
+                },
+                {
+                  label: "Softball",
+                  value: "softball",
+                },
+                {
+                  label: "Field Hockey",
+                  value: "field hockey",
+                },
+              ]}
+            />
+            <Select
+              className="w-full"
+              showSearch
+              defaultValue={"all"}
+              optionFilterProp="children"
+              onChange={(value) => onChange(value, "trainer")}
+              filterOption={filterOption}
+              options={[
+                {
+                  label: "All Trainer",
+                  value: "all",
+                },
+                {
+                  label: "Kavindu",
+                  value: "kavindu",
+                },
+                {
+                  label: "Fahim",
+                  value: "fahim",
+                },
+                {
+                  label: "Hasan",
+                  value: "hasan",
+                },
+              ]}
+            />
+            <Select
+              className="w-full"
+              showSearch
+              defaultValue={"all"}
+              optionFilterProp="children"
+              onChange={(value) => onChange(value, "level")}
+              filterOption={filterOption}
+              options={[
+                {
+                  label: "All Level",
+                  value: "all",
+                },
+                {
+                  label: "Basic",
+                  value: "basic",
+                },
+                {
+                  label: "Intermediate",
+                  value: "intermediate",
+                },
+                {
+                  label: "Advanced",
+                  value: "advanced",
+                },
+              ]}
+            />
+          </div>
         </div>
+        <DataTable
+          columns={columns}
+          data={data?.results || []}
+          loading={isLoading}
+        />
       </div>
-      <DataTable
-        columns={columns}
-        data={data?.results || []}
-        loading={isLoading}
-      />
       <DataPagination
         onChange={handlePageChange}
         page={page}

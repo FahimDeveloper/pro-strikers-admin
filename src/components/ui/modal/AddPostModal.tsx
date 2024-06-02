@@ -36,6 +36,10 @@ const AddPostModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onCancle = () => {
+    setModalOpen(false);
+    form.resetFields();
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="primary-btn">
@@ -47,7 +51,8 @@ const AddPostModal = () => {
         title="Create New Post"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
+        maskClosable={false}
       >
         <PostForm onFinish={onFinish} form={form} loading={isLoading} />
       </Modal>

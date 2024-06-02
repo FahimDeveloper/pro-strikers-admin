@@ -36,8 +36,8 @@ const DeleteFacilityPopup = ({ id }: { id: string }) => {
   return (
     <Popconfirm
       open={open}
-      title="Delete the facility"
-      description="Are you sure to delete this facility?"
+      title="Are you sure?"
+      description="You want to delete this facility?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

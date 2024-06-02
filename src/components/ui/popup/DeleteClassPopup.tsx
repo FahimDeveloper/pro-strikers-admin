@@ -36,8 +36,8 @@ const DeleteClassPopup = ({ id }: { id: string }) => {
   return (
     <Popconfirm
       open={open}
-      title="Delete the class"
-      description="Are you sure to delete this class?"
+      title="Are you sure?"
+      description="You want to delete this class?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

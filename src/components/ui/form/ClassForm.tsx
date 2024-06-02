@@ -1,24 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Input, InputNumber, Select } from "antd";
+import { useEffect } from "react";
 
 const ClassForm = ({ record, form }: any) => {
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        class_name: record?.class_name,
+        sport: record?.sport,
+        description: record?.description,
+        facility: record?.facility,
+        trainer: record?.trainer,
+        level: record?.level,
+        capacity: record?.capacity,
+        price: record?.price,
+      });
+    }
+  }, [record, form]);
   return (
     <>
-      <Form
-        initialValues={{
-          class_name: record?.class_name,
-          sport: record?.sport,
-          description: record?.description,
-          facility: record?.facility,
-          trainer: record?.trainer,
-          level: record?.level,
-          capacity: record?.capacity,
-          price: record?.price,
-        }}
-        form={form}
-        layout="vertical"
-        className="space-y-4"
-      >
+      <Form form={form} layout="vertical" className="space-y-4">
         <div className="flex gap-5">
           <Form.Item
             name="class_name"
@@ -54,8 +55,8 @@ const ClassForm = ({ record, form }: any) => {
                   value: "softball",
                 },
                 {
-                  label: "Hockey",
-                  value: "hockey",
+                  label: "Field Hockey",
+                  value: "field hockey",
                 },
               ]}
             />

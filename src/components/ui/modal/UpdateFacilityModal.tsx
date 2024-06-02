@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { CiEdit } from "react-icons/ci";
 
 const UpdateFacilityModal = ({ record }: any) => {
+  const [current, setCurrent] = useState(0);
   const [form] = Form.useForm();
   const [open, setModalOpen] = useState(false);
   const [update, { data, isLoading, isSuccess, isError, error }] =
@@ -23,6 +24,7 @@ const UpdateFacilityModal = ({ record }: any) => {
       });
       form.resetFields();
       setModalOpen(false);
+      setCurrent(0);
     }
     if (isError) {
       Swal.fire({
@@ -36,6 +38,10 @@ const UpdateFacilityModal = ({ record }: any) => {
   const onSubmit = (values: any) => {
     update({ id: record?._id, body: values });
   };
+  const onCancle = () => {
+    setModalOpen(false);
+    setCurrent(0);
+  };
   return (
     <>
       <Button
@@ -46,14 +52,17 @@ const UpdateFacilityModal = ({ record }: any) => {
         <CiEdit className="size-5 text-white" /> Update
       </Button>
       <Modal
+        maskClosable={false}
         width={800}
         footer={null}
         title="Update Facility"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
       >
         <FacilitySteps
+          current={current}
+          setCurrent={setCurrent}
           record={record}
           form={form}
           onSubmit={onSubmit}
