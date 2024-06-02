@@ -11,10 +11,12 @@ import DeleteAdminPopup from "../../components/ui/popup/DeleteAdminPopup";
 import { BsThreeDots } from "react-icons/bs";
 
 const TeamMembers = () => {
-  const [role, setRole] = useState<string>();
+  const [role, setRole] = useState<string | undefined>(undefined);
+  const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading } = useAdminsQuery({
+    search,
     role,
     page,
     limit,
@@ -110,6 +112,22 @@ const TeamMembers = () => {
     setLimit(size);
   };
 
+  const onChange = (value: string) => {
+    if (value === "all") {
+      setRole(undefined);
+    } else {
+      setRole(value);
+    }
+  };
+
+  const onSearch = (value: string) => {
+    if (value.length < 1) {
+      setSearch(undefined);
+    } else {
+      setSearch(value);
+    }
+  };
+
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
@@ -130,6 +148,7 @@ const TeamMembers = () => {
       </div>
       <div className="grid grid-cols-4 gap-2 items-center">
         <Input.Search
+          onSearch={onSearch}
           placeholder="Search by member name or email"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
@@ -138,7 +157,7 @@ const TeamMembers = () => {
           showSearch
           defaultValue={"all"}
           optionFilterProp="children"
-          onChange={(value) => setRole(value)}
+          onChange={onChange}
           filterOption={filterOption}
           options={[
             {

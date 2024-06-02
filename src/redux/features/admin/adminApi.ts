@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IAdmin, IAdminParams } from "../../../types/admin.types";
+import { IncomingQueryType } from "../../../types/index.types";
 import { adminApiSlice } from "../../api/httpsSlice";
 
 const adminApi = adminApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    admins: builder.query<any, any>({
-      query: () => ({
+    admins: builder.query<IncomingQueryType<IAdmin>, IAdminParams>({
+      query: (params) => ({
         url: "/admins",
         method: "GET",
+        params,
       }),
       providesTags: ["admins"],
     }),
