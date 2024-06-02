@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dropdown, Input, Select } from "antd";
+import { Dropdown, Image, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../components/common/DataTable";
@@ -35,6 +35,13 @@ const Events = () => {
       render: (_, _record, index) => {
         return <>{page * limit + index + 1 - limit}</>;
       },
+    },
+    {
+      title: "Thumbnail",
+      align: "center",
+      dataIndex: "image",
+      key: "image",
+      render: (text) => <Image src={text} width={50} />,
     },
     {
       title: "Event name",
@@ -92,6 +99,7 @@ const Events = () => {
     },
     {
       title: "Registration",
+      align: "center",
       dataIndex: "registration",
       key: "registration",
       render: (text) => (

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal } from "antd";
+import { Button, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
 import PostForm from "../form/PostForm";
 import { useForm } from "antd/es/form/Form";
@@ -8,12 +8,21 @@ import { useUpdatePostMutation } from "../../../redux/features/post/postApi";
 import { CiEdit } from "react-icons/ci";
 
 const UpdatePostModal = ({ record }: any) => {
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdatePostMutation();
   const onFinish = (values: any) => {
-    update({ id: record?._id, body: values });
+    const formData = new FormData();
+    if (values.image[0].originFileObj) {
+      formData.append("image", values.image[0].originFileObj);
+      formData.append("data", JSON.stringify(values));
+      update({ id: record?._id, body: formData });
+    } else {
+      delete values.image;
+      update({ id: record?._id, body: values });
+    }
   };
   useEffect(() => {
     if (isSuccess) {
@@ -27,6 +36,7 @@ const UpdatePostModal = ({ record }: any) => {
       });
       setModalOpen(false);
       form.resetFields();
+      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -59,6 +69,8 @@ const UpdatePostModal = ({ record }: any) => {
         onCancel={onCancle}
       >
         <PostForm
+          fileList={fileList}
+          setFileList={setFileList}
           record={record}
           onFinish={onFinish}
           form={form}

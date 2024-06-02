@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IncomingQueryType } from "../../../types/index.types";
+import { IPost, IPostParams } from "../../../types/post.type";
 import { postApiSlice } from "../../api/httpsSlice";
 
 const postApi = postApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    posts: builder.query<any, any>({
-      query: () => ({
+    posts: builder.query<IncomingQueryType<IPost>, IPostParams>({
+      query: (params) => ({
         url: "/posts",
         method: "GET",
+        params,
       }),
       providesTags: ["posts"],
     }),

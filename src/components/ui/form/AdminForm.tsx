@@ -98,7 +98,7 @@ const AdminForm = ({
   }, [record, form, setFileList]);
 
   return (
-    <div>
+    <>
       <Form
         form={form}
         layout="vertical"
@@ -255,7 +255,7 @@ const AdminForm = ({
           src={previewImage}
         />
       )}
-    </div>
+    </>
   );
 };
 

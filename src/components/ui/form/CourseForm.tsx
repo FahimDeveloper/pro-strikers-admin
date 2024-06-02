@@ -183,7 +183,9 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
               loading={loading}
               className="btn primary-btn"
             >
-              Create Course
+              {record && Object.keys(record).length > 0
+                ? "Update Course"
+                : "Create Course"}
             </Button>
           </Form.Item>
         </div>

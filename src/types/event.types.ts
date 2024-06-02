@@ -11,6 +11,7 @@ export type IEvent = {
   allowed_registrations: number;
   registration: number;
   description: string;
+  image: string;
   price: number;
 };
 
