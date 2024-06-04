@@ -67,7 +67,6 @@ const VerifyCode = () => {
   useEffect(() => {
     if (otpVerifySuccess) {
       resetPass({ ...state, token });
-      form.resetFields();
     }
     if (isOtpVerfiyError) {
       Swal.fire({
@@ -85,7 +84,7 @@ const VerifyCode = () => {
       </div>
       {isVerifyLoading && (
         <div className="h-svh flex items-center justify-center w-full">
-          <FaSpinner className="size-8 text-primary" />
+          <FaSpinner className="size-8 text-primary animate-spin" />
         </div>
       )}
       {isVerifySuccess && (
@@ -110,7 +109,13 @@ const VerifyCode = () => {
                 ]}
                 className="m-0"
               >
-                <Input.OTP length={4} style={{ width: "100%" }} />
+                <Input.OTP
+                  length={4}
+                  size="large"
+                  style={{
+                    width: "100%",
+                  }}
+                />
               </Form.Item>
               <Form.Item>
                 <Button

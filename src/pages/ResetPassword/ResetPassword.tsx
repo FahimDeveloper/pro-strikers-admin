@@ -69,7 +69,7 @@ const ResetPassword = () => {
       </div>
       {isVerifyLoading && (
         <div className="h-svh flex items-center justify-center w-full">
-          <FaSpinner className="size-8 text-primary" />
+          <FaSpinner className="size-8 text-primary animate-spin" />
         </div>
       )}
       {isVerifySuccess && (

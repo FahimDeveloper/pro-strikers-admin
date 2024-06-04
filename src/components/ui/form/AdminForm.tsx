@@ -134,7 +134,7 @@ const AdminForm = ({
           <div className="grid grid-cols-2 gap-x-5">
             <Form.Item
               name="first_name"
-              label="Client First Name"
+              label="Member First Name"
               className="w-full m-0"
               rules={[{ required: true, message: "Please enter First Name" }]}
             >
@@ -142,7 +142,7 @@ const AdminForm = ({
             </Form.Item>
             <Form.Item
               name="last_name"
-              label="Client Last Name"
+              label="Member Last Name"
               className="w-full m-0"
               rules={[{ required: true, message: "Please enter Last Name" }]}
             >

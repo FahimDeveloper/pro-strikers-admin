@@ -48,7 +48,7 @@ const SendResetMail = () => {
         </h2>
         <div className="w-[480px] space-y-5">
           <h3 className="text-center text-lg text-[#022B2D]">
-            Enter your validate email address
+            Enter your valid email address
           </h3>
           <Form
             form={form}
