@@ -18,7 +18,7 @@ const CourseScheduling = () => {
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useCoursesQuery({
+  const { data, isLoading, isFetching } = useCoursesQuery({
     search,
     page,
     limit,
@@ -254,7 +254,7 @@ const CourseScheduling = () => {
         <DataTable
           columns={columns}
           data={data?.results || []}
-          loading={isLoading}
+          loading={isLoading || isFetching}
         />
       </div>
       <DataPagination

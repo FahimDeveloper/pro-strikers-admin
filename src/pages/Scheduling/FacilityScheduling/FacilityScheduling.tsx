@@ -18,7 +18,7 @@ const FacilityScheduling = () => {
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useFacilitiesQuery({
+  const { data, isLoading, isFetching } = useFacilitiesQuery({
     search,
     facility,
     sport,
@@ -297,7 +297,7 @@ const FacilityScheduling = () => {
         <DataTable
           columns={columns}
           data={data?.results || []}
-          loading={isLoading}
+          loading={isLoading || isFetching}
         />
       </div>
       <DataPagination

@@ -19,7 +19,7 @@ const ClassesScheduling = () => {
   const [level, setLevel] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useClassesQuery({
+  const { data, isLoading, isFetching } = useClassesQuery({
     search,
     page,
     limit,
@@ -334,7 +334,7 @@ const ClassesScheduling = () => {
         <DataTable
           columns={columns}
           data={data?.results || []}
-          loading={isLoading}
+          loading={isLoading || isFetching}
         />
       </div>
       <DataPagination

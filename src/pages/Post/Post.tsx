@@ -17,7 +17,7 @@ const Post = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = usePostsQuery({
+  const { data, isLoading, isFetching } = usePostsQuery({
     search,
     category,
     page,
@@ -195,7 +195,7 @@ const Post = () => {
       <DataTable
         columns={columns}
         data={data?.results || []}
-        loading={isLoading}
+        loading={isLoading || isFetching}
       />
       <DataPagination
         onChange={handlePageChange}

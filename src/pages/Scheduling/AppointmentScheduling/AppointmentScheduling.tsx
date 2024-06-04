@@ -20,7 +20,7 @@ const AppointmentScheduling = () => {
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useAppointmentsQuery({
+  const { data, isLoading, isFetching } = useAppointmentsQuery({
     search,
     page,
     limit,
@@ -286,7 +286,7 @@ const AppointmentScheduling = () => {
         <DataTable
           columns={columns}
           data={data?.results || []}
-          loading={isLoading}
+          loading={isLoading || isFetching}
         />
       </div>
       <DataPagination

@@ -18,7 +18,7 @@ const Events = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useEventsQuery({
+  const { data, isLoading, isFetching } = useEventsQuery({
     search,
     event_type: event,
     sport,
@@ -258,7 +258,7 @@ const Events = () => {
       <DataTable
         columns={columns}
         data={data?.results || []}
-        loading={isLoading}
+        loading={isLoading || isFetching}
       />
       <DataPagination
         onChange={handlePageChange}

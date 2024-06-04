@@ -15,7 +15,7 @@ const TeamMembers = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useAdminsQuery({
+  const { data, isLoading, isFetching } = useAdminsQuery({
     search,
     role,
     page,
@@ -170,7 +170,7 @@ const TeamMembers = () => {
             },
             {
               label: "Super Admin",
-              value: "super admin",
+              value: "super-admin",
             },
             {
               label: "Trainer",
@@ -182,7 +182,7 @@ const TeamMembers = () => {
       <DataTable
         columns={columns}
         data={data?.results || []}
-        loading={isLoading}
+        loading={isLoading || isFetching}
       />
       <DataPagination
         onChange={handlePageChange}

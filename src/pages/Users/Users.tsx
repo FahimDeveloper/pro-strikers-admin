@@ -17,7 +17,7 @@ const Users = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const [search, setSearch] = useState<string | undefined>(undefined);
-  const { data, isLoading } = useUsersQuery({
+  const { data, isLoading, isFetching } = useUsersQuery({
     search,
     membership,
     page,
@@ -208,7 +208,7 @@ const Users = () => {
         <DataTable
           columns={columns}
           data={data?.results || []}
-          loading={isLoading}
+          loading={isLoading || isFetching}
         />
       </div>
       <DataPagination

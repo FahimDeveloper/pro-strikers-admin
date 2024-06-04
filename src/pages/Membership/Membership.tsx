@@ -16,7 +16,7 @@ const Membership = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useMembershipUsersQuery({
+  const { data, isLoading, isFetching } = useMembershipUsersQuery({
     search,
     package_name: membership,
     activity,
@@ -315,7 +315,7 @@ const Membership = () => {
         <DataTable
           columns={columns}
           data={data?.results || []}
-          loading={isLoading}
+          loading={isLoading || isFetching}
         />
         <DataPagination
           onChange={handlePageChange}

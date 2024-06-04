@@ -17,7 +17,7 @@ const Voucher = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading } = useVouchersQuery({
+  const { data, isLoading, isFetching } = useVouchersQuery({
     search,
     voucher_type: service,
     page,
@@ -232,7 +232,7 @@ const Voucher = () => {
       <DataTable
         columns={columns}
         data={data?.results || []}
-        loading={isLoading}
+        loading={isLoading || isFetching}
       />
       <DataPagination
         onChange={handlePageChange}
