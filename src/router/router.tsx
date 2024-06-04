@@ -6,6 +6,9 @@ import { superAdminPaths } from "./super-admin.routes";
 import { adminPaths } from "./admin.routes";
 import ProtectRoute from "./ProtectRoute";
 import PrivetRoute from "./PrivetRoute";
+import SendResetMail from "../pages/SendResetMail/SendResetMail";
+import VerifyCode from "../pages/VerifyCode/VerifyCode";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +16,30 @@ const router = createBrowserRouter([
     element: (
       <ProtectRoute>
         <Login />
+      </ProtectRoute>
+    ),
+  },
+  {
+    path: "/forget-password",
+    element: (
+      <ProtectRoute>
+        <SendResetMail />
+      </ProtectRoute>
+    ),
+  },
+  {
+    path: "/:id/:token",
+    element: (
+      <ProtectRoute>
+        <ResetPassword />
+      </ProtectRoute>
+    ),
+  },
+  {
+    path: "/:id/:token/verify",
+    element: (
+      <ProtectRoute>
+        <VerifyCode />
       </ProtectRoute>
     ),
   },

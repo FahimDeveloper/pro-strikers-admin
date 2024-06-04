@@ -20,6 +20,7 @@ const AddUserModal = () => {
         text: "Passoword does not match",
         confirmButtonColor: "#0ABAC3",
       });
+      return;
     } else {
       if (
         values.activity &&

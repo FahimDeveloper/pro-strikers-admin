@@ -1,9 +1,12 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithRefreshToken } from "./baseQuery";
+import { baseUrl } from "../../config";
 
 export const authApiSlice = createApi({
   reducerPath: "authApi",
-  baseQuery: baseQueryWithRefreshToken,
+  baseQuery: fetchBaseQuery({
+    baseUrl: baseUrl.BASE_URL,
+  }),
   endpoints: () => ({}),
 });
 

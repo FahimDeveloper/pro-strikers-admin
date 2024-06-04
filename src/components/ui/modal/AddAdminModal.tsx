@@ -21,6 +21,7 @@ const AddAdminModal = () => {
         text: "Passoword does not match",
         confirmButtonColor: "#0ABAC3",
       });
+      return;
     } else {
       formData.append("image", values.image[0].originFileObj);
       delete values.confirm_password;

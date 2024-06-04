@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useAppDispatch } from "../../hooks/useAppHooks";
 import { loggedInUser } from "../../redux/features/auth/authSlice";
+import { Link } from "react-router-dom";
 const Login = () => {
   const dispatch = useAppDispatch();
   const [login, { data, isLoading, isError, isSuccess, error }] =
@@ -41,7 +42,7 @@ const Login = () => {
         <img src={logo} className="w-2/3 object-cover" alt="logo" />
       </div>
       <div className="w-full flex flex-col justify-center gap-10 items-center">
-        <h2 className="text-center font-poppins font-bold text-4xl leading-[46px] text-[#043E41]">
+        <h2 className="text-center font-poppins font-medium text-4xl leading-[46px] text-[#043E41]">
           Welcome to ProStrikers
         </h2>
         <div className="w-[480px] space-y-5">
@@ -70,14 +71,25 @@ const Login = () => {
               className="m-0"
             >
               <Input.Password
-                className="h-10 m-0"
+                className="h-10"
                 prefix={<AiOutlineLock className="size-5" />}
                 placeholder="Password"
               />
             </Form.Item>
-            <Form.Item name="remember" valuePropName="checked">
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+            <div className="flex justify-between">
+              <Form.Item
+                name="remember"
+                valuePropName="checked"
+                className="m-0"
+              >
+                <Checkbox>Remember me</Checkbox>
+              </Form.Item>
+              <Link to="/forget-password">
+                <span className="font-poppins text-primary">
+                  Forgot Password?
+                </span>
+              </Link>
+            </div>
             <Form.Item>
               <Button
                 loading={isLoading}
