@@ -1,14 +1,4 @@
-type TDevelop = {
-  PRODUCTION: boolean;
-  DEVELOPMENT: boolean;
-};
-
-const develop: TDevelop = {
-  PRODUCTION: true,
-  DEVELOPMENT: false,
-};
-
-const production: boolean = develop.PRODUCTION;
+const production: boolean = import.meta.env.PROD;
 
 export const baseUrl = {
   BASE_URL: production
