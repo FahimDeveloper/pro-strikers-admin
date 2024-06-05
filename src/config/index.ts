@@ -8,7 +8,7 @@ const develop: TDevelop = {
   DEVELOPMENT: false,
 };
 
-const production: boolean = develop.DEVELOPMENT;
+const production: boolean = develop.PRODUCTION;
 
 export const baseUrl = {
   BASE_URL: production
