@@ -46,15 +46,27 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 4px !important;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #e5e7eb !important;
+  background-color: #e5e7eb;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #d1d5db !important;
+  background-color: #d1d5db;
+}
+
+.ant-table-body ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ant-table-body ::-webkit-scrollbar-track {
+  background-color: #e5e7eb;
+}
+
+.ant-table-body ::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
 }
 
 .primary-btn {

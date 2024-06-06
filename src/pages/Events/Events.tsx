@@ -206,16 +206,16 @@ const Events = () => {
             filterOption={filterOption}
             options={[
               {
-                label: "All Events",
+                label: "All Type",
                 value: "all",
               },
               {
-                label: "Tournament",
-                value: "tournament",
+                label: "Individual",
+                value: "individual",
               },
               {
-                label: "League",
-                value: "league",
+                label: "Group",
+                value: "group",
               },
             ]}
           />

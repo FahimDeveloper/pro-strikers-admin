@@ -158,6 +158,7 @@ const ClassForm = ({ record, form }: any) => {
             label="Capacity"
           >
             <InputNumber
+              min={0}
               className="w-full"
               placeholder="Enter class capacity"
             />
@@ -169,7 +170,11 @@ const ClassForm = ({ record, form }: any) => {
           className=" m-0"
           label="Class Fee"
         >
-          <InputNumber className="w-52" placeholder="Enter class price" />
+          <InputNumber
+            min={0}
+            className="w-52"
+            placeholder="Enter class price"
+          />
         </Form.Item>
       </Form>
     </>

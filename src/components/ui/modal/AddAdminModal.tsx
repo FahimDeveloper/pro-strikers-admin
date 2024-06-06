@@ -23,11 +23,15 @@ const AddAdminModal = () => {
       });
       return;
     } else {
-      formData.append("image", values.image[0].originFileObj);
       delete values.confirm_password;
-      delete values.image;
-      formData.append("data", JSON.stringify(values));
-      create(formData);
+      if (values.image) {
+        formData.append("image", values.image[0].originFileObj);
+        delete values.image;
+        formData.append("data", JSON.stringify(values));
+        create(formData);
+      } else {
+        create(values);
+      }
     }
   };
   useEffect(() => {

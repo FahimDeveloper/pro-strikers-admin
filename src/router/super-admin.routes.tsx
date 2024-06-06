@@ -51,7 +51,7 @@ const FacilityScheduling = LazyLoad(
 const TeamMembers = LazyLoad(
   lazy(() => import("../pages/TeamMembers/TeamMembers"))
 );
-const Users = LazyLoad(lazy(() => import("../pages/Users/Users")));
+const Clients = LazyLoad(lazy(() => import("../pages/Clients/Clients")));
 const Voucher = LazyLoad(lazy(() => import("../pages/Voucher/Voucher")));
 const AppointmentReports = LazyLoad(
   lazy(() => import("../pages/Reports/AppointmentReports/AppointmentReports"))
@@ -132,9 +132,9 @@ export const superAdminPaths = [
     ],
   },
   {
-    name: "Users",
-    path: "users",
-    element: <Users />,
+    name: "Clients",
+    path: "clients",
+    element: <Clients />,
   },
   {
     name: "Team Members",

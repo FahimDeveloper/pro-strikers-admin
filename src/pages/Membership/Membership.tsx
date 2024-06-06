@@ -7,7 +7,7 @@ import DataPagination from "../../components/common/DataPagination";
 import { useMembershipUsersQuery } from "../../redux/features/user/userApi";
 import { IUser } from "../../types/user.type";
 import moment from "moment";
-import UpdateUserModal from "../../components/ui/modal/UpdateUserModal";
+import UpdateUserModal from "../../components/ui/modal/UpdateClientModal";
 import { BsThreeDots } from "react-icons/bs";
 
 const Membership = () => {

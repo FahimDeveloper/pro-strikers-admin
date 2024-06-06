@@ -2,17 +2,17 @@
 import { Dropdown, Image, Input, Select } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
-import AddUserModal from "../../components/ui/modal/AddUserModal";
+import AddClientModal from "../../components/ui/modal/AddClientModal";
 import DataTable from "../../components/common/DataTable";
 import DataPagination from "../../components/common/DataPagination";
 import { useUsersQuery } from "../../redux/features/user/userApi";
-import UpdateUserModal from "../../components/ui/modal/UpdateUserModal";
-import DeleteUserPopup from "../../components/ui/popup/DeleteUserPopup";
+import UpdateClientModal from "../../components/ui/modal/UpdateClientModal";
+import DeleteClientPopup from "../../components/ui/popup/DeleteClientPopup";
 import { BsThreeDots } from "react-icons/bs";
 import moment from "moment";
 import { IUser } from "../../types/user.type";
 
-const Users = () => {
+const Clients = () => {
   const [membership, setMembership] = useState<boolean | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
@@ -119,11 +119,11 @@ const Users = () => {
         const items = [
           {
             key: "1",
-            label: <UpdateUserModal record={record} />,
+            label: <UpdateClientModal record={record} />,
           },
           {
             key: "2",
-            label: <DeleteUserPopup id={record?._id} />,
+            label: <DeleteClientPopup id={record?._id} />,
           },
         ];
         return (
@@ -174,7 +174,7 @@ const Users = () => {
               {data?.count || 0} clients available
             </p>
           </div>
-          <AddUserModal />
+          <AddClientModal />
         </div>
         <div className="grid grid-cols-4 gap-2 items-center">
           <Input.Search
@@ -221,4 +221,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Clients;

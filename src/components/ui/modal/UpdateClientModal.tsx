@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
-import UserForm from "../form/UserForm";
+import UserForm from "../form/ClientForm";
 import Swal from "sweetalert2";
 import { useUpdateUserMutation } from "../../../redux/features/user/userApi";
 import { CiEdit } from "react-icons/ci";
 
-const UpdateUserModal = ({ record }: any) => {
+const UpdateClientModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = Form.useForm();
@@ -110,4 +110,4 @@ const UpdateUserModal = ({ record }: any) => {
   );
 };
 
-export default UpdateUserModal;
+export default UpdateClientModal;

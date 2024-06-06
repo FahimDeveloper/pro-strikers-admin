@@ -87,8 +87,8 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
                 value: "percentage",
               },
               {
-                label: "Ammount",
-                value: "ammount",
+                label: "Amount",
+                value: "amount",
               },
             ]}
           />
@@ -99,7 +99,11 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
           label="Discount"
           rules={[{ required: true }]}
         >
-          <InputNumber className="w-full" placeholder="Enter discount value" />
+          <InputNumber
+            min={0}
+            className="w-full"
+            placeholder="Enter discount value"
+          />
         </Form.Item>
         <Form.Item
           name="start_date"

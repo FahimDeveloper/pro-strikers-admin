@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDeleteUserMutation } from "../../../redux/features/user/userApi";
 import { MdDeleteOutline } from "react-icons/md";
 
-const DeleteUserPopup = ({ id }: { id: string }) => {
+const DeleteClientPopup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [deleteIt, { data, isLoading, isSuccess, isError, error }] =
     useDeleteUserMutation();
@@ -56,4 +56,4 @@ const DeleteUserPopup = ({ id }: { id: string }) => {
   );
 };
 
-export default DeleteUserPopup;
+export default DeleteClientPopup;

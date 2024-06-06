@@ -125,6 +125,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
             rules={[{ required: true }]}
           >
             <InputNumber
+              min={0}
               placeholder="Enter course capacity"
               className="w-full"
             />
@@ -178,7 +179,11 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
           className=" m-0"
           label="Course Fee"
         >
-          <InputNumber className="w-48" placeholder="Enter class price" />
+          <InputNumber
+            min={0}
+            className="w-48"
+            placeholder="Enter class price"
+          />
         </Form.Item>
         <div className="flex justify-end">
           <Form.Item className="m-0">

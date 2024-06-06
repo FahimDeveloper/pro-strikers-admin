@@ -35,7 +35,7 @@ type TProp = {
   setFileList: any;
 };
 
-const UserForm = ({
+const ClientForm = ({
   form,
   record,
   onFinish,
@@ -115,7 +115,7 @@ const UserForm = ({
           <Form.Item
             name="image"
             className="m-0 mb-2"
-            rules={[{ required: true, message: "Please select user image" }]}
+            rules={[{ required: false, message: "Please select user image" }]}
             valuePropName="fileList"
             getValueFromEvent={normFile}
           >
@@ -315,4 +315,4 @@ const UserForm = ({
   );
 };
 
-export default UserForm;
+export default ClientForm;

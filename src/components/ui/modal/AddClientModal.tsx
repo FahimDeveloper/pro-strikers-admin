@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
-import UserForm from "../form/UserForm";
+import UserForm from "../form/ClientForm";
 import Swal from "sweetalert2";
 import { useCreateUserMutation } from "../../../redux/features/user/userApi";
 
-const AddUserModal = () => {
+const AddClientModal = () => {
   const [open, setModalOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = Form.useForm();
@@ -22,6 +22,7 @@ const AddUserModal = () => {
       });
       return;
     } else {
+      delete values.confirm_password;
       if (
         values.activity &&
         values.package_name == "no package" &&
@@ -36,11 +37,14 @@ const AddUserModal = () => {
       } else {
         values.membership = false;
       }
-      formData.append("image", values.image[0].originFileObj);
-      delete values.confirm_password;
-      delete values.image;
-      formData.append("data", JSON.stringify(values));
-      create(formData);
+      if (values.image) {
+        formData.append("image", values.image[0].originFileObj);
+        delete values.image;
+        formData.append("data", JSON.stringify(values));
+        create(formData);
+      } else {
+        create(values);
+      }
     }
   };
   useEffect(() => {
@@ -98,4 +102,4 @@ const AddUserModal = () => {
   );
 };
 
-export default AddUserModal;
+export default AddClientModal;

@@ -154,12 +154,12 @@ const EventForm = ({
               placeholder="Select type"
               options={[
                 {
-                  label: "League",
-                  value: "league",
+                  label: "Individual",
+                  value: "individual",
                 },
                 {
-                  label: "Tournament",
-                  value: "tournament",
+                  label: "Group",
+                  value: "group",
                 },
               ]}
             />
@@ -243,6 +243,7 @@ const EventForm = ({
             rules={[{ required: true, message: "Enter allowed registration" }]}
           >
             <InputNumber
+              min={0}
               className="w-full"
               placeholder="Enter allowed registration"
             />
@@ -261,7 +262,11 @@ const EventForm = ({
             className="m-0"
             label="Event Fee"
           >
-            <InputNumber className="w-36" placeholder="Enter event fee" />
+            <InputNumber
+              min={0}
+              className="w-36"
+              placeholder="Enter event fee"
+            />
           </Form.Item>
         </div>
         <Form.Item className="flex justify-end m-0">

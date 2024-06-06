@@ -182,7 +182,11 @@ const FacilityForm = ({ record, form }: any) => {
           className=" m-0"
           label="Facility Fee"
         >
-          <InputNumber className="w-48" placeholder="Enter class price" />
+          <InputNumber
+            min={0}
+            className="w-48"
+            placeholder="Enter class price"
+          />
         </Form.Item>
       </Form>
     </>
