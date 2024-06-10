@@ -71,7 +71,7 @@ const Orders = () => {
       key: "product",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
-          {text?.name}
+          {text?.product_name}
         </p>
       ),
     },
