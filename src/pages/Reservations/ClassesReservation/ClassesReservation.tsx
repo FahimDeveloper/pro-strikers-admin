@@ -10,8 +10,10 @@ import AddClassReservationModal from "../../../components/ui/modal/AddClassReser
 import moment from "moment";
 import DeleteClassReservationPopup from "../../../components/ui/popup/DeleteCalssReservationPopup";
 import UpdateClassReservationModal from "../../../components/ui/modal/UpdateClassReservationModal";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const ClassesReservation = () => {
+  const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -43,6 +45,23 @@ const ClassesReservation = () => {
     setPage(page);
     setLimit(size);
   };
+
+  const options = trainerData?.results?.map((trainer: any) => {
+    return {
+      value: `${trainer.first_name} ${trainer.last_name}`,
+      label: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
+  let trainerOptions;
+  if (options) {
+    trainerOptions = [
+      {
+        label: "All Trainer",
+        value: "all",
+      },
+      ...options,
+    ];
+  }
 
   const filterOption = (
     input: string,
@@ -239,24 +258,7 @@ const ClassesReservation = () => {
           optionFilterProp="children"
           onChange={(value) => onChange(value, "trainer")}
           filterOption={filterOption}
-          options={[
-            {
-              label: "All Trainer",
-              value: "all",
-            },
-            {
-              label: "Kavindu",
-              value: "kavindu",
-            },
-            {
-              label: "Fahim",
-              value: "fahim",
-            },
-            {
-              label: "Hasan",
-              value: "hasan",
-            },
-          ]}
+          options={trainerOptions}
         />
       </div>
       <DataTable

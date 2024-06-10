@@ -7,8 +7,10 @@ import { ColumnsType } from "antd/es/table";
 import DeleteVoucherPopup from "../../../components/ui/popup/DeleteVoucherPopup";
 import { BsThreeDots } from "react-icons/bs";
 import { useAppointmentOneOnOneReservationsQuery } from "../../../redux/features/reservation/appointmentOneOnOneReservatonApi";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const AppointmentOneOnOneReservation = () => {
+  const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -22,6 +24,22 @@ const AppointmentOneOnOneReservation = () => {
       page,
       limit,
     });
+  const options = trainerData?.results?.map((trainer: any) => {
+    return {
+      value: `${trainer.first_name} ${trainer.last_name}`,
+      label: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
+  let trainerOptions;
+  if (options) {
+    trainerOptions = [
+      {
+        label: "All Trainer",
+        value: "all",
+      },
+      ...options,
+    ];
+  }
   const onChange = (value: string, filter: string) => {
     if (filter === "sport") {
       if (value == "all") {
@@ -216,24 +234,7 @@ const AppointmentOneOnOneReservation = () => {
           optionFilterProp="children"
           onChange={(value) => onChange(value, "trainer")}
           filterOption={filterOption}
-          options={[
-            {
-              label: "All Trainer",
-              value: "all",
-            },
-            {
-              label: "Kavindu",
-              value: "kavindu",
-            },
-            {
-              label: "Fahim",
-              value: "fahim",
-            },
-            {
-              label: "Hasan",
-              value: "hasan",
-            },
-          ]}
+          options={trainerOptions}
         />
       </div>
       <DataTable

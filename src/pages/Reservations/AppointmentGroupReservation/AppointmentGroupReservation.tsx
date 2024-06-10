@@ -7,8 +7,10 @@ import { ColumnsType } from "antd/es/table";
 import DeleteVoucherPopup from "../../../components/ui/popup/DeleteVoucherPopup";
 import { BsThreeDots } from "react-icons/bs";
 import { useAppointmentGroupReservationsQuery } from "../../../redux/features/reservation/appointmentGroupReservatonApi";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const AppointmentGroupReservation = () => {
+  const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -53,6 +55,22 @@ const AppointmentGroupReservation = () => {
       setSearch(value);
     }
   };
+  const options = trainerData?.results?.map((trainer: any) => {
+    return {
+      value: `${trainer.first_name} ${trainer.last_name}`,
+      label: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
+  let trainerOptions;
+  if (options) {
+    trainerOptions = [
+      {
+        label: "All Trainer",
+        value: "all",
+      },
+      ...options,
+    ];
+  }
   const columns: ColumnsType<any> = [
     {
       width: 70,
@@ -162,7 +180,7 @@ const AppointmentGroupReservation = () => {
     <div className="space-y-5">
       <div className="space-y-1">
         <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-          Appointment One On One Reservation
+          Appointment Group Reservation
         </h2>
         <p className="text-[#838383] font-semibold text-lg">
           {data?.count || 0} reservation available
@@ -215,24 +233,7 @@ const AppointmentGroupReservation = () => {
           optionFilterProp="children"
           onChange={(value) => onChange(value, "trainer")}
           filterOption={filterOption}
-          options={[
-            {
-              label: "All Trainer",
-              value: "all",
-            },
-            {
-              label: "Kavindu",
-              value: "kavindu",
-            },
-            {
-              label: "Fahim",
-              value: "fahim",
-            },
-            {
-              label: "Hasan",
-              value: "hasan",
-            },
-          ]}
+          options={trainerOptions}
         />
       </div>
       <DataTable
