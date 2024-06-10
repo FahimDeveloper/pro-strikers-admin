@@ -24,9 +24,9 @@ const AddClientModal = () => {
     } else {
       delete values.confirm_password;
       if (
-        values.activity &&
-        values.package_name == "no package" &&
-        values.plan == "no plan"
+        !values.activity &&
+        values.package_name !== "no membership" &&
+        values.plan !== "no plan"
       ) {
         values.membership = true;
         const issueDate = new Date();

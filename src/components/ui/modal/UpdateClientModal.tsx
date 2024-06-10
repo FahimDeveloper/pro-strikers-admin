@@ -15,7 +15,7 @@ const UpdateClientModal = ({ record }: any) => {
   const onFinish = (values: any) => {
     if (
       values.activity &&
-      values.package_name !== "no package" &&
+      values.package_name !== "no membership" &&
       values.plan !== "no plan"
     ) {
       values.membership = true;
@@ -38,7 +38,7 @@ const UpdateClientModal = ({ record }: any) => {
       }
     } else if (
       !values.activity &&
-      values.package_name == "no package" &&
+      values.package_name == "no membership" &&
       values.plan == "no plan"
     ) {
       values.membership = false;
