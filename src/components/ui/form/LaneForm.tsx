@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Input, InputNumber, Select, Switch } from "antd";
+import { Button, Form, Input, InputNumber, Switch } from "antd";
 import { useEffect, useState } from "react";
 import { BiMinusCircle } from "react-icons/bi";
 
@@ -82,20 +82,7 @@ const LaneForm = ({ form, loading, onFinish, record }: TProp) => {
                       },
                     ]}
                   >
-                    <Select
-                      disabled={!addon}
-                      placeholder="Select Addon"
-                      options={[
-                        {
-                          label: "Color",
-                          value: "color",
-                        },
-                        {
-                          label: "Size",
-                          value: "size",
-                        },
-                      ]}
-                    />
+                    <Input disabled={!addon} placeholder="Enter your addon" />
                   </Form.Item>
                   <Form.Item
                     className="m-0"

@@ -35,13 +35,16 @@ const FacilityScheduling = () => {
       label: `${trainer.first_name} ${trainer.last_name}`,
     };
   });
-  const trainerOptions = [
-    {
-      label: "All Trainer",
-      value: "all",
-    },
-    ...options,
-  ];
+  let trainerOptions;
+  if (options) {
+    trainerOptions = [
+      {
+        label: "All Trainer",
+        value: "all",
+      },
+      ...options,
+    ];
+  }
   const columns: ColumnsType<IFacilitySchedule> = [
     {
       width: 70,
