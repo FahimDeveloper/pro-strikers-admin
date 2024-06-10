@@ -54,7 +54,7 @@ const UpdateProductModal = ({ record }: any) => {
         oldImages.push(image.url);
       }
     });
-    if (newImages) {
+    if (newImages.length > 0) {
       newImages.map((image: any) => {
         formData.append("image", image);
       });
