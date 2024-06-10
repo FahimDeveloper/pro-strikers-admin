@@ -51,7 +51,7 @@ const LaneForm = ({ form, loading, onFinish, record }: TProp) => {
         <Input.TextArea rows={4} placeholder="Enter lane description" />
       </Form.Item>
       <Form.Item
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         name="addon"
         className="m-0"
         label="Addon"

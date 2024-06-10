@@ -9,8 +9,8 @@ const FacilityForm = ({ record, form }: any) => {
   const { data: trainerData } = useTrainersQuery(undefined);
   const laneOptions = laneData?.results?.map((lane: any) => {
     return {
-      label: lane.title,
-      value: lane.title,
+      label: lane.lane_title,
+      value: lane.lane_title,
     };
   });
   const trainerOptions = trainerData?.results?.map((trainer: any) => {

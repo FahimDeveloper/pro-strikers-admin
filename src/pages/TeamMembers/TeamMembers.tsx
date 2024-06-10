@@ -40,7 +40,10 @@ const TeamMembers = () => {
       key: "full_name",
       render: (_, record) => (
         <div className="flex items-center ms-5 gap-5">
-          <Image src={record?.image} style={{ width: 50 }} />
+          <Image
+            src={record?.image}
+            style={{ width: 50, height: 50, objectFit: "contain" }}
+          />
           <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
             {record?.first_name} {record?.last_name}
           </p>
