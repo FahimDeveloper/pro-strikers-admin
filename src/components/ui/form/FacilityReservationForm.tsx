@@ -8,12 +8,14 @@ import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import { useFacilityByDateMutation } from "../../../redux/features/schedule/facilityScheduleApi";
 import { createTimeSlots } from "../../../utils/createTimeSlots";
+import { useForm } from "antd/es/form/Form";
 
 type TProp = {
   record?: any;
   form: any;
   onFinish: any;
   loading: boolean;
+  isSuccess?: boolean;
 };
 
 const FacilityReservationForm = ({
@@ -21,10 +23,12 @@ const FacilityReservationForm = ({
   form,
   onFinish,
   loading,
+  isSuccess,
 }: TProp) => {
   dayjs.extend(weekday);
   dayjs.extend(localeData);
   const [facilityDate, setFacilityDate] = useState("");
+  const [checkForm] = useForm();
   const { data: usres } = useUsersEmailQuery(undefined);
   const [facilityByDate, { data, isLoading, isError, error }] =
     useFacilityByDateMutation();
@@ -70,7 +74,10 @@ const FacilityReservationForm = ({
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [isError, error]);
+    if (isSuccess) {
+      checkForm.resetFields();
+    }
+  }, [isError, error, isSuccess, checkForm]);
   const onCheckFinish = (values: any) => {
     facilityByDate(values);
     setFacilityDate(values.date);
@@ -78,7 +85,7 @@ const FacilityReservationForm = ({
   return (
     <div className="space-y-5">
       {!record && (
-        <Form onFinish={onCheckFinish} layout="vertical">
+        <Form onFinish={onCheckFinish} form={checkForm} layout="vertical">
           <div className="grid grid-cols-5 gap-3">
             <Form.Item
               className="col-span-3 m-0"

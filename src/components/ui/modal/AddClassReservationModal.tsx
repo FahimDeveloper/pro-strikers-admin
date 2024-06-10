@@ -58,6 +58,7 @@ const AddClassReservationModal = () => {
       >
         <div className="my-5">
           <ClassReservationForm
+            isSuccess={isSuccess}
             form={form}
             onFinish={onFinish}
             loading={isLoading}

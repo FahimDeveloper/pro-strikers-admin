@@ -7,15 +7,23 @@ import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
+import { useForm } from "antd/es/form/Form";
 
 type TProp = {
   record?: any;
   form: any;
   onFinish: any;
   loading: boolean;
+  isSuccess?: boolean;
 };
 
-const ClassReservationForm = ({ record, form, onFinish, loading }: TProp) => {
+const ClassReservationForm = ({
+  record,
+  form,
+  onFinish,
+  isSuccess,
+  loading,
+}: TProp) => {
   dayjs.extend(weekday);
   dayjs.extend(localeData);
   const [classDate, setClassDate] = useState("");
@@ -28,6 +36,7 @@ const ClassReservationForm = ({ record, form, onFinish, loading }: TProp) => {
       label: user.email,
     };
   });
+  const [checkForm] = useForm();
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
@@ -39,7 +48,6 @@ const ClassReservationForm = ({ record, form, onFinish, loading }: TProp) => {
           ? dayjs(record?.class_date, "DD/MM/YYYY")
           : "",
       });
-      console.log();
     }
     if (data?.results) {
       form.setFieldsValue({
@@ -59,7 +67,10 @@ const ClassReservationForm = ({ record, form, onFinish, loading }: TProp) => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [isError, error]);
+    if (isSuccess) {
+      checkForm.resetFields();
+    }
+  }, [isError, error, isSuccess, checkForm]);
   const onCheckFinish = (values: any) => {
     classByDate(values);
     setClassDate(values.date);
@@ -67,7 +78,7 @@ const ClassReservationForm = ({ record, form, onFinish, loading }: TProp) => {
   return (
     <div className="space-y-5">
       {!record && (
-        <Form onFinish={onCheckFinish} layout="vertical">
+        <Form onFinish={onCheckFinish} form={checkForm} layout="vertical">
           <div className="grid grid-cols-5 gap-3">
             <Form.Item
               className="col-span-3 m-0"

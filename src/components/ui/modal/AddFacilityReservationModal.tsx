@@ -58,6 +58,7 @@ const AddFacilityReservationModal = () => {
       >
         <div className="my-5">
           <FacilityReservationForm
+            isSuccess={isSuccess}
             form={form}
             onFinish={onFinish}
             loading={isLoading}

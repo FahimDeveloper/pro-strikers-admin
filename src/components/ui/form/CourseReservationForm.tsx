@@ -7,15 +7,23 @@ import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import { useCourseByDateMutation } from "../../../redux/features/schedule/courseScheduleApi";
+import { useForm } from "antd/es/form/Form";
 
 type TProp = {
   record?: any;
   form: any;
   onFinish: any;
   loading: boolean;
+  isSuccess?: boolean;
 };
 
-const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
+const CourseReservationForm = ({
+  record,
+  form,
+  onFinish,
+  loading,
+  isSuccess,
+}: TProp) => {
   dayjs.extend(weekday);
   dayjs.extend(localeData);
   const { data: usres } = useUsersEmailQuery(undefined);
@@ -27,6 +35,7 @@ const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
       label: user.email,
     };
   });
+  const [checkForm] = useForm();
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
@@ -57,14 +66,17 @@ const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [isError, error]);
+    if (isSuccess) {
+      checkForm.resetFields();
+    }
+  }, [isError, error, isSuccess, checkForm]);
   const onCheckFinish = (values: any) => {
     classByDate(values);
   };
   return (
     <div className="space-y-5">
       {!record && (
-        <Form onFinish={onCheckFinish} layout="vertical">
+        <Form onFinish={onCheckFinish} form={checkForm} layout="vertical">
           <div className="flex gap-2">
             <Form.Item
               className="m-0 w-full"
