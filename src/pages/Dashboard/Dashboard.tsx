@@ -1,7 +1,12 @@
 import PieAnalytics from "../../components/common/PieAnalytics";
 import TotalViewAnalysis from "../../components/common/TotalViewAnalysis";
+import { useAppSelector } from "../../hooks/useAppHooks";
+import { useAdminQuery } from "../../redux/features/admin/adminApi";
 
 const Dashboard = () => {
+  const { user } = useAppSelector((state) => state.auth);
+  const { data } = useAdminQuery(user?._id);
+  console.log(data);
   const sportsData = [
     {
       type: "cricket",
@@ -62,7 +67,6 @@ const Dashboard = () => {
       state_value: "20%",
     },
   ];
-
   return (
     <div className="space-y-5">
       <TotalViewAnalysis data={totalViewData} />

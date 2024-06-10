@@ -7,6 +7,7 @@ const TotalViewAnalysis = ({ data }: any) => {
       {data.map((item: any, index: number) => {
         return (
           <div
+            key={index}
             className={`space-y-3 border-[#E9EAEC] border-solid border-0 ${
               (index == 0 && "border-r") || (index == 1 && "border-r")
             }`}

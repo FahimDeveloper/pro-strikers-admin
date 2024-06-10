@@ -1,8 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const AppointmentForm = ({ record, form }: any) => {
+  const { data: trainerData } = useTrainersQuery(undefined);
+  const trainerOptions = trainerData?.results?.map((trainer: any) => {
+    return {
+      label: `${trainer.first_name} ${trainer.last_name}`,
+      value: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
@@ -110,23 +118,7 @@ const AppointmentForm = ({ record, form }: any) => {
             className="w-full m-0"
             label="Trainer"
           >
-            <Select
-              placeholder="Select trainer"
-              options={[
-                {
-                  label: "Kavindu",
-                  value: "kavindu",
-                },
-                {
-                  label: "Fahim",
-                  value: "fahim",
-                },
-                {
-                  label: "Hasan",
-                  value: "hasan",
-                },
-              ]}
-            />
+            <Select placeholder="Select trainer" options={trainerOptions} />
           </Form.Item>
         </div>
         <Form.Item

@@ -13,7 +13,7 @@ const AddGroupAppointmentReservationModal = ({ record }: any) => {
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateAppointmentGroupReservationMutation();
   const onFinish = (values: any) => {
-    console.log(values);
+    update(values);
   };
   useEffect(() => {
     if (isSuccess) {

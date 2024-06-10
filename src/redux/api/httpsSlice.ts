@@ -83,7 +83,7 @@ export const storeApiSlice = createApi({
 export const laneApiSlice = createApi({
   reducerPath: "laneApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["lanes", "lane"],
+  tagTypes: ["lanes", "lane", "lane-title"],
   endpoints: () => ({}),
 });
 

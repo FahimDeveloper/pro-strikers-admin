@@ -51,7 +51,7 @@ const PieAnalytics = ({ data, text }: any) => {
       <div className="grid grid-cols-2 gap-5 items-center h-full">
         <div className="2xl:space-y-3 space-y-2">
           {data.map((item: any, index: number) => (
-            <div className="flex justify-between items-center">
+            <div key={index} className="flex justify-between items-center">
               <div key={item.type} className="flex items-center gap-5">
                 <div
                   className="size-3 rounded-full"

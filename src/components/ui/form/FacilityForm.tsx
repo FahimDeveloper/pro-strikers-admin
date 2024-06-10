@@ -1,8 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
+import { useLaneTitleQuery } from "../../../redux/features/Lane/laneApi";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const FacilityForm = ({ record, form }: any) => {
+  const { data: laneData } = useLaneTitleQuery(undefined);
+  const { data: trainerData } = useTrainersQuery(undefined);
+  const laneOptions = laneData?.results?.map((lane: any) => {
+    return {
+      label: lane.title,
+      value: lane.title,
+    };
+  });
+  const trainerOptions = trainerData?.results?.map((trainer: any) => {
+    return {
+      label: `${trainer.first_name} ${trainer.last_name}`,
+      value: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
@@ -101,27 +117,7 @@ const FacilityForm = ({ record, form }: any) => {
             label="Lane"
             rules={[{ required: true, message: "Please select Lane" }]}
           >
-            <Select
-              placeholder="Select lane"
-              options={[
-                {
-                  label: "Lane 1",
-                  value: "lane 1",
-                },
-                {
-                  label: "Lane 2",
-                  value: "lane 2",
-                },
-                {
-                  label: "Lane 3",
-                  value: "lane 3",
-                },
-                {
-                  label: "Lane 4",
-                  value: "lane 4",
-                },
-              ]}
-            />
+            <Select placeholder="Select lane" options={laneOptions} />
           </Form.Item>
           <Form.Item
             name="facility_duration"
@@ -149,23 +145,7 @@ const FacilityForm = ({ record, form }: any) => {
             className="w-full m-0"
             label="Trainer"
           >
-            <Select
-              placeholder="Select trainer"
-              options={[
-                {
-                  label: "Kavindu",
-                  value: "kavindu",
-                },
-                {
-                  label: "Fahim",
-                  value: "fahim",
-                },
-                {
-                  label: "Hasan",
-                  value: "hasan",
-                },
-              ]}
-            />
+            <Select placeholder="Select trainer" options={trainerOptions} />
           </Form.Item>
         </div>
         <Form.Item

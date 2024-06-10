@@ -12,6 +12,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { useEffect } from "react";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 type TProp = {
   record?: any;
@@ -21,6 +22,13 @@ type TProp = {
 };
 
 const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
+  const { data: trainerData } = useTrainersQuery(undefined);
+  const trainerOptions = trainerData?.results?.map((trainer: any) => {
+    return {
+      label: `${trainer.first_name} ${trainer.last_name}`,
+      value: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
   dayjs.extend(weekday);
   dayjs.extend(localeData);
   useEffect(() => {
@@ -100,23 +108,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
             className="w-full m-0"
             label="Trainer"
           >
-            <Select
-              placeholder="Select trainer"
-              options={[
-                {
-                  label: "Kavindu",
-                  value: "kavindu",
-                },
-                {
-                  label: "Fahim",
-                  value: "fahim",
-                },
-                {
-                  label: "Hasan",
-                  value: "hasan",
-                },
-              ]}
-            />
+            <Select placeholder="Select trainer" options={trainerOptions} />
           </Form.Item>
           <Form.Item
             name="capacity"

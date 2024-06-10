@@ -13,7 +13,6 @@ const OneOnOneApppointmentReservationForm = ({
   record,
   form,
   onFinish,
-  loading,
 }: TProp) => {
   useEffect(() => {
     if (record) {

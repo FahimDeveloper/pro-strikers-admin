@@ -19,13 +19,20 @@ const laneApi = laneApiSlice.injectEndpoints({
       }),
       providesTags: ["lane"],
     }),
+    laneTitle: builder.query({
+      query: () => ({
+        url: `/lanes/lane-title`,
+        method: "GET",
+      }),
+      providesTags: ["lane-title"],
+    }),
     createLane: builder.mutation<any, any>({
       query: (body) => ({
         url: "/lanes/create",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["lanes"],
+      invalidatesTags: ["lanes", "lane-title"],
     }),
     updateLane: builder.mutation<any, any>({
       query: ({ id, body }) => ({
@@ -51,4 +58,5 @@ export const {
   useCreateLaneMutation,
   useUpdateLaneMutation,
   useDeleteLaneMutation,
+  useLaneTitleQuery,
 } = laneApi;

@@ -12,7 +12,9 @@ const AddOneOnOneAppointmentReservationModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateAppointmentOneOnOneReservationMutation();
   const onFinish = (values: any) => {
-    console.log(values);
+    const issueDate = new Date();
+    values.issue_date = issueDate.toISOString();
+    create(values);
   };
   useEffect(() => {
     if (isSuccess) {
