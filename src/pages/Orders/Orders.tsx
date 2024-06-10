@@ -54,7 +54,7 @@ const Orders = () => {
       ),
     },
     {
-      width: 250,
+      width: 260,
       align: "center",
       title: "Email",
       dataIndex: "user_email",
