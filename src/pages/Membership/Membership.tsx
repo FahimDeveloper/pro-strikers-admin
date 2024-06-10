@@ -249,7 +249,7 @@ const Membership = () => {
       <div className="space-y-5">
         <div className="space-y-1">
           <h3 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Membership
+            Membership Clinets
           </h3>
           <p className="text-[#838383] font-semibold text-lg">
             {data?.count || 0} membership clients available

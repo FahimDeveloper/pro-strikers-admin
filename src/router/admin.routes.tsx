@@ -137,8 +137,8 @@ export const adminPaths = [
     element: <Clients />,
   },
   {
-    name: "Membership",
-    path: "membership",
+    name: "Membership Clients",
+    path: "membership-clients",
     element: <Membership />,
   },
   {

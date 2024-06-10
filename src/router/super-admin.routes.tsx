@@ -164,8 +164,8 @@ export const superAdminPaths = [
     element: <TeamMembers />,
   },
   {
-    name: "Membership",
-    path: "membership",
+    name: "Membership Clients",
+    path: "membership-clients",
     element: <Membership />,
   },
   {
