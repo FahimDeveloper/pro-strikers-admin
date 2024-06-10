@@ -37,7 +37,7 @@ const courseReservationApi = courseReservationApiSlice.injectEndpoints({
     }),
     deleteCourseReservation: builder.mutation<any, any>({
       query: (id) => ({
-        url: `/reservations/coursees/delete/${id}`,
+        url: `/reservations/courses/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["reservations"],

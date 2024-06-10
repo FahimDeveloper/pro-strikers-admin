@@ -77,7 +77,7 @@ const AddClientModal = () => {
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="primary-btn">
-        Add User
+        Add Client
       </button>
       <Modal
         width={800}
