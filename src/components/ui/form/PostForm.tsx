@@ -201,7 +201,6 @@ const PostForm = ({
             config={config}
             onChange={(value) => setContent(value)}
           />
-          {/* // <Input.TextArea placeholder="Enter the content" rows={6} /> */}
         </Form.Item>
         <Form.Item className="flex justify-end">
           <Button loading={loading} htmlType="submit" className="primary-btn">

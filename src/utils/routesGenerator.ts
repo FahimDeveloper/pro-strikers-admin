@@ -16,10 +16,22 @@ export const routesGenerator = (routesPath: TPath[]) => {
     }
     if (route.children) {
       route.children.forEach((child) => {
-        acc.push({
-          path: child.path!,
-          element: child.element,
-        });
+        if (child.path && child.element) {
+          acc.push({
+            path: child.path!,
+            element: child.element,
+          });
+        }
+        if (child.children) {
+          child.children.forEach((grandChild) => {
+            if (grandChild.path && grandChild.element) {
+              acc.push({
+                path: grandChild.path!,
+                element: grandChild.element,
+              });
+            }
+          });
+        }
       });
     }
     return acc;

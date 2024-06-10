@@ -2,13 +2,21 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import {
   adminApiSlice,
+  appointmentGroupReservationApiSlice,
+  appointmentOneOnOneReservationApiSlice,
   appointmentScheduleApiSlice,
   authApiSlice,
+  classReservationApiSlice,
   classScheduleApiSlice,
+  courseReservationApiSlice,
   courseScheduleApiSlice,
   eventApiSlice,
+  facilityReservationApiSlice,
   facilityScheduleApiSlice,
+  laneApiSlice,
+  orderApiSlice,
   postApiSlice,
+  storeApiSlice,
   userApiSlice,
   voucherApiSlice,
 } from "../api/httpsSlice";
@@ -33,7 +41,18 @@ export const rootReducers = combineReducers({
   [eventApiSlice.reducerPath]: eventApiSlice.reducer,
   [postApiSlice.reducerPath]: postApiSlice.reducer,
   [voucherApiSlice.reducerPath]: voucherApiSlice.reducer,
+  [storeApiSlice.reducerPath]: storeApiSlice.reducer,
+  [laneApiSlice.reducerPath]: laneApiSlice.reducer,
+  [orderApiSlice.reducerPath]: orderApiSlice.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
+  [appointmentGroupReservationApiSlice.reducerPath]:
+    appointmentGroupReservationApiSlice.reducer,
+  [appointmentOneOnOneReservationApiSlice.reducerPath]:
+    appointmentOneOnOneReservationApiSlice.reducer,
+  [classReservationApiSlice.reducerPath]: classReservationApiSlice.reducer,
+  [courseReservationApiSlice.reducerPath]: courseReservationApiSlice.reducer,
+  [facilityReservationApiSlice.reducerPath]:
+    facilityReservationApiSlice.reducer,
   auth: persistedAuthReducer,
 });
 
@@ -47,5 +66,13 @@ export const rootMiddlewares = [
   eventApiSlice.middleware,
   postApiSlice.middleware,
   voucherApiSlice.middleware,
+  storeApiSlice.middleware,
+  laneApiSlice.middleware,
+  orderApiSlice.middleware,
   userApiSlice.middleware,
+  appointmentGroupReservationApiSlice.middleware,
+  appointmentOneOnOneReservationApiSlice.middleware,
+  classReservationApiSlice.middleware,
+  courseReservationApiSlice.middleware,
+  facilityReservationApiSlice.middleware,
 ];

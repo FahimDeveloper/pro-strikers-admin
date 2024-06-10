@@ -20,6 +20,13 @@ const adminApi = adminApiSlice.injectEndpoints({
       }),
       providesTags: ["admin"],
     }),
+    trainers: builder.query({
+      query: () => ({
+        url: `/admins/trainers`,
+        method: "GET",
+      }),
+      providesTags: ["trianers"],
+    }),
     createAdmin: builder.mutation<any, any>({
       query: (body) => ({
         url: "/admins/create",
@@ -52,4 +59,5 @@ export const {
   useCreateAdminMutation,
   useUpdateAdminMutation,
   useDeleteAdminMutation,
+  useTrainersQuery,
 } = adminApi;

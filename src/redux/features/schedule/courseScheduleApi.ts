@@ -26,6 +26,13 @@ const courseScheduleApi = courseScheduleApiSlice.injectEndpoints({
       }),
       providesTags: ["course"],
     }),
+    courseByDate: builder.mutation<any, any>({
+      query: (body) => ({
+        url: `/schedule/courses/by-date`,
+        method: "POST",
+        body: body,
+      }),
+    }),
     createCourse: builder.mutation<any, ICourseSchedule>({
       query: (body) => ({
         url: "/schedule/courses/create",
@@ -61,4 +68,5 @@ export const {
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
+  useCourseByDateMutation,
 } = courseScheduleApi;

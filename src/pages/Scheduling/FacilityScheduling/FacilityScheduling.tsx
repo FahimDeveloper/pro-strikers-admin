@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dropdown, Input, Select } from "antd";
+import { Dropdown, Input, Select, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
@@ -10,6 +10,7 @@ import { IFacilitySchedule } from "../../../types/facilitySchedule.types";
 import UpdateFacilityModal from "../../../components/ui/modal/UpdateFacilityModal";
 import DeleteFacilityPopup from "../../../components/ui/popup/DeleteFacilityPopup";
 import { BsThreeDots } from "react-icons/bs";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const FacilityScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -26,6 +27,21 @@ const FacilityScheduling = () => {
     page,
     limit,
   });
+  const { Paragraph } = Typography;
+  const { data: trainerData } = useTrainersQuery(undefined);
+  const options = trainerData?.results?.map((trainer: any) => {
+    return {
+      value: `${trainer.first_name} ${trainer.last_name}`,
+      label: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
+  const trainerOptions = [
+    {
+      label: "All Trainer",
+      value: "all",
+    },
+    ...options,
+  ];
   const columns: ColumnsType<IFacilitySchedule> = [
     {
       width: 70,
@@ -36,6 +52,27 @@ const FacilityScheduling = () => {
       render: (_, _record, index) => {
         return <>{page * limit + index + 1 - limit}</>;
       },
+    },
+    {
+      width: 240,
+      title: "Course ID",
+      align: "center",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text) => (
+        <Paragraph
+          copyable={{
+            text: async () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(text);
+                }, 500);
+              }),
+          }}
+        >
+          {text}
+        </Paragraph>
+      ),
     },
     {
       width: 220,
@@ -273,24 +310,7 @@ const FacilityScheduling = () => {
               optionFilterProp="children"
               onChange={(value) => onChange(value, "trainer")}
               filterOption={filterOption}
-              options={[
-                {
-                  label: "All Trainer",
-                  value: "all",
-                },
-                {
-                  label: "Kavindu",
-                  value: "kavindu",
-                },
-                {
-                  label: "Fahim",
-                  value: "fahim",
-                },
-                {
-                  label: "Hasan",
-                  value: "hasan",
-                },
-              ]}
+              options={trainerOptions}
             />
           </div>
         </div>

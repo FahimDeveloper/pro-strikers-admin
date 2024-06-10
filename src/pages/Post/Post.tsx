@@ -66,7 +66,7 @@ const Post = () => {
       title: "Publish Date",
       align: "center",
       dataIndex: "createdAt",
-      key: "created_at",
+      key: "createdAt",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
           {moment(text).format("DD/MM/YYYY")}

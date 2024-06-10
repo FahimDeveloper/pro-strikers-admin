@@ -26,7 +26,14 @@ const userApi = userApiSlice.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: ["users"],
+      providesTags: ["membership-users"],
+    }),
+    usersEmail: builder.query({
+      query: () => ({
+        url: "/users/email",
+        method: "GET",
+      }),
+      providesTags: ["users-email"],
     }),
     user: builder.query<any, any>({
       query: (id) => ({
@@ -68,4 +75,5 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useUsersEmailQuery,
 } = userApi;

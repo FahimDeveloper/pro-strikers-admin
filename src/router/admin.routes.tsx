@@ -7,11 +7,22 @@ const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
 const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
 const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
-const AppointmentReservation = LazyLoad(
+const LaneManage = LazyLoad(
+  lazy(() => import("../pages/LaneManage/LaneManage"))
+);
+const AppointmentOneOnOneReservation = LazyLoad(
   lazy(
     () =>
       import(
-        "../pages/Reservations/AppointmentReservation/AppointmentReservation"
+        "../pages/Reservations/AppointmentOneOnOneReservation/AppointmentOneOnOneReservation"
+      )
+  )
+);
+const AppointmentGroupReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/AppointmentGroupReservation/AppointmentGroupReservation"
       )
   )
 );
@@ -95,8 +106,18 @@ export const adminPaths = [
       },
       {
         name: "Appointment",
-        path: "reservation/appointment",
-        element: <AppointmentReservation />,
+        children: [
+          {
+            name: "One On One",
+            path: "reservation/appointment/one-on-one",
+            element: <AppointmentOneOnOneReservation />,
+          },
+          {
+            name: "Group",
+            path: "reservation/appointment/group",
+            element: <AppointmentGroupReservation />,
+          },
+        ],
       },
       {
         name: "Facility",
@@ -119,6 +140,11 @@ export const adminPaths = [
     name: "Membership",
     path: "membership",
     element: <Membership />,
+  },
+  {
+    name: "Lane Manage",
+    path: "lane-manage",
+    element: <LaneManage />,
   },
   {
     name: "Store",

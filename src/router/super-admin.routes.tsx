@@ -7,13 +7,8 @@ const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
 const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
 const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
-const AppointmentReservation = LazyLoad(
-  lazy(
-    () =>
-      import(
-        "../pages/Reservations/AppointmentReservation/AppointmentReservation"
-      )
-  )
+const LaneManage = LazyLoad(
+  lazy(() => import("../pages/LaneManage/LaneManage"))
 );
 const ClassesReservation = LazyLoad(
   lazy(
@@ -31,12 +26,29 @@ const FacilityReservation = LazyLoad(
       import("../pages/Reservations/FacilityReservation/FacilityReservation")
   )
 );
+const AppointmentOneOnOneReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/AppointmentOneOnOneReservation/AppointmentOneOnOneReservation"
+      )
+  )
+);
+const AppointmentGroupReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/AppointmentGroupReservation/AppointmentGroupReservation"
+      )
+  )
+);
 const AppointmentScheduling = LazyLoad(
   lazy(
     () =>
       import("../pages/Scheduling/AppointmentScheduling/AppointmentScheduling")
   )
 );
+
 const ClassesScheduling = LazyLoad(
   lazy(() => import("../pages/Scheduling/ClassesScheduling/ClassesScheduling"))
 );
@@ -116,8 +128,18 @@ export const superAdminPaths = [
       },
       {
         name: "Appointment",
-        path: "reservation/appointment",
-        element: <AppointmentReservation />,
+        children: [
+          {
+            name: "One On One",
+            path: "reservation/appointment/one-on-one",
+            element: <AppointmentOneOnOneReservation />,
+          },
+          {
+            name: "Group",
+            path: "reservation/appointment/group",
+            element: <AppointmentGroupReservation />,
+          },
+        ],
       },
       {
         name: "Facility",
@@ -145,6 +167,11 @@ export const superAdminPaths = [
     name: "Membership",
     path: "membership",
     element: <Membership />,
+  },
+  {
+    name: "Lane Manage",
+    path: "lane-manage",
+    element: <LaneManage />,
   },
   {
     name: "Store",

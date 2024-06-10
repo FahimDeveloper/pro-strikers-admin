@@ -13,14 +13,14 @@ export const authApiSlice = createApi({
 export const adminApiSlice = createApi({
   reducerPath: "adminApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["admins", "admin"],
+  tagTypes: ["admins", "admin", "trianers"],
   endpoints: () => ({}),
 });
 
 export const userApiSlice = createApi({
   reducerPath: "userApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["users", "user"],
+  tagTypes: ["users", "user", "membership-users", "users-email"],
   endpoints: () => ({}),
 });
 
@@ -34,7 +34,7 @@ export const appointmentScheduleApiSlice = createApi({
 export const classScheduleApiSlice = createApi({
   reducerPath: "classScheduleApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["class", "classes"],
+  tagTypes: ["class", "classes", "class-by-date"],
   endpoints: () => ({}),
 });
 
@@ -70,5 +70,59 @@ export const voucherApiSlice = createApi({
   reducerPath: "voucherApi",
   baseQuery: baseQueryWithRefreshToken,
   tagTypes: ["vouchers", "voucher"],
+  endpoints: () => ({}),
+});
+
+export const storeApiSlice = createApi({
+  reducerPath: "storeApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["products", "product"],
+  endpoints: () => ({}),
+});
+
+export const laneApiSlice = createApi({
+  reducerPath: "laneApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["lanes", "lane"],
+  endpoints: () => ({}),
+});
+
+export const orderApiSlice = createApi({
+  reducerPath: "orderApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["orders", "order"],
+  endpoints: () => ({}),
+});
+
+export const appointmentGroupReservationApiSlice = createApi({
+  reducerPath: "appointmentGroupReservationApiSlice",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["reservations", "reservation"],
+  endpoints: () => ({}),
+});
+
+export const appointmentOneOnOneReservationApiSlice = createApi({
+  reducerPath: "appointmentOneOnOneReservationApiSlice",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["reservations", "reservation"],
+  endpoints: () => ({}),
+});
+
+export const classReservationApiSlice = createApi({
+  reducerPath: "classReservationApiSlice",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["reservations", "reservation"],
+  endpoints: () => ({}),
+});
+export const courseReservationApiSlice = createApi({
+  reducerPath: "courseReservationApiSlice",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["reservations", "reservation"],
+  endpoints: () => ({}),
+});
+export const facilityReservationApiSlice = createApi({
+  reducerPath: "facilityReservationApiSlice",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["reservations", "reservation"],
   endpoints: () => ({}),
 });

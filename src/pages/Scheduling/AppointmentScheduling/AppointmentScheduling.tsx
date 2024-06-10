@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dropdown, Input, Select } from "antd";
+import { Dropdown, Input, Select, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
@@ -10,6 +10,7 @@ import { IAppointmentSchedule } from "../../../types/appointmentSchedule.types";
 import DeleteAppointmentPopup from "../../../components/ui/popup/DeleteAppointmentPopup";
 import UpdateAppointmentModal from "../../../components/ui/modal/UpdateAppointmentModal";
 import { BsThreeDots } from "react-icons/bs";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const AppointmentScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -28,6 +29,21 @@ const AppointmentScheduling = () => {
     trainer,
     sport,
   });
+  const { data: trainerData } = useTrainersQuery(undefined);
+  const options = trainerData?.results?.map((trainer: any) => {
+    return {
+      value: `${trainer.first_name} ${trainer.last_name}`,
+      label: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
+  const trainerOptions = [
+    {
+      label: "All Trainer",
+      value: "all",
+    },
+    ...options,
+  ];
+  const { Paragraph } = Typography;
   const columns: ColumnsType<IAppointmentSchedule> = [
     {
       width: 70,
@@ -38,6 +54,27 @@ const AppointmentScheduling = () => {
       render: (_, _record, index) => {
         return <>{page * limit + index + 1 - limit}</>;
       },
+    },
+    {
+      width: 240,
+      title: "Appointment ID",
+      align: "center",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text) => (
+        <Paragraph
+          copyable={{
+            text: async () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(text);
+                }, 500);
+              }),
+          }}
+        >
+          {text}
+        </Paragraph>
+      ),
     },
     {
       width: 220,
@@ -262,24 +299,7 @@ const AppointmentScheduling = () => {
               optionFilterProp="children"
               onChange={(value) => onChange(value, "trainer")}
               filterOption={filterOption}
-              options={[
-                {
-                  label: "All Trainer",
-                  value: "all",
-                },
-                {
-                  label: "Kavindu",
-                  value: "kavindu",
-                },
-                {
-                  label: "Fahim",
-                  value: "fahim",
-                },
-                {
-                  label: "Hasan",
-                  value: "hasan",
-                },
-              ]}
+              options={trainerOptions}
             />
           </div>
         </div>

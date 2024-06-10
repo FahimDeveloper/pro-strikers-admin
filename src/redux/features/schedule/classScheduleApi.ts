@@ -26,6 +26,13 @@ const classScheduleApi = classScheduleApiSlice.injectEndpoints({
       }),
       providesTags: ["class"],
     }),
+    classByDate: builder.mutation<any, any>({
+      query: (body) => ({
+        url: `/schedule/classes/by-date`,
+        method: "POST",
+        body: body,
+      }),
+    }),
     createClass: builder.mutation<any, IClassSchedule>({
       query: (body) => ({
         url: "/schedule/classes/create",
@@ -61,4 +68,5 @@ export const {
   useCreateClassMutation,
   useUpdateClassMutation,
   useDeleteClassMutation,
+  useClassByDateMutation,
 } = classScheduleApi;
