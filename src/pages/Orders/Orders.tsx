@@ -64,6 +64,18 @@ const Orders = () => {
       ),
     },
     {
+      width: 250,
+      align: "center",
+      title: "Product Name",
+      dataIndex: "product",
+      key: "product",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {text?.name}
+        </p>
+      ),
+    },
+    {
       width: 140,
       title: "Category",
       align: "center",
@@ -86,6 +98,16 @@ const Orders = () => {
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
         </p>
+      ),
+    },
+    {
+      width: 120,
+      align: "center",
+      title: "Total Price",
+      dataIndex: "total_price",
+      key: "total_price",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">${text}</p>
       ),
     },
     {
