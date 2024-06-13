@@ -48,7 +48,7 @@ const userApi = userApiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["users"],
+      invalidatesTags: ["users", "membership-users"],
     }),
     updateUser: builder.mutation<any, any>({
       query: ({ id, body }) => ({
@@ -56,14 +56,14 @@ const userApi = userApiSlice.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["users", "user"],
+      invalidatesTags: ["users", "user", "membership-users"],
     }),
     deleteUser: builder.mutation<any, any>({
       query: (id) => ({
         url: `/users/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["users"],
+      invalidatesTags: ["users", "membership-users"],
     }),
   }),
 });
