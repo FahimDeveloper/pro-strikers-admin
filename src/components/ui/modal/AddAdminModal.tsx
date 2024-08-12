@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import AdminForm from "../form/AdminForm";
 import { useCreateAdminMutation } from "../../../redux/features/admin/adminApi";
 import { useForm } from "antd/es/form/Form";
+import { generateRandomPassword } from "../../../utils/createRandomPassword";
 
 const AddAdminModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -14,24 +15,14 @@ const AddAdminModal = () => {
     useCreateAdminMutation();
   const onFinish = (values: any) => {
     const formData = new FormData();
-    if (values.password !== values.confirm_password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Passoword does not match",
-        confirmButtonColor: "#0ABAC3",
-      });
-      return;
+    values.password = generateRandomPassword();
+    if (values.image) {
+      formData.append("image", values.image[0].originFileObj);
+      delete values.image;
+      formData.append("data", JSON.stringify(values));
+      create(formData);
     } else {
-      delete values.confirm_password;
-      if (values.image) {
-        formData.append("image", values.image[0].originFileObj);
-        delete values.image;
-        formData.append("data", JSON.stringify(values));
-        create(formData);
-      } else {
-        create(values);
-      }
+      create(values);
     }
   };
   useEffect(() => {

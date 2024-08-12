@@ -100,7 +100,7 @@ const CoursesReservation = () => {
     {
       width: 220,
       align: "center",
-      title: "Course Name",
+      title: "Bootcamp Name",
       dataIndex: "course",
       key: "course",
       render: (_, record) => (
@@ -151,7 +151,7 @@ const CoursesReservation = () => {
     {
       width: 160,
       align: "center",
-      title: "Course Date",
+      title: "Bootcamp Date",
       dataIndex: "course_date",
       key: "course_date",
       render: (text) => (
@@ -192,7 +192,7 @@ const CoursesReservation = () => {
       <div className="flex justify-between items-end">
         <div className="space-y-1">
           <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Course Reservation
+            Bootcamp Reservation
           </h2>
           <p className="text-[#838383] font-semibold text-lg">
             {data?.count || 0} reservation available

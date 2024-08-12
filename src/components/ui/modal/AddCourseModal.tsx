@@ -43,12 +43,12 @@ const AddCourseModal = () => {
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
-        Add Course
+        Add Bootcamp
       </button>
       <Modal
         width={800}
         footer={null}
-        title="Create New Course"
+        title="Create New Bootcamp"
         centered
         open={open}
         onCancel={onCancle}

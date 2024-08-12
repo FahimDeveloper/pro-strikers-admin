@@ -13,35 +13,24 @@ const UpdateClientModal = ({ record }: any) => {
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation();
   const onFinish = (values: any) => {
-    if (
-      values.activity &&
-      values.package_name !== "no membership" &&
-      values.plan !== "no plan"
-    ) {
-      values.membership = true;
-      if (!record?.issue_date && !record?.expiry_date) {
-        const issueDate = new Date();
-        values.issue_date = issueDate.toISOString();
-        const expiryDate = new Date(issueDate);
-        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-        values.expiry_date = expiryDate.toISOString();
-      } else if (record?.issue_date && record?.expiry_date) {
-        const newDate = new Date();
-        const expiryDate = new Date(record?.expiry_date);
-        if (newDate > expiryDate) {
-          const issueDate = new Date();
-          values.issue_date = issueDate.toISOString();
-          const expiryDate = new Date(issueDate);
-          expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-          values.expiry_date = expiryDate.toISOString();
-        }
-      }
-    } else if (
-      !values.activity &&
-      values.package_name == "no membership" &&
-      values.plan == "no plan"
-    ) {
-      values.membership = false;
+    // const newDate = new Date();
+    // const expiryDate = new Date(record?.expiry_date);
+    // if (newDate > expiryDate) {
+    //   const issueDate = new Date();
+    //   values.issue_date = issueDate.toISOString();
+    //   const expiryDate = new Date(issueDate);
+    //   expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+    //   values.expiry_date = expiryDate.toISOString();
+    // }
+    if (!record?.issue_date && !record?.expiry_date && values.membership) {
+      values.status = true;
+      const issueDate = new Date();
+      values.issue_date = issueDate.toISOString();
+      const expiryDate = new Date(issueDate);
+      expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+      values.expiry_date = expiryDate.toISOString();
+    } else {
+      values.status = false;
     }
     const formData = new FormData();
     if (values.image[0].originFileObj) {

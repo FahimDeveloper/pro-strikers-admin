@@ -8,11 +8,11 @@ export type IUser = {
   password: string;
   role: "user";
   phone: string;
-  date_of_birth: Date;
+  date_of_birth: string;
   membership: boolean;
-  active: boolean;
-  issue_date?: Date;
-  expiry_date?: Date;
+  status: boolean;
+  issue_date?: string;
+  expiry_date?: string;
   package_name: string;
   plan: string;
 };
@@ -29,5 +29,5 @@ export type IUserMembershipParams = {
   page: number | undefined;
   limit: number | undefined;
   package_name: string | undefined;
-  activity: boolean | undefined;
+  status: boolean | undefined;
 };

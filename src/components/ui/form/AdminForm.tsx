@@ -197,6 +197,8 @@ const AdminForm = ({
                   { label: "Admin", value: "admin" },
                   { label: "Super Admin", value: "super-admin" },
                   { label: "Trainer", value: "trainer" },
+                  { label: "Manager", value: "manager" },
+                  { label: "Staff", value: "staff" },
                 ]}
               />
             </Form.Item>
@@ -204,7 +206,6 @@ const AdminForm = ({
               className="w-full m-0"
               name="date_of_birth"
               label="Date of Birth"
-              rules={[{ required: true }]}
             >
               <DatePicker format={"DD/MM/YYYY"} className="w-full" />
             </Form.Item>
@@ -217,26 +218,6 @@ const AdminForm = ({
           >
             <Input.TextArea rows={5} />
           </Form.Item>
-          {!record && (
-            <div className="flex col-span-3 gap-2">
-              <Form.Item
-                className="m-0 w-full"
-                name="password"
-                label="Password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password placeholder="Enter your password" />
-              </Form.Item>
-              <Form.Item
-                className="m-0 w-full"
-                name="confirm_password"
-                label="Confirm Password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password placeholder="Enter your password" />
-              </Form.Item>
-            </div>
-          )}
         </div>
         <div className="flex justify-end">
           <Form.Item className="m-0">

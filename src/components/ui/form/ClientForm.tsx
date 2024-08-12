@@ -45,9 +45,8 @@ const ClientForm = ({
 }: TProp) => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
-
+  const [checkMembership, setCheckMembership] = useState(false);
   const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    console.log(newFileList);
     setFileList(newFileList);
   };
 
@@ -69,6 +68,9 @@ const ClientForm = ({
   dayjs.extend(localeData);
   useEffect(() => {
     if (record) {
+      if (record?.membership) {
+        setCheckMembership(true);
+      }
       form.setFieldsValue({
         first_name: record?.first_name,
         last_name: record?.last_name,
@@ -86,7 +88,7 @@ const ClientForm = ({
         date_of_birth: record?.date_of_birth
           ? dayjs(record?.date_of_birth, "DD/MM/YYYY")
           : "",
-        activity: record?.activity,
+        membership: record?.membership,
         package_name: record?.package_name,
         plan: record?.plan,
       });
@@ -189,7 +191,6 @@ const ClientForm = ({
                 className="w-full m-0"
                 name="date_of_birth"
                 label="Date of Birth"
-                rules={[{ required: true }]}
               >
                 <DatePicker className="w-full" format={"DD/MM/YYYY"} />
               </Form.Item>
@@ -199,20 +200,21 @@ const ClientForm = ({
             <p className="font-medium text-base">Membership Details</p>
             <div className="grid grid-cols-3 gap-5">
               <Form.Item
-                name="activity"
-                label="Activity"
+                name="membership"
+                label="Membership"
                 className="w-full m-0"
                 rules={[{ required: true }]}
               >
                 <Select
-                  placeholder="Select Activity"
+                  placeholder="Select Membership"
+                  onChange={(value) => setCheckMembership(value)}
                   options={[
                     {
-                      label: "Active",
+                      label: "Yes",
                       value: true,
                     },
                     {
-                      label: "In Active",
+                      label: "No",
                       value: false,
                     },
                   ]}
@@ -220,17 +222,19 @@ const ClientForm = ({
               </Form.Item>
               <Form.Item
                 name="package_name"
-                label="Membership"
+                label="Package"
                 className="w-full m-0"
-                rules={[{ required: true, message: "Please select Package" }]}
+                rules={[
+                  {
+                    required: checkMembership,
+                    message: "Please select Package",
+                  },
+                ]}
               >
                 <Select
+                  disabled={!checkMembership}
                   placeholder="Select package"
                   options={[
-                    {
-                      label: "No Membeship",
-                      value: "no membeship",
-                    },
                     { label: "Individual pro", value: "individual pro" },
                     {
                       label: "Individual pro unlimited",
@@ -247,15 +251,12 @@ const ClientForm = ({
                 name="plan"
                 label="Plan"
                 className="w-full m-0"
-                rules={[{ required: true }]}
+                rules={[{ required: checkMembership }]}
               >
                 <Select
+                  disabled={!checkMembership}
                   placeholder="Select Plan"
                   options={[
-                    {
-                      label: "No Plan",
-                      value: "no plan",
-                    },
                     {
                       label: "Monthly",
                       value: "monthly",
@@ -270,26 +271,6 @@ const ClientForm = ({
             </div>
           </div>
         </div>
-        {!record && (
-          <div className="flex gap-2">
-            <Form.Item
-              className="m-0 w-full"
-              name="password"
-              label="Password"
-              rules={[{ required: true }]}
-            >
-              <Input.Password placeholder="Enter your password" />
-            </Form.Item>
-            <Form.Item
-              className="m-0 w-full"
-              name="confirm_password"
-              label="Confirm Password"
-              rules={[{ required: true }]}
-            >
-              <Input.Password placeholder="Enter your password" />
-            </Form.Item>
-          </div>
-        )}
         <div className="flex justify-end">
           <Form.Item className="m-0">
             <Button htmlType="submit" loading={loading} className="primary-btn">

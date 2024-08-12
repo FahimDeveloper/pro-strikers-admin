@@ -83,6 +83,7 @@ const ScheduleForm = ({ record, form }: any) => {
                             format="HH:mm A"
                             use12Hours
                             className="w-full"
+                            placeholder="Select Start time"
                           />
                         </Form.Item>
                         <p>to</p>
@@ -102,6 +103,7 @@ const ScheduleForm = ({ record, form }: any) => {
                             format="HH:mm A"
                             use12Hours
                             className="w-full"
+                            placeholder="Select End time"
                           />
                         </Form.Item>
                       </div>

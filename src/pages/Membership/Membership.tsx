@@ -12,14 +12,14 @@ import { BsThreeDots } from "react-icons/bs";
 
 const Membership = () => {
   const [membership, setMembership] = useState<string | undefined>(undefined);
-  const [activity, setActivity] = useState<boolean | undefined>(undefined);
+  const [active, setActive] = useState<boolean | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useMembershipUsersQuery({
     search,
     package_name: membership,
-    activity,
+    status: active,
     limit,
     page,
   });
@@ -145,9 +145,9 @@ const Membership = () => {
     {
       width: 120,
       title: "Status",
-      dataIndex: "activity",
+      dataIndex: "status",
       align: "center",
-      key: "activity",
+      key: "status",
       render: (text) =>
         text ? (
           <div className="w-full rounded-sm text-[#0F3808] bg-[#CFFFC8] py-1">
@@ -158,8 +158,8 @@ const Membership = () => {
             In Active
           </div>
         ),
-      sorter: (a: { active: boolean }, b: { active: boolean }) =>
-        Number(a.active) - Number(b.active),
+      sorter: (a: { status: boolean }, b: { status: boolean }) =>
+        Number(a.status) - Number(b.status),
     },
     {
       width: 80,
@@ -202,11 +202,11 @@ const Membership = () => {
       }
     } else if (filter === "activeStatus") {
       if (value === "active") {
-        setActivity(true);
+        setActive(true);
       } else if (value == "in active") {
-        setActivity(false);
+        setActive(false);
       } else if (value === "all") {
-        setActivity(undefined);
+        setActive(undefined);
       }
     }
   };

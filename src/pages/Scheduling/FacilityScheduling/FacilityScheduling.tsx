@@ -58,7 +58,7 @@ const FacilityScheduling = () => {
     },
     {
       width: 240,
-      title: "Course ID",
+      title: "Facility ID",
       align: "center",
       dataIndex: "_id",
       key: "_id",

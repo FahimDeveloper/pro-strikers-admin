@@ -11,6 +11,7 @@ import { BsThreeDots } from "react-icons/bs";
 import DeleteClassPopup from "../../../components/ui/popup/DeleteClassPopup";
 import UpdateClassModal from "../../../components/ui/modal/UpdateClassModal";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+import moment from "moment";
 
 const ClassesScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -146,6 +147,30 @@ const ClassesScheduling = () => {
         </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    },
+    {
+      width: 140,
+      title: "Start Date",
+      align: "center",
+      dataIndex: "start_date",
+      key: "start_date",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
+      ),
+    },
+    {
+      width: 140,
+      title: "End Date",
+      align: "center",
+      dataIndex: "end_date",
+      key: "end_date",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
+      ),
     },
     {
       width: 80,

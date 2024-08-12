@@ -112,8 +112,8 @@ export const superAdminPaths = [
         element: <FacilityScheduling />,
       },
       {
-        name: "Courses",
-        path: "scheduling/courses",
+        name: "Bootcamps",
+        path: "scheduling/bootcamps",
         element: <CoursesScheduling />,
       },
     ],
@@ -147,8 +147,8 @@ export const superAdminPaths = [
         element: <FacilityReservation />,
       },
       {
-        name: "Courses",
-        path: "reservation/courses",
+        name: "Bootcamps",
+        path: "reservation/bootcamps",
         element: <CoursesReservation />,
       },
     ],
@@ -212,8 +212,8 @@ export const superAdminPaths = [
         element: <FacilityReports />,
       },
       {
-        name: "Courses",
-        path: "reports/courses",
+        name: "Bootcamps",
+        path: "reports/bootcamps",
         element: <CoursesReports />,
       },
       {

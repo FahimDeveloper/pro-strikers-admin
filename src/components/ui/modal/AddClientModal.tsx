@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import UserForm from "../form/ClientForm";
 import Swal from "sweetalert2";
 import { useCreateUserMutation } from "../../../redux/features/user/userApi";
+import { generateRandomPassword } from "../../../utils/createRandomPassword";
 
 const AddClientModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -12,39 +13,26 @@ const AddClientModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateUserMutation();
   const onFinish = (values: any) => {
+    values.password = generateRandomPassword();
     const formData = new FormData();
-    if (values.password !== values.confirm_password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Passoword does not match",
-        confirmButtonColor: "#0ABAC3",
-      });
-      return;
+    if (values.membership) {
+      values.status = true;
+      const issueDate = new Date();
+      values.issue_date = issueDate.toISOString();
+      const expiryDate = new Date(issueDate);
+      expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+      values.expiry_date = expiryDate.toISOString();
     } else {
-      delete values.confirm_password;
-      if (
-        !values.activity &&
-        values.package_name !== "no membership" &&
-        values.plan !== "no plan"
-      ) {
-        values.membership = true;
-        const issueDate = new Date();
-        values.issue_date = issueDate.toISOString();
-        const expiryDate = new Date(issueDate);
-        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-        values.expiry_date = expiryDate.toISOString();
-      } else {
-        values.membership = false;
-      }
-      if (values.image) {
-        formData.append("image", values.image[0].originFileObj);
-        delete values.image;
-        formData.append("data", JSON.stringify(values));
-        create(formData);
-      } else {
-        create(values);
-      }
+      values.package_name = undefined;
+      values.plan = undefined;
+    }
+    if (values.image) {
+      formData.append("image", values.image[0].originFileObj);
+      delete values.image;
+      formData.append("data", JSON.stringify(values));
+      create(formData);
+    } else {
+      create(values);
     }
   };
   useEffect(() => {

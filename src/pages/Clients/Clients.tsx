@@ -9,7 +9,6 @@ import { useUsersQuery } from "../../redux/features/user/userApi";
 import UpdateClientModal from "../../components/ui/modal/UpdateClientModal";
 import DeleteClientPopup from "../../components/ui/popup/DeleteClientPopup";
 import { BsThreeDots } from "react-icons/bs";
-import moment from "moment";
 import { IUser } from "../../types/user.type";
 
 const Clients = () => {
@@ -81,19 +80,6 @@ const Clients = () => {
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-    },
-    {
-      width: 140,
-      title: "Date of Birth",
-      align: "center",
-      dataIndex: "date_of_birth",
-      key: "date_of_birth",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
-        </p>
-      ),
-      sorter: (a, b) => Number(a.date_of_birth) - Number(b.date_of_birth),
     },
     {
       width: 130,

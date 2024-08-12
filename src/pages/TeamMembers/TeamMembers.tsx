@@ -179,6 +179,14 @@ const TeamMembers = () => {
               label: "Trainer",
               value: "trainer",
             },
+            {
+              label: "Manager",
+              value: "manager",
+            },
+            {
+              label: "Staff",
+              value: "staff",
+            },
           ]}
         />
       </div>

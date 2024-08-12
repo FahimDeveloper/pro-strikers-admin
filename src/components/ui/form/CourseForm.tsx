@@ -63,7 +63,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
           <Form.Item
             name="course_name"
             className="w-full m-0"
-            label="Course Name"
+            label="Bootcamp Name"
             rules={[{ required: true }]}
           >
             <Input placeholder="Enter course name" />
@@ -113,7 +113,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
           <Form.Item
             name="capacity"
             className="w-full m-0"
-            label="Course Capacity"
+            label="Bootcamp Capacity"
             rules={[{ required: true }]}
           >
             <InputNumber
@@ -169,7 +169,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
           rules={[{ required: true }]}
           name="price"
           className=" m-0"
-          label="Course Fee"
+          label="Bootcamp Fee"
         >
           <InputNumber
             min={0}
@@ -185,8 +185,8 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
               className="btn primary-btn"
             >
               {record && Object.keys(record).length > 0
-                ? "Update Course"
-                : "Create Course"}
+                ? "Update Bootcamp"
+                : "Create Bootcamp"}
             </Button>
           </Form.Item>
         </div>

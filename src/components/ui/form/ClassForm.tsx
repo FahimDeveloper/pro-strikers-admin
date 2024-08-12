@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Input, InputNumber, Select } from "antd";
+import { DatePicker, Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+import weekday from "dayjs/plugin/weekday";
+import localeData from "dayjs/plugin/localeData";
+import dayjs from "dayjs";
 
 const ClassForm = ({ record, form }: any) => {
   const { data: trainerData } = useTrainersQuery(undefined);
@@ -11,12 +14,18 @@ const ClassForm = ({ record, form }: any) => {
       value: `${trainer.first_name} ${trainer.last_name}`,
     };
   });
+  dayjs.extend(weekday);
+  dayjs.extend(localeData);
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
         class_name: record?.class_name,
         sport: record?.sport,
         description: record?.description,
+        start_date: record?.start_date
+          ? dayjs(record?.start_date, "DD/MM/YYYY")
+          : "",
+        end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
         facility: record?.facility,
         trainer: record?.trainer,
         level: record?.level,
@@ -79,6 +88,22 @@ const ClassForm = ({ record, form }: any) => {
           <Input.TextArea placeholder="Enter class description" rows={4} />
         </Form.Item>
         <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+          <Form.Item
+            rules={[{ required: true }]}
+            name="start_date"
+            className="w-full m-0"
+            label="Start Date"
+          >
+            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true }]}
+            name="end_date"
+            className="w-full m-0"
+            label="End Date"
+          >
+            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
+          </Form.Item>
           <Form.Item
             rules={[{ required: true }]}
             name="facility"

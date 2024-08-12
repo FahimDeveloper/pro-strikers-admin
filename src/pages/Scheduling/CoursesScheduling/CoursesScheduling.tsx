@@ -57,7 +57,7 @@ const CourseScheduling = () => {
     },
     {
       width: 240,
-      title: "Course ID",
+      title: "Bootcamp ID",
       align: "center",
       dataIndex: "_id",
       key: "_id",
@@ -78,7 +78,7 @@ const CourseScheduling = () => {
     },
     {
       width: 220,
-      title: "Course Name",
+      title: "Bootcamp Name",
       align: "center",
       dataIndex: "course_name",
       key: "coruse_name",
@@ -214,10 +214,10 @@ const CourseScheduling = () => {
         <div className="flex justify-between items-end">
           <div className="space-y-1">
             <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-              Courses
+              Bootcamps
             </h2>
             <p className="text-[#838383] font-semibold text-lg">
-              {data?.count || 0} courses available
+              {data?.count || 0} bootcamps available
             </p>
           </div>
           <AddCourseModal />
@@ -225,7 +225,7 @@ const CourseScheduling = () => {
         <div className="flex gap-2 items-center">
           <Input.Search
             onSearch={onSearch}
-            placeholder="Search Course"
+            placeholder="Search Bootcamp"
             className="text-sm font-medium text-[#5D5D5D]"
           />
           <div className="flex gap-2 items-center">
