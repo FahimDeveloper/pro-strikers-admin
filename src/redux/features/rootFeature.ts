@@ -11,6 +11,8 @@ import {
   courseReservationApiSlice,
   courseScheduleApiSlice,
   eventApiSlice,
+  eventGroupReservationApiSlice,
+  eventIndividualReservationApiSlice,
   facilityReservationApiSlice,
   facilityScheduleApiSlice,
   laneApiSlice,
@@ -53,6 +55,10 @@ export const rootReducers = combineReducers({
   [courseReservationApiSlice.reducerPath]: courseReservationApiSlice.reducer,
   [facilityReservationApiSlice.reducerPath]:
     facilityReservationApiSlice.reducer,
+  [eventGroupReservationApiSlice.reducerPath]:
+    eventGroupReservationApiSlice.reducer,
+  [eventIndividualReservationApiSlice.reducerPath]:
+    eventIndividualReservationApiSlice.reducer,
   auth: persistedAuthReducer,
 });
 
@@ -75,4 +81,6 @@ export const rootMiddlewares = [
   classReservationApiSlice.middleware,
   courseReservationApiSlice.middleware,
   facilityReservationApiSlice.middleware,
+  eventGroupReservationApiSlice.middleware,
+  eventIndividualReservationApiSlice.middleware,
 ];

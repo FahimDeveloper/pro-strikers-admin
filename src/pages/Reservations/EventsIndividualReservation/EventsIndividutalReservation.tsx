@@ -1,32 +1,62 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dropdown, Image, Input, Select, Typography } from "antd";
-import { ColumnsType } from "antd/es/table";
+import { Dropdown, Input, Select } from "antd";
+import DataPagination from "../../../components/common/DataPagination";
+import DataTable from "../../../components/common/DataTable";
 import { useState } from "react";
-import DataTable from "../../components/common/DataTable";
-import DataPagination from "../../components/common/DataPagination";
-import AddEventModal from "../../components/ui/modal/AddEventModal";
-import { useEventsQuery } from "../../redux/features/event/eventApi";
-import { IEvent } from "../../types/event.types";
-import moment from "moment";
-import UpdateEventModal from "../../components/ui/modal/UpdateEventModal";
-import DeleteEventPopup from "../../components/ui/popup/DeleteEventPopup";
+import AddEventIndividualReservationModal from "../../../components/ui/modal/AddEventIndividualReservationModal";
+import { ColumnsType } from "antd/es/table";
+import { IEventIndividualReservation } from "../../../types/event.types";
 import { BsThreeDots } from "react-icons/bs";
+import { useEventIndividualReservationsQuery } from "../../../redux/features/reservation/eventIndividualReservation";
+import UpdateEventIndividualReservationModal from "../../../components/ui/modal/UpdateEventIndividualReservationModal";
+import DeleteEventIndividualReservationPopup from "../../../components/ui/popup/DeleteEventIndividualReservationPopup";
 
-const Events = () => {
-  const { Paragraph } = Typography;
-  const [event, setEvent] = useState<string | undefined>(undefined);
+const EventsIndividutalReservation = () => {
   const [sport, setSport] = useState<string | undefined>(undefined);
+  const [skillLevel, setSkillLevel] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading, isFetching } = useEventsQuery({
+  const { data, isLoading, isFetching } = useEventIndividualReservationsQuery({
     search,
-    event_type: event,
     sport,
+    skill_level: skillLevel,
     page,
     limit,
   });
-  const columns: ColumnsType<IEvent> = [
+
+  const handlePageChange = (page: number, size: number) => {
+    setPage(page);
+    setLimit(size);
+  };
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
+  const onSearch = (value: string) => {
+    if (value.length < 1) {
+      setSearch(undefined);
+    } else {
+      setSearch(value);
+    }
+  };
+
+  const onChange = (value: string, filter: string) => {
+    if (filter == "skil") {
+      if (value === "all") {
+        setSkillLevel(undefined);
+      } else {
+        setSkillLevel(value);
+      }
+    } else if (filter === "sport") {
+      if (value === "all") {
+        setSport(undefined);
+      } else {
+        setSport(value);
+      }
+    }
+  };
+  const columns: ColumnsType<IEventIndividualReservation> = [
     {
       width: 70,
       align: "center",
@@ -38,40 +68,33 @@ const Events = () => {
       },
     },
     {
-      width: 120,
+      width: 180,
       align: "center",
-      title: "Thumbnail",
-      dataIndex: "image",
-      key: "image",
-      render: (text) => <Image src={text} width={50} />,
-    },
-    {
-      width: 240,
-      title: "Event ID",
-      align: "center",
-      dataIndex: "_id",
-      key: "_id",
+      title: "Player Name",
+      dataIndex: "player_name",
+      key: "player_name",
       render: (text) => (
-        <Paragraph
-          copyable={{
-            text: async () =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(text);
-                }, 500);
-              }),
-          }}
-        >
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
-        </Paragraph>
+        </p>
       ),
     },
     {
-      width: 220,
+      width: 260,
       align: "center",
-      title: "Event name",
-      dataIndex: "event_name",
-      key: "event_name",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
@@ -80,19 +103,6 @@ const Events = () => {
     },
     {
       width: 140,
-      align: "center",
-      title: "Event Type",
-      dataIndex: "event_type",
-      key: "event_type",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.event_type.localeCompare(b.event_type),
-    },
-    {
-      width: 120,
       align: "center",
       title: "Sport",
       dataIndex: "sport",
@@ -102,44 +112,53 @@ const Events = () => {
           {text}
         </p>
       ),
-      sorter: (a, b) => a.event_type.localeCompare(b.event_type),
-    },
-    {
-      width: 160,
-      align: "center",
-      title: "Start Date",
-      dataIndex: "start_date",
-      key: "start_date",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
-        </p>
-      ),
-      sorter: (a, b) => Number(a.start_date) - Number(b.start_date),
-    },
-    {
-      width: 160,
-      align: "center",
-      title: "End Date",
-      dataIndex: "end_date",
-      key: "end_date",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
-        </p>
-      ),
-      sorter: (a, b) => Number(a.end_date) - Number(b.end_date),
+      sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
       width: 140,
       align: "center",
-      title: "Registration",
-      dataIndex: "registration",
-      key: "registration",
+      title: "Skill Level",
+      dataIndex: "skill_level",
+      key: "skill_level",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
+      ),
+      sorter: (a, b) => a.skill_level.localeCompare(b.skill_level),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "City",
+      dataIndex: "city",
+      key: "city",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-      sorter: (a, b) => a.registration - b.registration,
+      sorter: (a, b) => a.city.localeCompare(b.city),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "State",
+      dataIndex: "state",
+      key: "state",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.state.localeCompare(b.state),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Zip/Postal Code",
+      dataIndex: "zip_code",
+      key: "zip_code",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
     },
     {
       width: 80,
@@ -152,11 +171,11 @@ const Events = () => {
         const items = [
           {
             key: "1",
-            label: <UpdateEventModal record={record} />,
+            label: <UpdateEventIndividualReservationModal record={record} />,
           },
           {
             key: "2",
-            label: <DeleteEventPopup id={record?._id} />,
+            label: <DeleteEventIndividualReservationPopup id={record._id!} />,
           },
         ];
         return (
@@ -167,77 +186,50 @@ const Events = () => {
       },
     },
   ];
-  const handlePageChange = (page: number, size: number) => {
-    setPage(page);
-    setLimit(size);
-  };
-
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-
-  const onChange = (value: string, filter: string) => {
-    if (filter == "eventType") {
-      if (value === "all") {
-        setEvent(undefined);
-      } else {
-        setEvent(value);
-      }
-    } else if (filter === "sportType") {
-      if (value === "all") {
-        setSport(undefined);
-      } else {
-        setSport(value);
-      }
-    }
-  };
-  const onSearch = (value: string) => {
-    if (value.length < 1) {
-      setSearch(undefined);
-    } else {
-      setSearch(value);
-    }
-  };
   return (
     <div className="space-y-5">
       <div className="flex justify-between items-end">
         <div className="space-y-1">
           <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Events
+            Events Individual Reservation
           </h2>
           <p className="text-[#838383] font-semibold text-lg">
-            {data?.count || 0} event available
+            {data?.count || 0} reservation available
           </p>
         </div>
-        <AddEventModal />
+        <AddEventIndividualReservationModal />
       </div>
       <div className="grid grid-cols-9 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search events"
+          placeholder="Search reservation by player name or email"
           className="text-sm col-span-6 font-medium text-[#5D5D5D]"
         />
         <div className="col-span-3 flex gap-2">
           <Select
+            placeholder="Select level"
             className="w-full"
             showSearch
             defaultValue={"all"}
             optionFilterProp="children"
-            onChange={(value) => onChange(value, "eventType")}
+            onChange={(value) => onChange(value, "skill")}
             filterOption={filterOption}
             options={[
               {
-                label: "All Type",
+                label: "All Level",
                 value: "all",
               },
               {
-                label: "Individual",
-                value: "individual",
+                label: "Basic",
+                value: "basic",
               },
               {
-                label: "Group",
-                value: "group",
+                label: "Intermediate",
+                value: "intermediate",
+              },
+              {
+                label: "Advanced",
+                value: "advanced",
               },
             ]}
           />
@@ -246,7 +238,7 @@ const Events = () => {
             showSearch
             defaultValue={"all"}
             optionFilterProp="children"
-            onChange={(value) => onChange(value, "sportType")}
+            onChange={(value) => onChange(value, "sport")}
             filterOption={filterOption}
             options={[
               {
@@ -292,4 +284,4 @@ const Events = () => {
   );
 };
 
-export default Events;
+export default EventsIndividutalReservation;

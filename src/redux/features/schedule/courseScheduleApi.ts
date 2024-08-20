@@ -1,17 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ICourseSchedule,
-  ICourseScheduleParams,
-} from "../../../types/couseSchedule.types";
+import { ICourseParams, ICourseSchedule } from "../../../types/couse.types";
 import { IncomingQueryType } from "../../../types/index.types";
 import { courseScheduleApiSlice } from "../../api/httpsSlice";
 
 const courseScheduleApi = courseScheduleApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    courses: builder.query<
-      IncomingQueryType<ICourseSchedule>,
-      ICourseScheduleParams
-    >({
+    courses: builder.query<IncomingQueryType<ICourseSchedule>, ICourseParams>({
       query: (params) => ({
         url: "/schedule/courses",
         method: "GET",
@@ -25,13 +19,6 @@ const courseScheduleApi = courseScheduleApiSlice.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["course"],
-    }),
-    courseByDate: builder.mutation<any, any>({
-      query: (body) => ({
-        url: `/schedule/courses/by-date`,
-        method: "POST",
-        body: body,
-      }),
     }),
     createCourse: builder.mutation<any, ICourseSchedule>({
       query: (body) => ({
@@ -68,5 +55,4 @@ export const {
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
-  useCourseByDateMutation,
 } = courseScheduleApi;

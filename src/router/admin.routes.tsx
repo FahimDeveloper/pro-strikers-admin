@@ -129,7 +129,27 @@ export const adminPaths = [
         path: "reservation/courses",
         element: <CoursesReservation />,
       },
+      {
+        name: "Events",
+        children: [
+          {
+            name: "Individual",
+            path: "events/individual",
+            element: <AppointmentOneOnOneReservation />,
+          },
+          {
+            name: "Group",
+            path: "events/group",
+            element: <AppointmentGroupReservation />,
+          },
+        ],
+      },
     ],
+  },
+  {
+    name: "Events",
+    path: "events",
+    element: <Events />,
   },
   {
     name: "Clients",
@@ -160,11 +180,6 @@ export const adminPaths = [
     name: "Voucher",
     path: "voucher",
     element: <Voucher />,
-  },
-  {
-    name: "Events",
-    path: "events",
-    element: <Events />,
   },
   {
     name: "Post",

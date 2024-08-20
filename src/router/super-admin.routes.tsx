@@ -1,6 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
+import EventsIndividutalReservation from "../pages/Reservations/EventsIndividualReservation/EventsIndividutalReservation";
+import EventsGroupReservation from "../pages/Reservations/EventsGroupReservation/EventsGroupReservation";
 
 const Store = LazyLoad(lazy(() => import("../pages/Store/Store")));
 const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
@@ -151,7 +153,27 @@ export const superAdminPaths = [
         path: "reservation/bootcamps",
         element: <CoursesReservation />,
       },
+      {
+        name: "Events",
+        children: [
+          {
+            name: "Individual",
+            path: "reservation/events/individual",
+            element: <EventsIndividutalReservation />,
+          },
+          {
+            name: "Group",
+            path: "reservation/events/group",
+            element: <EventsGroupReservation />,
+          },
+        ],
+      },
     ],
+  },
+  {
+    name: "Events",
+    path: "events",
+    element: <Events />,
   },
   {
     name: "Clients",
@@ -187,11 +209,6 @@ export const superAdminPaths = [
     name: "Voucher",
     path: "voucher",
     element: <Voucher />,
-  },
-  {
-    name: "Events",
-    path: "events",
-    element: <Events />,
   },
   {
     name: "Reports",

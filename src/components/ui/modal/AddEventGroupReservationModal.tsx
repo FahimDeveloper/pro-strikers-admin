@@ -1,21 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
+import { useForm } from "antd/es/form/Form";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { useForm } from "antd/es/form/Form";
-import CourseReservationForm from "../form/CourseReservationForm";
-import { useCreateCourseReservationMutation } from "../../../redux/features/reservation/coursesReservation";
+import { useCreateEventGroupReservationMutation } from "../../../redux/features/reservation/eventGroupReservation";
+import GroupEventReservationSteps from "../step/GroupEventReservationSteps";
 
-const AddCourseReservationModal = () => {
+const AddEventGroupReservationModal = () => {
   const [open, setModalOpen] = useState(false);
+  const [current, setCurrent] = useState(0);
   const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateCourseReservationMutation();
-  const onFinish = (values: any) => {
-    const issueDate = new Date();
-    values.issue_date = issueDate.toISOString();
-    create(values);
-  };
+    useCreateEventGroupReservationMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -38,9 +34,8 @@ const AddCourseReservationModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
-    setModalOpen(false);
-    form.resetFields();
+  const onSubmit = (values: any) => {
+    create(values);
   };
   return (
     <>
@@ -50,22 +45,22 @@ const AddCourseReservationModal = () => {
       <Modal
         width={800}
         footer={null}
-        title="Create New Bootcamp Reservation"
+        title="Create New Event Group Reservation"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={() => setModalOpen(false)}
         maskClosable={false}
       >
-        <div className="my-5">
-          <CourseReservationForm
-            form={form}
-            onFinish={onFinish}
-            loading={isLoading}
-          />
-        </div>
+        <GroupEventReservationSteps
+          current={current}
+          setCurrent={setCurrent}
+          form={form}
+          onSubmit={onSubmit}
+          loading={isLoading}
+        />
       </Modal>
     </>
   );
 };
 
-export default AddCourseReservationModal;
+export default AddEventGroupReservationModal;

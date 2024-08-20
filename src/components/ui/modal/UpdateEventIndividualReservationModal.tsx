@@ -1,21 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal } from "antd";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import { Button, Modal } from "antd";
 import { useForm } from "antd/es/form/Form";
-import CourseReservationForm from "../form/CourseReservationForm";
-import { useCreateCourseReservationMutation } from "../../../redux/features/reservation/coursesReservation";
+import { useEffect, useState } from "react";
+import { CiEdit } from "react-icons/ci";
+import Swal from "sweetalert2";
+import EventIndividualReservationForm from "../form/EventIndividualReservationForm";
+import { useUpdateEventIndividualReservationMutation } from "../../../redux/features/reservation/eventIndividualReservation";
 
-const AddCourseReservationModal = () => {
+const UpdateEventIndividualReservationModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateCourseReservationMutation();
-  const onFinish = (values: any) => {
-    const issueDate = new Date();
-    values.issue_date = issueDate.toISOString();
-    create(values);
-  };
+  const [update, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateEventIndividualReservationMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -38,26 +34,30 @@ const AddCourseReservationModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
-    setModalOpen(false);
-    form.resetFields();
+  const onFinish = (values: any) => {
+    update({ id: record?._id, payload: values });
   };
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="btn primary-btn">
-        Add Reservation
-      </button>
+      <Button
+        type="primary"
+        onClick={() => setModalOpen(true)}
+        className="w-full flex gap-1 justify-center items-center"
+      >
+        <CiEdit className="size-5 text-white" /> Update
+      </Button>
       <Modal
         width={800}
         footer={null}
-        title="Create New Bootcamp Reservation"
+        title="Update Individual Reservation"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={() => setModalOpen(false)}
         maskClosable={false}
       >
         <div className="my-5">
-          <CourseReservationForm
+          <EventIndividualReservationForm
+            record={record}
             form={form}
             onFinish={onFinish}
             loading={isLoading}
@@ -68,4 +68,4 @@ const AddCourseReservationModal = () => {
   );
 };
 
-export default AddCourseReservationModal;
+export default UpdateEventIndividualReservationModal;

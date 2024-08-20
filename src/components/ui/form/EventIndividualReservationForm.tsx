@@ -1,28 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input, InputNumber, Select } from "antd";
+import { IEventIndividualReservation } from "../../../types/event.types";
 import { useEffect } from "react";
-import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
-type TProp = {
-  record?: any;
+const EventIndividualReservationForm = ({
+  form,
+  onFinish,
+  record,
+  loading,
+}: {
   form: any;
   onFinish: any;
+  record?: IEventIndividualReservation;
   loading: boolean;
-};
-
-const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
-  const { data: trainerData } = useTrainersQuery(undefined);
-  const options = trainerData?.results?.map((trainer: any) => {
-    return {
-      value: `${trainer.first_name} ${trainer.last_name}`,
-      label: `${trainer.first_name} ${trainer.last_name}`,
-    };
-  });
-
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+}) => {
   useEffect(() => {
     form.setFieldsValue({
       player_name: record?.player_name,
@@ -39,34 +30,17 @@ const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
   }, [record, form]);
   return (
     <Form form={form} onFinish={onFinish} layout="vertical">
+      {!record && (
+        <Form.Item
+          label="Event Id"
+          className="mb-3"
+          name="event"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Type here..." />
+        </Form.Item>
+      )}
       <div className="grid grid-cols-2 gap-4">
-        {!record && (
-          <div className="col-span-2 grid grid-cols-2 gap-4">
-            <Form.Item
-              label="Bootcamp Id"
-              name="course"
-              className="m-0"
-              rules={[{ required: true }]}
-            >
-              <Input placeholder="Type here..." />
-            </Form.Item>
-            <Form.Item
-              label="Trainer"
-              name="trainer"
-              rules={[{ required: true }]}
-              className="m-0"
-            >
-              <Select
-                className="w-full"
-                showSearch
-                placeholder="Select trainer"
-                optionFilterProp="children"
-                filterOption={filterOption}
-                options={options}
-              />
-            </Form.Item>
-          </div>
-        )}
         <Form.Item
           label="Player Name"
           name="player_name"
@@ -202,4 +176,4 @@ const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
   );
 };
 
-export default CourseReservationForm;
+export default EventIndividualReservationForm;

@@ -20,10 +20,10 @@ export const navigationGenerator = (navigationsPath: TPath[], role: string) => {
         acc.push({
           key: `${role}/${route.name}`,
           label: route.name,
-          children: route.children.map((child) => {
+          children: route.children.map((child, index) => {
             if (child.name && child.children) {
               return {
-                key: `${role}/${child.path}`,
+                key: `${role}/${child.name.toLowerCase() + index}`,
                 label: child.name,
                 children: child.children.map((grandChild) => {
                   return {

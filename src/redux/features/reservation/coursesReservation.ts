@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ICourseParams, ICourseReservation } from "../../../types/couse.types";
 import { IncomingQueryType } from "../../../types/index.types";
 import { courseReservationApiSlice } from "../../api/httpsSlice";
 
 const courseReservationApi = courseReservationApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    courseReservations: builder.query<IncomingQueryType<any>, any>({
+    courseReservations: builder.query<
+      IncomingQueryType<ICourseReservation>,
+      ICourseParams
+    >({
       query: (params) => ({
         url: "/reservations/courses",
         method: "GET",

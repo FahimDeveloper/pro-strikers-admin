@@ -6,7 +6,7 @@ import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
 import AddCourseModal from "../../../components/ui/modal/AddCourseModal";
 import { useCoursesQuery } from "../../../redux/features/schedule/courseScheduleApi";
-import { ICourseSchedule } from "../../../types/couseSchedule.types";
+import { ICourseSchedule } from "../../../types/couse.types";
 import { BsThreeDots } from "react-icons/bs";
 import UpdateCourseModal from "../../../components/ui/modal/UpdateCourseModal";
 import DeleteCoursePopup from "../../../components/ui/popup/DeleteCoursePopup";
@@ -77,6 +77,19 @@ const CourseScheduling = () => {
       ),
     },
     {
+      width: 180,
+      title: "Trainer",
+      align: "center",
+      dataIndex: "trainer",
+      key: "trainer",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
+      ),
+      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    },
+    {
       width: 220,
       title: "Bootcamp Name",
       align: "center",
@@ -99,19 +112,6 @@ const CourseScheduling = () => {
         </p>
       ),
       sorter: (a, b) => a.sport.localeCompare(b.sport),
-    },
-    {
-      width: 180,
-      title: "Trainer",
-      align: "center",
-      dataIndex: "trainer",
-      key: "trainer",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
       width: 140,

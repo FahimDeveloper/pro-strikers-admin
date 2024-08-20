@@ -1,74 +1,43 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dropdown, Input, Select } from "antd";
-import { useState } from "react";
-import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
+import DataTable from "../../../components/common/DataTable";
+import { useState } from "react";
 import { ColumnsType } from "antd/es/table";
+import { IEventGroupReservation } from "../../../types/event.types";
 import { BsThreeDots } from "react-icons/bs";
-import { useCourseReservationsQuery } from "../../../redux/features/reservation/coursesReservation";
-import AddCourseReservationModal from "../../../components/ui/modal/AddCourseReservationModal";
-import DeleteCourseReservationPopup from "../../../components/ui/popup/DeleteCourseReservationPopup";
-import UpdateCourseReservationModal from "../../../components/ui/modal/UpdateCourseReservationModal";
-import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
-import { ICourseReservation } from "../../../types/couse.types";
+import AddEventGroupReservationModal from "../../../components/ui/modal/AddEventGroupReservationModal";
+import UpdateEventGroupReservationModal from "../../../components/ui/modal/UpdateEventGroupReservationModal";
+import DeleteEventGroupReservationPopup from "../../../components/ui/popup/DeleteEventGroupReservationPopup";
+import { useEventGroupReservationsQuery } from "../../../redux/features/reservation/eventGroupReservation";
 
-const CoursesReservation = () => {
-  const { data: trainerData } = useTrainersQuery(undefined);
-  const [trainer, setTrainer] = useState<string | undefined>(undefined);
+const EventsGroupReservation = () => {
   const [sport, setSport] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading, isFetching } = useCourseReservationsQuery({
+  const { data, isLoading, isFetching } = useEventGroupReservationsQuery({
     search,
-    trainer,
     sport,
     page,
     limit,
   });
 
-  const options = trainerData?.results?.map((trainer: any) => {
-    return {
-      value: `${trainer.first_name} ${trainer.last_name}`,
-      label: `${trainer.first_name} ${trainer.last_name}`,
-    };
-  });
-  let trainerOptions;
-  if (options) {
-    trainerOptions = [
-      {
-        label: "All Trainer",
-        value: "all",
-      },
-      ...options,
-    ];
-  }
-
-  const onChange = (value: string, filter: string) => {
-    if (filter === "sport") {
-      if (value == "all") {
-        setSport(undefined);
-      } else {
-        setSport(value);
-      }
-    } else if (filter === "trainer") {
-      if (value == "all") {
-        setTrainer(undefined);
-      } else {
-        setTrainer(value);
-      }
-    }
-  };
   const handlePageChange = (page: number, size: number) => {
     setPage(page);
     setLimit(size);
   };
-
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
+  const onChange = (value: string) => {
+    if (value === "all") {
+      setSport(undefined);
+    } else {
+      setSport(value);
+    }
+  };
   const onSearch = (value: string) => {
     if (value.length < 1) {
       setSearch(undefined);
@@ -76,7 +45,7 @@ const CoursesReservation = () => {
       setSearch(value);
     }
   };
-  const columns: ColumnsType<ICourseReservation> = [
+  const columns: ColumnsType<IEventGroupReservation> = [
     {
       width: 70,
       align: "center",
@@ -90,9 +59,9 @@ const CoursesReservation = () => {
     {
       width: 180,
       align: "center",
-      title: "Player Name",
-      dataIndex: "player_name",
-      key: "player_name",
+      title: "Team Name",
+      dataIndex: "team_name",
+      key: "team_name",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
@@ -122,7 +91,7 @@ const CoursesReservation = () => {
       ),
     },
     {
-      width: 140,
+      width: 120,
       align: "center",
       title: "Sport",
       dataIndex: "sport",
@@ -133,32 +102,6 @@ const CoursesReservation = () => {
         </p>
       ),
       sorter: (a, b) => a.sport.localeCompare(b.sport),
-    },
-    {
-      width: 140,
-      align: "center",
-      title: "Trainer",
-      dataIndex: "trainer",
-      key: "trainer",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    },
-    {
-      width: 140,
-      align: "center",
-      title: "Skill Level",
-      dataIndex: "skill_level",
-      key: "skill_level",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.skill_level.localeCompare(b.skill_level),
     },
     {
       width: 160,
@@ -183,7 +126,7 @@ const CoursesReservation = () => {
       sorter: (a, b) => a.state.localeCompare(b.state),
     },
     {
-      width: 160,
+      width: 180,
       align: "center",
       title: "Zip/Postal Code",
       dataIndex: "zip_code",
@@ -204,11 +147,11 @@ const CoursesReservation = () => {
         const items = [
           {
             key: "1",
-            label: <UpdateCourseReservationModal record={record} />,
+            label: <UpdateEventGroupReservationModal record={record} />,
           },
           {
             key: "2",
-            label: <DeleteCourseReservationPopup id={record._id!} />,
+            label: <DeleteEventGroupReservationPopup id={record._id!} />,
           },
         ];
         return (
@@ -224,63 +167,56 @@ const CoursesReservation = () => {
       <div className="flex justify-between items-end">
         <div className="space-y-1">
           <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Bootcamp Reservation
+            Events Group Reservation
           </h2>
           <p className="text-[#838383] font-semibold text-lg">
             {data?.count || 0} reservation available
           </p>
         </div>
-        <AddCourseReservationModal />
+        <AddEventGroupReservationModal />
       </div>
-      <div className="grid grid-cols-5 gap-2 items-center">
+      <div className="grid grid-cols-9 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search by player name or email"
-          className="text-sm col-span-3 font-medium text-[#5D5D5D]"
+          placeholder="Search reservation by Team name or email"
+          className="text-sm col-span-6 font-medium text-[#5D5D5D]"
         />
-        <Select
-          className="w-full col-span-1"
-          showSearch
-          defaultValue={"all"}
-          optionFilterProp="children"
-          onChange={(value) => onChange(value, "sport")}
-          filterOption={filterOption}
-          options={[
-            {
-              label: "All Sport",
-              value: "all",
-            },
-            {
-              label: "Cricket",
-              value: "cricket",
-            },
-            {
-              label: "Soccer",
-              value: "soccer",
-            },
-            {
-              label: "Baseball",
-              value: "baseball",
-            },
-            {
-              label: "Softball",
-              value: "softball",
-            },
-            {
-              label: "Field Hockey",
-              value: "field hockey",
-            },
-          ]}
-        />
-        <Select
-          className="w-full"
-          showSearch
-          defaultValue={"all"}
-          optionFilterProp="children"
-          onChange={(value) => onChange(value, "trainer")}
-          filterOption={filterOption}
-          options={trainerOptions}
-        />
+        <div className="col-span-3 flex gap-2">
+          <Select
+            className="w-full"
+            showSearch
+            defaultValue={"all"}
+            optionFilterProp="children"
+            onChange={onChange}
+            filterOption={filterOption}
+            options={[
+              {
+                label: "All Sport",
+                value: "all",
+              },
+              {
+                label: "Cricket",
+                value: "cricket",
+              },
+              {
+                label: "Soccer",
+                value: "soccer",
+              },
+              {
+                label: "Baseball",
+                value: "baseball",
+              },
+              {
+                label: "Softball",
+                value: "softball",
+              },
+              {
+                label: "Field Hockey",
+                value: "field hockey",
+              },
+            ]}
+          />
+        </div>
       </div>
       <DataTable
         columns={columns}
@@ -297,4 +233,4 @@ const CoursesReservation = () => {
   );
 };
 
-export default CoursesReservation;
+export default EventsGroupReservation;
