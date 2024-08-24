@@ -38,7 +38,7 @@ const GroupAppointmentReservationForm = ({
       form.setFieldsValue({
         user_email: record.user_email,
         category: record?.category,
-        trainer: record?.trainer,
+        trainer: record?.trainer._id,
         class: record?._id,
         class_date: record?.class_date
           ? dayjs(record?.class_date, "DD/MM/YYYY")

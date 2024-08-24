@@ -36,7 +36,7 @@ const ClassesScheduling = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
   const options = trainerData?.results?.map((trainer: any) => {
     return {
-      value: `${trainer.first_name} ${trainer.last_name}`,
+      value: trainer._id,
       label: `${trainer.first_name} ${trainer.last_name}`,
     };
   });
@@ -143,7 +143,7 @@ const ClassesScheduling = () => {
       key: "trainer",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
+          {text.first_name} {text.last_name}
         </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),

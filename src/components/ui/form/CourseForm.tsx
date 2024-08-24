@@ -26,7 +26,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
   const trainerOptions = trainerData?.results?.map((trainer: any) => {
     return {
       label: `${trainer.first_name} ${trainer.last_name}`,
-      value: `${trainer.first_name} ${trainer.last_name}`,
+      value: trainer._id,
     };
   });
   dayjs.extend(weekday);
@@ -36,7 +36,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
       form.setFieldsValue({
         course_name: record?.course_name,
         sport: record?.sport,
-        trainer: record?.trainer,
+        trainer: record?.trainer._id,
         capacity: record?.capacity,
         start_date: record?.start_date
           ? dayjs(record?.start_date, "DD/MM/YYYY")

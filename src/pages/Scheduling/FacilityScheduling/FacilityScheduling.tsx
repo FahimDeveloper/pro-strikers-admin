@@ -10,41 +10,21 @@ import { IFacilitySchedule } from "../../../types/facilitySchedule.types";
 import UpdateFacilityModal from "../../../components/ui/modal/UpdateFacilityModal";
 import DeleteFacilityPopup from "../../../components/ui/popup/DeleteFacilityPopup";
 import { BsThreeDots } from "react-icons/bs";
-import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const FacilityScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [facility, setFacility] = useState<string | undefined>(undefined);
   const [sport, setSport] = useState<string | undefined>(undefined);
-  const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useFacilitiesQuery({
     search,
     facility,
     sport,
-    trainer,
     page,
     limit,
   });
   const { Paragraph } = Typography;
-  const { data: trainerData } = useTrainersQuery(undefined);
-  const options = trainerData?.results?.map((trainer: any) => {
-    return {
-      value: `${trainer.first_name} ${trainer.last_name}`,
-      label: `${trainer.first_name} ${trainer.last_name}`,
-    };
-  });
-  let trainerOptions;
-  if (options) {
-    trainerOptions = [
-      {
-        label: "All Trainer",
-        value: "all",
-      },
-      ...options,
-    ];
-  }
   const columns: ColumnsType<IFacilitySchedule> = [
     {
       width: 70,
@@ -128,19 +108,6 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.facility_duration - b.facility_duration,
     },
     {
-      width: 180,
-      title: "Trainer",
-      align: "center",
-      dataIndex: "trainer",
-      key: "trainer",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    },
-    {
       width: 80,
       title: "Fee",
       align: "center",
@@ -193,12 +160,6 @@ const FacilityScheduling = () => {
         setSport(undefined);
       } else {
         setSport(value);
-      }
-    } else if (filter === "trainer") {
-      if (value === "all") {
-        setTrainer(undefined);
-      } else {
-        setTrainer(value);
       }
     } else if (filter === "facility") {
       if (value === "all") {
@@ -305,15 +266,6 @@ const FacilityScheduling = () => {
                   value: "hockey",
                 },
               ]}
-            />
-            <Select
-              className="w-full"
-              showSearch
-              defaultValue={"all"}
-              optionFilterProp="children"
-              onChange={(value) => onChange(value, "trainer")}
-              filterOption={filterOption}
-              options={trainerOptions}
             />
           </div>
         </div>

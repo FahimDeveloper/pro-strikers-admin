@@ -11,7 +11,7 @@ const ClassForm = ({ record, form }: any) => {
   const trainerOptions = trainerData?.results?.map((trainer: any) => {
     return {
       label: `${trainer.first_name} ${trainer.last_name}`,
-      value: `${trainer.first_name} ${trainer.last_name}`,
+      value: trainer._id,
     };
   });
   dayjs.extend(weekday);
@@ -27,7 +27,7 @@ const ClassForm = ({ record, form }: any) => {
           : "",
         end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
         facility: record?.facility,
-        trainer: record?.trainer,
+        trainer: record?.trainer._id,
         level: record?.level,
         capacity: record?.capacity,
         price: record?.price,

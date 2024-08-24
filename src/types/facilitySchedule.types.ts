@@ -23,6 +23,5 @@ export type IFacilityScheduleParams = {
   page: number | undefined;
   limit: number | undefined;
   facility: string | undefined;
-  trainer: string | undefined;
   sport: string | undefined;
 };

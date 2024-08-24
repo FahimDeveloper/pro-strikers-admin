@@ -24,15 +24,9 @@ const facilityScheduleApi = facilityScheduleApiSlice.injectEndpoints({
       query: (id) => ({
         url: `/schedule/facilities/${id}`,
         method: "GET",
+        keepUnusedDataFor: 0,
       }),
       providesTags: ["facility"],
-    }),
-    facilityByDate: builder.mutation<any, any>({
-      query: (body) => ({
-        url: `/schedule/facilities/by-date`,
-        method: "POST",
-        body: body,
-      }),
     }),
     createFacility: builder.mutation<any, IFacilitySchedule>({
       query: (body) => ({
@@ -69,5 +63,4 @@ export const {
   useCreateFacilityMutation,
   useUpdateFacilityMutation,
   useDeleteFacilityMutation,
-  useFacilityByDateMutation,
 } = facilityScheduleApi;

@@ -10,53 +10,24 @@ import AddFacilityReservationModal from "../../../components/ui/modal/AddFacilit
 import moment from "moment";
 import DeleteFacilityReservationPopup from "../../../components/ui/popup/DeleteFacilityReservationPopup";
 import UpdateFacilityReservationModal from "../../../components/ui/modal/UpdateFacilityReservationModal";
-import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const FacilityReservation = () => {
-  const { data: trainerData } = useTrainersQuery(undefined);
-  const [trainer, setTrainer] = useState<string | undefined>(undefined);
-  const [category, setCategory] = useState<string | undefined>(undefined);
+  const [sport, setSport] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useFacilityReservationsQuery({
     search,
-    category,
-    trainer,
+    sport,
     page,
     limit,
   });
 
-  const options = trainerData?.results?.map((trainer: any) => {
-    return {
-      value: `${trainer.first_name} ${trainer.last_name}`,
-      label: `${trainer.first_name} ${trainer.last_name}`,
-    };
-  });
-  let trainerOptions;
-  if (options) {
-    trainerOptions = [
-      {
-        label: "All Trainer",
-        value: "all",
-      },
-      ...options,
-    ];
-  }
-
-  const onChange = (value: string, filter: string) => {
-    if (filter === "sport") {
-      if (value == "all") {
-        setCategory(undefined);
-      } else {
-        setCategory(value);
-      }
-    } else if (filter === "trainer") {
-      if (value == "all") {
-        setTrainer(undefined);
-      } else {
-        setTrainer(value);
-      }
+  const onChange = (value: string) => {
+    if (value == "all") {
+      setSport(undefined);
+    } else {
+      setSport(value);
     }
   };
   const handlePageChange = (page: number, size: number) => {
@@ -115,25 +86,14 @@ const FacilityReservation = () => {
       width: 120,
       align: "center",
       title: "Sport",
-      dataIndex: "category",
-      key: "category",
+      dataIndex: "sport",
+      key: "sport",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
         </p>
       ),
       sorter: (a, b) => a.category.localeCompare(b.category),
-    },
-    {
-      width: 160,
-      align: "center",
-      title: "Trainer",
-      dataIndex: "trainer",
-      key: "trainer",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
       width: 160,
@@ -201,18 +161,18 @@ const FacilityReservation = () => {
         <AddFacilityReservationModal />
       </div>
 
-      <div className="grid grid-cols-5 gap-2 items-center">
+      <div className="grid grid-cols-3 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
           placeholder="Search user by email"
-          className="text-sm col-span-3 font-medium text-[#5D5D5D]"
+          className="text-sm col-span-2 font-medium text-[#5D5D5D]"
         />
         <Select
           className="w-full col-span-1"
           showSearch
           defaultValue={"all"}
           optionFilterProp="children"
-          onChange={(value) => onChange(value, "sport")}
+          onChange={onChange}
           filterOption={filterOption}
           options={[
             {
@@ -240,15 +200,6 @@ const FacilityReservation = () => {
               value: "field hockey",
             },
           ]}
-        />
-        <Select
-          className="w-full"
-          showSearch
-          defaultValue={"all"}
-          optionFilterProp="children"
-          onChange={(value) => onChange(value, "trainer")}
-          filterOption={filterOption}
-          options={trainerOptions}
         />
       </div>
       <DataTable

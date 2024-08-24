@@ -7,13 +7,12 @@ import FacilityReservationForm from "../form/FacilityReservationForm";
 import { useCreateFacilityReservationMutation } from "../../../redux/features/reservation/facilityReservation";
 
 const AddFacilityReservationModal = () => {
+  const [selectSlots, setSelectSlots] = useState<any[]>([]);
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateFacilityReservationMutation();
   const onFinish = (values: any) => {
-    const issueDate = new Date();
-    values.issue_date = issueDate.toISOString();
     create(values);
   };
   useEffect(() => {
@@ -62,6 +61,8 @@ const AddFacilityReservationModal = () => {
             form={form}
             onFinish={onFinish}
             loading={isLoading}
+            selectSlots={selectSlots}
+            setSelectSlots={setSelectSlots}
           />
         </div>
       </Modal>

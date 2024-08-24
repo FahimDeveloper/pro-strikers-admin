@@ -2,21 +2,13 @@
 import { Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
 import { useLaneTitleQuery } from "../../../redux/features/Lane/laneApi";
-import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const FacilityForm = ({ record, form }: any) => {
   const { data: laneData } = useLaneTitleQuery(undefined);
-  const { data: trainerData } = useTrainersQuery(undefined);
   const laneOptions = laneData?.results?.map((lane: any) => {
     return {
       label: lane.lane_title,
       value: lane.lane_title,
-    };
-  });
-  const trainerOptions = trainerData?.results?.map((trainer: any) => {
-    return {
-      label: `${trainer.first_name} ${trainer.last_name}`,
-      value: `${trainer.first_name} ${trainer.last_name}`,
     };
   });
   useEffect(() => {
@@ -26,7 +18,6 @@ const FacilityForm = ({ record, form }: any) => {
         facility: record?.facility,
         sport: record?.sport,
         lane: record?.lane,
-        trainer: record?.trainer,
         facility_duration: record?.facility_duration,
         description: record?.description,
         price: record?.price,
@@ -110,7 +101,7 @@ const FacilityForm = ({ record, form }: any) => {
             />
           </Form.Item>
         </div>
-        <div className="grid grid-cols-3 gap-x-5">
+        <div className="grid grid-cols-2 gap-x-5">
           <Form.Item
             name="lane"
             className="w-full m-0"
@@ -138,14 +129,6 @@ const FacilityForm = ({ record, form }: any) => {
                 },
               ]}
             />
-          </Form.Item>
-          <Form.Item
-            rules={[{ required: true, message: "Please select Trainer" }]}
-            name="trainer"
-            className="w-full m-0"
-            label="Trainer"
-          >
-            <Select placeholder="Select trainer" options={trainerOptions} />
           </Form.Item>
         </div>
         <Form.Item

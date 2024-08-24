@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, DatePicker, Form, Input, Select } from "antd";
+import { Button, Form, Input } from "antd";
 import { useEffect, useState } from "react";
-import { useUsersEmailQuery } from "../../../redux/features/user/userApi";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
-import { useFacilityByDateMutation } from "../../../redux/features/schedule/facilityScheduleApi";
-import { createTimeSlots } from "../../../utils/createTimeSlots";
+import { useFacilityQuery } from "../../../redux/features/schedule/facilityScheduleApi";
 import { useForm } from "antd/es/form/Form";
+import BookingPart from "../../../pages/Reservations/FacilityReservation/components/BookingPart";
 
 type TProp = {
   record?: any;
@@ -16,57 +15,37 @@ type TProp = {
   onFinish: any;
   loading: boolean;
   isSuccess?: boolean;
+  selectSlots?: any;
+  setSelectSlots?: any;
 };
 
 const FacilityReservationForm = ({
   record,
   form,
+  isSuccess,
   onFinish,
   loading,
-  isSuccess,
+  selectSlots,
+  setSelectSlots,
 }: TProp) => {
   dayjs.extend(weekday);
   dayjs.extend(localeData);
-  const [facilityDate, setFacilityDate] = useState("");
   const [checkForm] = useForm();
-  const { data: usres } = useUsersEmailQuery(undefined);
-  const [facilityByDate, { data, isLoading, isError, error }] =
-    useFacilityByDateMutation();
-  const userOptions = usres?.results.map((user: any) => {
-    return {
-      value: user.email,
-      label: user.email,
-    };
+  const [skip, setSkip] = useState(true);
+  const [facilityId, setFacilityId] = useState("");
+
+  const {
+    data,
+    isSuccess: querySuccess,
+    isLoading,
+    isError,
+    error,
+  } = useFacilityQuery(facilityId, {
+    skip,
   });
-  const timeSlotOptions = createTimeSlots(
-    data?.results?.schedules[0]?.start_time,
-    data?.results?.schedules[0]?.end_time,
-    data?.results?.facility_duration
-  );
-  useEffect(() => {
-    if (record) {
-      form.setFieldsValue({
-        user_email: record.user_email,
-        category: record?.category,
-        trainer: record?.trainer,
-        facility: record?._id,
-        time_slots: record?.time_slots,
-        facility_date: record?.facility_date
-          ? dayjs(record?.facility_date, "DD/MM/YYYY")
-          : "",
-      });
-    }
-    if (data?.results) {
-      form.setFieldsValue({
-        category: data?.results?.sport,
-        trainer: data?.results?.trainer,
-        facility: data?.results?._id,
-        facility_date: facilityDate,
-      });
-    }
-  }, [record, form, data, facilityDate]);
   useEffect(() => {
     if (isError) {
+      setSkip(true);
       Swal.fire({
         title: "Oops!..",
         icon: "error",
@@ -74,159 +53,122 @@ const FacilityReservationForm = ({
         confirmButtonColor: "#0ABAC3",
       });
     }
+    if (querySuccess) {
+      setSkip(true);
+    }
     if (isSuccess) {
       checkForm.resetFields();
     }
-  }, [isError, error, isSuccess, checkForm]);
+  }, [isError, error, isSuccess, checkForm, querySuccess]);
   const onCheckFinish = (values: any) => {
-    facilityByDate(values);
-    setFacilityDate(values.date);
+    setFacilityId(values.id);
+    setSkip(false);
   };
   return (
-    <div className="space-y-5">
-      {!record && (
-        <Form onFinish={onCheckFinish} form={checkForm} layout="vertical">
-          <div className="grid grid-cols-5 gap-3">
-            <Form.Item
-              className="col-span-3 m-0"
-              name="id"
-              rules={[{ required: true, message: "Enter facility id" }]}
-            >
-              <Input placeholder="Enter the class ID" />
-            </Form.Item>
-            <div className="col-span-2 flex gap-3">
-              <Form.Item
-                className="m-0 w-full"
-                name="date"
-                rules={[{ required: true, message: "select booking date" }]}
-              >
-                <DatePicker className="w-full" />
-              </Form.Item>
-              <Form.Item className="m-0">
-                <Button type="primary" htmlType="submit" loading={isLoading}>
-                  Check
-                </Button>
-              </Form.Item>
-            </div>
-          </div>
-        </Form>
-      )}
-      <Form onFinish={onFinish} form={form} layout="vertical">
-        <div className="grid grid-cols-2 gap-4">
+    <div>
+      <Form onFinish={onCheckFinish} form={checkForm} layout="vertical">
+        <div className="flex gap-3">
           <Form.Item
-            name="user_email"
-            label="User"
-            className="m-0"
-            rules={[
-              {
-                required: data?.results._id ? true : false,
-                message: "select user",
-              },
-            ]}
+            className="w-full m-0"
+            name="id"
+            rules={[{ required: true, message: "Enter facility id" }]}
           >
-            <Select
-              placeholder="Select user"
-              disabled={data?.results._id ? false : record ? false : true}
-              options={userOptions}
-              showSearch
-            />
+            <Input placeholder="Enter facility Id" />
           </Form.Item>
-          <Form.Item
-            name="trainer"
-            label="Trainer"
-            className="m-0"
-            rules={[
-              {
-                required: data?.results._id ? true : false,
-                message: "Enter Trainer",
-              },
-            ]}
-          >
-            <Input
-              placeholder="Enter trainer"
-              readOnly
-              disabled={data?.results._id ? false : record ? false : true}
-            />
-          </Form.Item>
-          <Form.Item
-            className="col-span-2 m-0"
-            name="facility"
-            label="Facility ID"
-            rules={[{ required: true, message: "enter facility id" }]}
-          >
-            <Input
-              readOnly
-              disabled={data?.results._id ? false : record ? false : true}
-              placeholder="Enter the facility Id"
-            />
-          </Form.Item>
-          <Form.Item
-            name="category"
-            label="Category"
-            className="m-0"
-            rules={[
-              {
-                required: data?.results._id ? true : false,
-                message: "Enter category",
-              },
-            ]}
-          >
-            <Input
-              disabled={data?.results._id ? false : record ? false : true}
-              readOnly
-              placeholder="Enter category"
-            />
-          </Form.Item>
-          <Form.Item
-            className="m-0 w-full"
-            name="facility_date"
-            label="Facility Date"
-            rules={[
-              {
-                required: data?.results._id ? true : false,
-                message: "select class date",
-              },
-            ]}
-          >
-            <DatePicker
-              className="w-full"
-              disabled={data?.results._id ? false : record ? false : true}
-            />
-          </Form.Item>
-          <Form.Item
-            name="time_slots"
-            label="Time Slots"
-            className="col-span-2 m-0"
-            rules={[
-              {
-                required: data?.results._id ? true : false,
-                message: "select time slots",
-              },
-            ]}
-          >
-            <Select
-              placeholder="select time slots"
-              mode="multiple"
-              disabled={data?.results._id ? false : record ? false : true}
-              options={timeSlotOptions}
-            />
-          </Form.Item>
-        </div>
-        <div className="flex justify-end mt-4">
           <Form.Item className="m-0">
             <Button
               type="primary"
-              disabled={data?.results._id ? false : record ? false : true}
+              className="px-5"
               htmlType="submit"
-              loading={loading}
+              loading={isLoading}
             >
-              {record && Object.keys(record).length > 0
-                ? "Update Reservation"
-                : "Create Reservation"}
+              Get Facility
             </Button>
           </Form.Item>
         </div>
       </Form>
+      {data?.results && (
+        <BookingPart
+          rentalFacility={data}
+          selectSlots={selectSlots}
+          setSelectSlots={setSelectSlots}
+        />
+      )}
+      {selectSlots.length > 0 && (
+        <Form form={form} onFinish={onFinish} layout="vertical">
+          <div className="grid grid-cols-2 gap-4">
+            <Form.Item
+              label="First Name"
+              className="m-0"
+              name="first_name"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+            <Form.Item
+              label="Last Name"
+              className="m-0"
+              name="last_name"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+            <Form.Item
+              label="Phone"
+              className="m-0"
+              name="phone"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              className="m-0"
+              name="email"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+            <Form.Item
+              label="Street Address"
+              name="street_address"
+              className="m-0"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+            <Form.Item
+              label="City"
+              className="m-0"
+              name="city"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+            <Form.Item
+              label="State/Province"
+              name="state"
+              className="m-0"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+            <Form.Item
+              label="Zip/Postal Code"
+              name="zip_code"
+              className="m-0"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here.." />
+            </Form.Item>
+          </div>
+          <Form.Item className="mt-5 text-end">
+            <Button htmlType="submit" loading={loading} className="primary-btn">
+              {record ? "Update" : "Book Now"}
+            </Button>
+          </Form.Item>
+        </Form>
+      )}
     </div>
   );
 };

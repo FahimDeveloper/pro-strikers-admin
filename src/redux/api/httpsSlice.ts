@@ -125,7 +125,7 @@ export const courseReservationApiSlice = createApi({
 export const facilityReservationApiSlice = createApi({
   reducerPath: "facilityReservationApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["reservations", "reservation"],
+  tagTypes: ["reservations", "reservation", "carts"],
   endpoints: () => ({}),
 });
 
