@@ -16,7 +16,7 @@ const AppointmentForm = ({ record, form }: any) => {
       form.setFieldsValue({
         appointment_name: record?.appointment_name,
         appointment_type: record?.appointment_type,
-        appointment_duration: record?.appointment_duration,
+        duration: record?.duration,
         sport: record?.sport,
         trainer: record?.trainer._id,
         description: record?.description,
@@ -61,7 +61,7 @@ const AppointmentForm = ({ record, form }: any) => {
         </div>
         <div className="grid grid-cols-3 gap-x-5">
           <Form.Item
-            name="appointment_duration"
+            name="duration"
             className="w-full m-0"
             label="Appointment Duratoin"
             rules={[{ required: true, message: "Please select Duration" }]}

@@ -14,7 +14,6 @@ const AddEventModal = () => {
     useCreateEventMutation();
   const onFinish = (values: any) => {
     const formData = new FormData();
-    values.registration = 0;
     formData.append("image", values.image[0].originFileObj);
     delete values.image;
     formData.append("data", JSON.stringify(values));

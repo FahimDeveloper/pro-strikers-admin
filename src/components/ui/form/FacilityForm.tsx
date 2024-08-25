@@ -18,7 +18,7 @@ const FacilityForm = ({ record, form }: any) => {
         facility: record?.facility,
         sport: record?.sport,
         lane: record?.lane,
-        facility_duration: record?.facility_duration,
+        duration: record?.duration,
         description: record?.description,
         price: record?.price,
       });
@@ -111,7 +111,7 @@ const FacilityForm = ({ record, form }: any) => {
             <Select placeholder="Select lane" options={laneOptions} />
           </Form.Item>
           <Form.Item
-            name="facility_duration"
+            name="duration"
             className="w-full m-0"
             label="Facility Duratoin"
             rules={[{ required: true, message: "Please select Duration" }]}

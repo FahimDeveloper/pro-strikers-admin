@@ -3,7 +3,7 @@ export interface IFacilitySchedule {
   facility_name: string;
   sport: string;
   facility: string;
-  facility_duration: number;
+  duration: number;
   trainer: string;
   description: string;
   price: number;

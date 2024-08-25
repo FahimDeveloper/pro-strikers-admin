@@ -49,14 +49,10 @@ const BookingTimeSlots = ({
 
   const slots = useMemo(() => {
     if (day && day.active) {
-      return createTimeSlots(
-        day.start_time,
-        day.end_time,
-        facility.facility_duration
-      );
+      return createTimeSlots(day.start_time, day.end_time, facility.duration);
     }
     return [];
-  }, [day, facility.facility_duration]);
+  }, [day, facility.duration]);
 
   const onSelect = (value: string, index: number) => {
     if (!user && !token) {

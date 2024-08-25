@@ -98,14 +98,14 @@ const FacilityScheduling = () => {
       width: 130,
       title: "Duration",
       align: "center",
-      dataIndex: "facility_duration",
-      key: "facility_duration",
+      dataIndex: "duration",
+      key: "duration",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text} minutes
         </p>
       ),
-      sorter: (a, b) => a.facility_duration - b.facility_duration,
+      sorter: (a, b) => a.duration - b.duration,
     },
     {
       width: 80,

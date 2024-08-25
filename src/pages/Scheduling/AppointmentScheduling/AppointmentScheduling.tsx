@@ -133,14 +133,14 @@ const AppointmentScheduling = () => {
       width: 140,
       title: "Duration",
       align: "center",
-      dataIndex: "appointment_duration",
-      key: "appointment_duration",
+      dataIndex: "duration",
+      key: "duration",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text} minutes
         </p>
       ),
-      sorter: (a, b) => a.appointment_duration - b.appointment_duration,
+      sorter: (a, b) => a.duration - b.duration,
     },
     {
       width: 80,

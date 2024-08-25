@@ -150,12 +150,8 @@ const PostForm = ({
                   value: "general",
                 },
                 {
-                  label: "Tournament",
-                  value: "tournament",
-                },
-                {
-                  label: "League",
-                  value: "league",
+                  label: "Event",
+                  value: "event",
                 },
                 {
                   label: "Cricket",

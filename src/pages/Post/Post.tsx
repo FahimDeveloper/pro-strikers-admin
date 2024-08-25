@@ -35,11 +35,12 @@ const Post = () => {
       },
     },
     {
+      width: 140,
       align: "center",
       title: "Thumbnail",
       dataIndex: "image",
       key: "image",
-      render: (text) => <Image src={text} style={{ width: 50 }} />,
+      render: (text) => <Image src={text} style={{ width: 70 }} />,
     },
     {
       align: "center",
@@ -47,7 +48,9 @@ const Post = () => {
       dataIndex: "title",
       key: "title",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] truncate">
+          {text}
+        </p>
       ),
       sorter: (a, b) => a.title.localeCompare(b.title),
     },
@@ -162,12 +165,8 @@ const Post = () => {
               value: "general",
             },
             {
-              label: "Tournament",
-              value: "tournament",
-            },
-            {
-              label: "League",
-              value: "league",
+              label: "Event",
+              value: "event",
             },
             {
               label: "Cricket",
