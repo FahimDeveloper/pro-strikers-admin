@@ -18,6 +18,7 @@ import {
   laneApiSlice,
   orderApiSlice,
   postApiSlice,
+  slotBookingApiSlice,
   storeApiSlice,
   userApiSlice,
   voucherApiSlice,
@@ -60,6 +61,7 @@ export const rootReducers = combineReducers({
   [eventIndividualReservationApiSlice.reducerPath]:
     eventIndividualReservationApiSlice.reducer,
   auth: persistedAuthReducer,
+  [slotBookingApiSlice.reducerPath]: slotBookingApiSlice.reducer,
 });
 
 export const rootMiddlewares = [
@@ -83,4 +85,5 @@ export const rootMiddlewares = [
   facilityReservationApiSlice.middleware,
   eventGroupReservationApiSlice.middleware,
   eventIndividualReservationApiSlice.middleware,
+  slotBookingApiSlice.middleware,
 ];

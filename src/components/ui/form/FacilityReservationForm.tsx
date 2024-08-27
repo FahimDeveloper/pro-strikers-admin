@@ -2,12 +2,9 @@
 import { Button, Form, Input } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import dayjs from "dayjs";
-import weekday from "dayjs/plugin/weekday";
-import localeData from "dayjs/plugin/localeData";
 import { useFacilityQuery } from "../../../redux/features/schedule/facilityScheduleApi";
 import { useForm } from "antd/es/form/Form";
-import BookingPart from "../../../pages/Reservations/FacilityReservation/components/BookingPart";
+import BookingPart from "../../common/BookingPart";
 
 type TProp = {
   record?: any;
@@ -28,8 +25,6 @@ const FacilityReservationForm = ({
   selectSlots,
   setSelectSlots,
 }: TProp) => {
-  dayjs.extend(weekday);
-  dayjs.extend(localeData);
   const [checkForm] = useForm();
   const [skip, setSkip] = useState(true);
   const [facilityId, setFacilityId] = useState("");

@@ -21,10 +21,10 @@ const appointmentGroupReservationApi =
         providesTags: ["reservation"],
       }),
       createAppointmentGroupReservation: builder.mutation<any, any>({
-        query: (body) => ({
-          url: "/reservations/appointments/group/create",
+        query: ({ id, payload }) => ({
+          url: `/reservations/appointments/group/create/${id}`,
           method: "POST",
-          body,
+          body: payload,
         }),
         invalidatesTags: ["reservations"],
       }),

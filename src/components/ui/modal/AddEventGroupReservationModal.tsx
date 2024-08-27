@@ -37,6 +37,11 @@ const AddEventGroupReservationModal = () => {
   const onSubmit = (values: any) => {
     create(values);
   };
+  const onCancle = () => {
+    setModalOpen(false);
+    form.resetFields();
+    setCurrent(0);
+  };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
@@ -48,7 +53,7 @@ const AddEventGroupReservationModal = () => {
         title="Create New Event Group Reservation"
         centered
         open={open}
-        onCancel={() => setModalOpen(false)}
+        onCancel={onCancle}
         maskClosable={false}
       >
         <GroupEventReservationSteps

@@ -15,22 +15,26 @@ import { collectBookingTimeSlots } from "../../utils/collectBookingTimeSlots";
 
 const BookingTimeSlots = ({
   activeDate,
-  facility,
-  cartsQuery,
+  training,
+  slotsCartQuery,
   addToCart,
   selectSlots,
   setSelectSlots,
+  slotsBookedQuery,
 }: {
   activeDate: Date;
-  facility: any;
-  cartsQuery: any;
+  training: any;
+  slotsCartQuery: any;
+  slotsBookedQuery: any;
   addToCart: any;
   selectSlots: any;
   setSelectSlots: any;
 }) => {
   const [create, { isLoading: createLoading, isSuccess, isError, error }] =
     addToCart;
-  const { data: cartsData, isLoading: cartsLoading } = cartsQuery;
+  const { data: slotsCartData, isLoading: slotsCartLoading } = slotsCartQuery;
+  const { data: slotsBookedData, isLoading: slotsBookedLoading } =
+    slotsBookedQuery;
   const [timeSlot, setTimeSlot] = useState("");
   const [slotIndex, setSlotIndex] = useState<number | null>(null);
   const user = useSelector(selectCurrentUser);
@@ -39,20 +43,20 @@ const BookingTimeSlots = ({
   const location = useLocation();
   const day = useMemo(
     () =>
-      facility?.schedules?.find(
+      training?.schedules?.find(
         (schedule: any) =>
           schedule.day ===
           activeDate.toLocaleDateString("en-US", { weekday: "long" })
       ),
-    [facility, activeDate]
+    [training, activeDate]
   );
 
   const slots = useMemo(() => {
     if (day && day.active) {
-      return createTimeSlots(day.start_time, day.end_time, facility.duration);
+      return createTimeSlots(day.start_time, day.end_time, training.duration);
     }
     return [];
-  }, [day, facility.duration]);
+  }, [day, training.duration]);
 
   const onSelect = (value: string, index: number) => {
     if (!user && !token) {
@@ -70,12 +74,14 @@ const BookingTimeSlots = ({
         }
       });
     } else {
+      const date = activeDate.toISOString().split("T")[0];
       setTimeSlot(value);
       setSlotIndex(index);
       create({
-        facility: facility._id,
+        id: `${training._id}${date}${value.split(" ").join("")}`,
+        training: training._id,
         user: user?._id,
-        date: activeDate.toISOString().split("T")[0],
+        date,
         time_slot: value,
       });
     }
@@ -111,55 +117,68 @@ const BookingTimeSlots = ({
     }
   }, [isSuccess, isError, error]);
 
-  const unavailableSlots = collectBookingTimeSlots(cartsData?.results);
+  const cartSlots = collectBookingTimeSlots(slotsCartData?.results);
+  const bookedSlots = collectBookingTimeSlots(slotsBookedData?.results);
+  const unavailableSlots = [...cartSlots, ...bookedSlots];
 
   return (
-    <div className="grid grid-cols-5 gap-1">
-      {slots.map((slot, index) => (
-        <button
-          disabled={
-            createLoading ||
-            cartsLoading ||
-            unavailableSlots.includes(slot) ||
-            selectSlots.find(
-              (slots: any) =>
-                slots.date.toISOString().split("T")[0] ===
-                  activeDate.toISOString().split("T")[0] &&
-                slots.slots.includes(slot)
-            )
-          }
-          key={index}
-          onClick={() => onSelect(slot, index)}
-          className={`border border-solid rounded-md border-gray-200 py-4 px-1 disabled:cursor-not-allowed text-center ${
-            createLoading || cartsLoading
-              ? "cursor-not-allowed"
-              : "cursor-pointer"
-          } ${
-            selectSlots.find(
-              (slots: any) =>
-                slots.date.toISOString().split("T")[0] ===
-                  activeDate.toISOString().split("T")[0] &&
-                slots.slots.includes(slot)
-            )
-              ? "bg-primary text-white"
-              : unavailableSlots.includes(slot)
-              ? "bg-gray-100"
-              : "bg-white"
-          }`}
-        >
-          {(createLoading || cartsLoading) && index === slotIndex ? (
-            <FaSpinner className="animate-spin size-3 text-white" />
-          ) : (
-            <p className="text-xs font-medium">
-              {!selectSlots.find((slots: any) => slots.slots.includes(slot)) &&
-              unavailableSlots.includes(slot)
-                ? "Unavailable"
-                : slot}
-            </p>
-          )}
-        </button>
-      ))}
-    </div>
+    <>
+      {slots?.length > 0 ? (
+        <div className="grid grid-cols-5 gap-1">
+          {slots.map((slot, index) => (
+            <button
+              disabled={
+                createLoading ||
+                slotsCartLoading ||
+                slotsBookedLoading ||
+                unavailableSlots.includes(slot) ||
+                selectSlots.find(
+                  (slots: any) =>
+                    slots.date.toISOString().split("T")[0] ===
+                      activeDate.toISOString().split("T")[0] &&
+                    slots.slots.includes(slot)
+                )
+              }
+              key={index}
+              onClick={() => onSelect(slot, index)}
+              className={`border border-solid rounded-md border-gray-200 h-12 px-1 disabled:cursor-not-allowed text-center ${
+                createLoading || slotsCartLoading || slotsBookedLoading
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+              } ${
+                selectSlots.find(
+                  (slots: any) =>
+                    slots.date.toISOString().split("T")[0] ===
+                      activeDate.toISOString().split("T")[0] &&
+                    slots.slots.includes(slot)
+                )
+                  ? "bg-primary text-white"
+                  : unavailableSlots.includes(slot)
+                  ? "bg-gray-100"
+                  : "bg-white"
+              }`}
+            >
+              {(createLoading || slotsCartLoading || slotsBookedLoading) &&
+              index === slotIndex ? (
+                <FaSpinner className="animate-spin size-5 text-primary" />
+              ) : (
+                <p className="text-xs font-medium">
+                  {!selectSlots.find((slots: any) =>
+                    slots.slots.includes(slot)
+                  ) && unavailableSlots.includes(slot)
+                    ? "Unavailable"
+                    : slot}
+                </p>
+              )}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p className="text-2xl h-40 items-center justify-center flex font-semibold">
+          No slot available in this date
+        </p>
+      )}
+    </>
   );
 };
 

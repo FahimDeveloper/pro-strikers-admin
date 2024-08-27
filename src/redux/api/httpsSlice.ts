@@ -141,3 +141,10 @@ export const eventGroupReservationApiSlice = createApi({
   tagTypes: ["group-reservations", "group-reservation"],
   endpoints: () => ({}),
 });
+
+export const slotBookingApiSlice = createApi({
+  reducerPath: "slotBookingApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["carts", "booked"],
+  endpoints: () => ({}),
+});

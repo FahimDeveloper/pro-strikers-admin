@@ -8,17 +8,19 @@ import DeleteVoucherPopup from "../../../components/ui/popup/DeleteVoucherPopup"
 import { BsThreeDots } from "react-icons/bs";
 import { useAppointmentGroupReservationsQuery } from "../../../redux/features/reservation/appointmentGroupReservatonApi";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+import AddGroupAppointmentReservationModal from "../../../components/ui/modal/AddGroupAppointmentReservationModal";
+import moment from "moment";
 
 const AppointmentGroupReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
-  const [category, setCategory] = useState<string | undefined>(undefined);
+  const [sport, setSport] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useAppointmentGroupReservationsQuery({
     search,
-    category,
+    sport,
     trainer,
     page,
     limit,
@@ -26,9 +28,9 @@ const AppointmentGroupReservation = () => {
   const onChange = (value: string, filter: string) => {
     if (filter === "sport") {
       if (value == "all") {
-        setCategory(undefined);
+        setSport(undefined);
       } else {
-        setCategory(value);
+        setSport(value);
       }
     } else if (filter === "trainer") {
       if (value == "all") {
@@ -83,11 +85,21 @@ const AppointmentGroupReservation = () => {
       },
     },
     {
-      width: 220,
+      width: 260,
       align: "center",
       title: "Email",
-      dataIndex: "user_email",
-      key: "user_email",
+      dataIndex: "email",
+      key: "email",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
@@ -98,28 +110,24 @@ const AppointmentGroupReservation = () => {
       title: "Appointment Name",
       dataIndex: "appointment",
       key: "appointment",
-      render: (_, record) => (
+      render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {record?.appointment.appointment_name}
+          {text?.appointment_name}
         </p>
       ),
-      sorter: (a, b) =>
-        a.appointment.appointment_name.localeCompare(
-          b.appointment.appointment_name
-        ),
     },
     {
       width: 120,
       align: "center",
       title: "Sport",
-      dataIndex: "category",
-      key: "category",
+      dataIndex: "sport",
+      key: "sport",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
         </p>
       ),
-      sorter: (a, b) => a.category.localeCompare(b.category),
+      sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
       width: 160,
@@ -128,9 +136,10 @@ const AppointmentGroupReservation = () => {
       dataIndex: "trainer",
       key: "trainer",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {text?.first_name} {text?.last_name}
+        </p>
       ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
       width: 160,
@@ -139,18 +148,9 @@ const AppointmentGroupReservation = () => {
       dataIndex: "issue_date",
       key: "issue_date",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    },
-    {
-      width: 160,
-      align: "center",
-      title: "Facility Date",
-      dataIndex: "appointment_date",
-      key: "appointment_date",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("DD/MM/YYYY")}
+        </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
@@ -178,18 +178,21 @@ const AppointmentGroupReservation = () => {
   ];
   return (
     <div className="space-y-5">
-      <div className="space-y-1">
-        <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-          Appointment Group Reservation
-        </h2>
-        <p className="text-[#838383] font-semibold text-lg">
-          {data?.count || 0} reservation available
-        </p>
+      <div className="flex justify-between items-end">
+        <div className="space-y-1">
+          <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
+            Appointment Group Reservation
+          </h2>
+          <p className="text-[#838383] font-semibold text-lg">
+            {data?.count || 0} reservation available
+          </p>
+        </div>
+        <AddGroupAppointmentReservationModal />
       </div>
       <div className="grid grid-cols-5 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search voucher"
+          placeholder="Search reservation by email or phone"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
         <Select

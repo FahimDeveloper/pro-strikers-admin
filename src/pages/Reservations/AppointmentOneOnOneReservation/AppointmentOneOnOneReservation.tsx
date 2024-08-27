@@ -12,14 +12,14 @@ import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 const AppointmentOneOnOneReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
-  const [category, setCategory] = useState<string | undefined>(undefined);
+  const [sport, setSport] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } =
     useAppointmentOneOnOneReservationsQuery({
       search,
-      category,
+      sport,
       trainer,
       page,
       limit,
@@ -43,9 +43,9 @@ const AppointmentOneOnOneReservation = () => {
   const onChange = (value: string, filter: string) => {
     if (filter === "sport") {
       if (value == "all") {
-        setCategory(undefined);
+        setSport(undefined);
       } else {
-        setCategory(value);
+        setSport(value);
       }
     } else if (filter === "trainer") {
       if (value == "all") {
@@ -84,11 +84,11 @@ const AppointmentOneOnOneReservation = () => {
       },
     },
     {
-      width: 220,
+      width: 260,
       align: "center",
       title: "Email",
-      dataIndex: "user_email",
-      key: "user_email",
+      dataIndex: "email",
+      key: "email",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
@@ -113,14 +113,14 @@ const AppointmentOneOnOneReservation = () => {
       width: 120,
       align: "center",
       title: "Sport",
-      dataIndex: "category",
-      key: "category",
+      dataIndex: "sport",
+      key: "sport",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
         </p>
       ),
-      sorter: (a, b) => a.category.localeCompare(b.category),
+      sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
       width: 160,
@@ -129,9 +129,10 @@ const AppointmentOneOnOneReservation = () => {
       dataIndex: "trainer",
       key: "trainer",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {text.first_name} {text.last_name}
+        </p>
       ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
       width: 160,
