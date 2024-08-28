@@ -34,6 +34,16 @@ const GroupReservationGeneralForm = ({
   return (
     <Form form={form} layout="vertical">
       <div className="grid grid-cols-2 gap-4">
+        {!record && (
+          <Form.Item
+            label="Event Id"
+            className="col-span-2 m-0"
+            name="event"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="Type here..." />
+          </Form.Item>
+        )}
         <Form.Item
           label="First Name"
           name="first_name"

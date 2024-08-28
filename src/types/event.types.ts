@@ -21,7 +21,6 @@ export type IEventParams = {
   limit: number | undefined;
   sport: string | undefined;
   event_type?: string | undefined;
-  skill_level?: string | undefined;
 };
 
 export type IEventIndividualReservation = {

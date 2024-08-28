@@ -12,14 +12,14 @@ type TProp = {
 const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
   useEffect(() => {
     form.setFieldsValue({
-      player_name: record?.player_name,
+      first_name: record?.player_name,
+      last_name: record?.last_name,
       email: record?.email,
       phone: record?.phone,
       age: record?.age,
       state: record?.state,
       city: record?.city,
       sport: record?.sport,
-      skill_level: record?.skill_level,
       street_address: record?.street_address,
       zip_code: record?.zip_code,
     });
@@ -38,8 +38,16 @@ const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
           </Form.Item>
         )}
         <Form.Item
-          label="Player Name"
-          name="player_name"
+          label="First Name"
+          name="first_name"
+          className="m-0"
+          rules={[{ required: true }]}
+        >
+          <Input placeholder="Type here.." />
+        </Form.Item>
+        <Form.Item
+          label="Last Name"
+          name="last_name"
           className="m-0"
           rules={[{ required: true }]}
         >
@@ -81,30 +89,6 @@ const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
               {
                 label: "Field Hockey",
                 value: "field hockey",
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item
-          rules={[{ required: true }]}
-          name="skill_level"
-          className="w-full m-0"
-          label="Skill Level"
-        >
-          <Select
-            placeholder="Select level"
-            options={[
-              {
-                label: "Basic",
-                value: "basic",
-              },
-              {
-                label: "Intermediate",
-                value: "intermediate",
-              },
-              {
-                label: "Advanced",
-                value: "advanced",
               },
             ]}
           />

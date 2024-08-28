@@ -22,7 +22,8 @@ export type ICourseParams = {
 
 export type ICourseReservation = {
   _id?: string;
-  player_name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   age: number;

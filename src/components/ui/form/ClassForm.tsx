@@ -28,7 +28,6 @@ const ClassForm = ({ record, form }: any) => {
         end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
         facility: record?.facility,
         trainer: record?.trainer._id,
-        level: record?.level,
         capacity: record?.capacity,
         price: record?.price,
       });
@@ -104,6 +103,27 @@ const ClassForm = ({ record, form }: any) => {
           >
             <DatePicker className="w-full" format={"DD/MM/YYYY"} />
           </Form.Item>
+
+          <Form.Item
+            rules={[{ required: true }]}
+            name="trainer"
+            className="w-full m-0"
+            label="Trainer"
+          >
+            <Select placeholder="Select trainer" options={trainerOptions} />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true }]}
+            name="capacity"
+            className=" m-0"
+            label="Capacity"
+          >
+            <InputNumber
+              min={0}
+              className="w-full"
+              placeholder="Enter class capacity"
+            />
+          </Form.Item>
           <Form.Item
             rules={[{ required: true }]}
             name="facility"
@@ -138,61 +158,17 @@ const ClassForm = ({ record, form }: any) => {
           </Form.Item>
           <Form.Item
             rules={[{ required: true }]}
-            name="trainer"
-            className="w-full m-0"
-            label="Trainer"
-          >
-            <Select placeholder="Select trainer" options={trainerOptions} />
-          </Form.Item>
-          <Form.Item
-            rules={[{ required: true }]}
-            name="level"
-            className="w-full m-0"
-            label="Level"
-          >
-            <Select
-              placeholder="Select level"
-              options={[
-                {
-                  label: "Basic",
-                  value: "basic",
-                },
-                {
-                  label: "Intermediate",
-                  value: "intermediate",
-                },
-                {
-                  label: "Advanced",
-                  value: "advanced",
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item
-            rules={[{ required: true }]}
-            name="capacity"
-            className=" m-0"
-            label="Capacity"
+            name="price"
+            className="m-0"
+            label="Class Fee"
           >
             <InputNumber
               min={0}
               className="w-full"
-              placeholder="Enter class capacity"
+              placeholder="Enter class price"
             />
           </Form.Item>
         </div>
-        <Form.Item
-          rules={[{ required: true }]}
-          name="price"
-          className=" m-0"
-          label="Class Fee"
-        >
-          <InputNumber
-            min={0}
-            className="w-52"
-            placeholder="Enter class price"
-          />
-        </Form.Item>
       </Form>
     </>
   );

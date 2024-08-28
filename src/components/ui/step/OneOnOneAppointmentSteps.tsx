@@ -1,33 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Steps } from "antd";
 import { useState } from "react";
-import GroupReservationGeneralForm from "../form/GroupReservationGeneralForm";
-import GroupReservationTeamDetailsForm from "../form/GroupReservationTeamDetailsForm";
+import ScheduleForm from "../form/ScheduleForm";
+import AppointmentOneOnOneForm from "../form/AppointmentOneOnOneForm";
 
-const GroupTrainingSteps = ({
+type TProp = {
+  record?: any;
+  form: any;
+  onSubmit: any;
+  loading: boolean;
+  current: any;
+  setCurrent: any;
+};
+
+const OneOnOneAppointmentSteps = ({
+  record,
   form,
   onSubmit,
   loading,
-  record,
   current,
   setCurrent,
-}: {
-  form: any;
-  onSubmit: any;
-  record: any;
-  loading: boolean;
-  current: number;
-  setCurrent: any;
-}) => {
+}: TProp) => {
   const [formData, setFormData] = useState<any>({});
   const steps = [
     {
       title: "General Details",
-      content: <GroupReservationGeneralForm form={form} record={record} />,
+      content: <AppointmentOneOnOneForm record={record} form={form} />,
     },
     {
-      title: "Group Details",
-      content: <GroupReservationTeamDetailsForm form={form} record={record} />,
+      title: "Schedule",
+      content: <ScheduleForm record={record} form={form} />,
     },
   ];
   const next = () => {
@@ -78,7 +80,9 @@ const GroupTrainingSteps = ({
             loading={loading}
             onClick={() => onFinish()}
           >
-            Proceed
+            {record && Object.keys(record).length > 1
+              ? "Update Appointment"
+              : "Create Appointment"}
           </Button>
         )}
         {current < steps.length - 1 && (
@@ -91,4 +95,4 @@ const GroupTrainingSteps = ({
   );
 };
 
-export default GroupTrainingSteps;
+export default OneOnOneAppointmentSteps;

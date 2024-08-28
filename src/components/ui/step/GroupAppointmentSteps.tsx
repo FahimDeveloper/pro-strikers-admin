@@ -2,7 +2,7 @@
 import { Button, Steps } from "antd";
 import { useState } from "react";
 import ScheduleForm from "../form/ScheduleForm";
-import AppointmentForm from "../form/AppointmentForm";
+import AppointmentGroupForm from "../form/AppointmentGroupForm";
 
 type TProp = {
   record?: any;
@@ -13,7 +13,7 @@ type TProp = {
   setCurrent: any;
 };
 
-const AppointmentSteps = ({
+const GroupAppointmentSteps = ({
   record,
   form,
   onSubmit,
@@ -25,7 +25,7 @@ const AppointmentSteps = ({
   const steps = [
     {
       title: "General Details",
-      content: <AppointmentForm record={record} form={form} />,
+      content: <AppointmentGroupForm record={record} form={form} />,
     },
     {
       title: "Schedule",
@@ -95,4 +95,4 @@ const AppointmentSteps = ({
   );
 };
 
-export default AppointmentSteps;
+export default GroupAppointmentSteps;

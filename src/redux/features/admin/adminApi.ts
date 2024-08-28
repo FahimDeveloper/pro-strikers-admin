@@ -25,7 +25,7 @@ const adminApi = adminApiSlice.injectEndpoints({
         url: `/admins/trainers`,
         method: "GET",
       }),
-      providesTags: ["trianers"],
+      providesTags: ["trainers"],
     }),
     createAdmin: builder.mutation<any, any>({
       query: (body) => ({
@@ -33,7 +33,7 @@ const adminApi = adminApiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["admins"],
+      invalidatesTags: ["admins", "trainers"],
     }),
     updateAdmin: builder.mutation<any, any>({
       query: ({ id, body }) => ({

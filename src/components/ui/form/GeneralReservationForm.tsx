@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IEventGroupReservation } from "../../../types/event.types";
+import { Button, Form, Input, InputNumber } from "antd";
 import { useEffect } from "react";
-import dayjs from "dayjs";
-import weekday from "dayjs/plugin/weekday";
-import localeData from "dayjs/plugin/localeData";
-import { Form, Input, InputNumber, Select } from "antd";
 
-const GroupReservationGeneralForm = ({
+const GeneralReservationForm = ({
   record,
   form,
+  loading,
+  onFinish,
 }: {
   form: any;
-  record: IEventGroupReservation | undefined;
+  record?: any;
+  onFinish: any;
+  loading: any;
 }) => {
-  dayjs.extend(weekday);
-  dayjs.extend(localeData);
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
@@ -24,8 +22,6 @@ const GroupReservationGeneralForm = ({
         email: record?.email,
         phone: record?.phone,
         sport: record?.sport,
-        // preferred_time: record?.preferred_time,
-        // preferred_date: dayjs(record?.preferred_date, "DD/MM/YYYY"),
         city: record?.city,
         zip_code: record?.zip_code,
         street_address: record?.street_address,
@@ -34,18 +30,18 @@ const GroupReservationGeneralForm = ({
     }
   }, [record, form]);
   return (
-    <Form form={form} layout="vertical">
-      {!record && (
-        <Form.Item
-          label="Event Id"
-          name="event"
-          className="mb-3"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Type here..." />
-        </Form.Item>
-      )}
+    <Form onFinish={onFinish} form={form} layout="vertical">
       <div className="grid grid-cols-2 gap-4">
+        {!record && (
+          <Form.Item
+            label="Appointment Id"
+            name="appointment"
+            className="m-0 col-span-2"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="Type here..." />
+          </Form.Item>
+        )}
         <Form.Item
           label="First Name"
           name="first_name"
@@ -95,63 +91,10 @@ const GroupReservationGeneralForm = ({
           name="sport"
           className="w-full m-0"
           label="Sport"
-          rules={[{ required: true, message: "Please select Sport" }]}
-        >
-          <Select
-            placeholder="Select sport"
-            options={[
-              {
-                label: "Cricket",
-                value: "cricket",
-              },
-              {
-                label: "Soccer",
-                value: "soccer",
-              },
-              {
-                label: "Baseball",
-                value: "baseball",
-              },
-              {
-                label: "Softball",
-                value: "softball",
-              },
-              {
-                label: "Field Hockey",
-                value: "field hockey",
-              },
-            ]}
-          />
-        </Form.Item>
-        {/* <Form.Item
-          label="Training preferred time"
-          name="preferred_time"
-          className="m-0"
           rules={[{ required: true }]}
         >
-          <Select
-            placeholder="Select time"
-            options={[
-              { value: "8:00 am", label: "8:00 am " },
-              { value: "10:00 am", label: "10:00 am" },
-              { value: "12:00 pm", label: "12:00 pm" },
-              { value: "2:00 pm", label: "2:00 pm" },
-              { value: "4:00 pm", label: "4:00 pm" },
-            ]}
-          />
+          <Input readOnly placeholder="Type here.." />
         </Form.Item>
-        <Form.Item
-          className="m-0"
-          label="Training preferred date"
-          name="preferred_date"
-          rules={[{ required: true }]}
-        >
-          <DatePicker
-            placeholder="select date"
-            className="w-full"
-            format={"DD/MM/YYYY"}
-          />
-        </Form.Item> */}
 
         <Form.Item
           className="m-0"
@@ -186,8 +129,15 @@ const GroupReservationGeneralForm = ({
           <Input placeholder="Type here.." />
         </Form.Item>
       </div>
+      <div className="mt-5 flex justify-end">
+        <Form.Item className="m-0">
+          <Button loading={loading} htmlType="submit" className="primary-btn">
+            {record ? "Update" : "Create"}
+          </Button>
+        </Form.Item>
+      </div>
     </Form>
   );
 };
 
-export default GroupReservationGeneralForm;
+export default GeneralReservationForm;

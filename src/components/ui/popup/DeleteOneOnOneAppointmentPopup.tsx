@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Popconfirm } from "antd";
-import { useDeleteAppointmentMutation } from "../../../redux/features/schedule/appointmentScheduleApi";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
+import { useDeleteOneAppointmentMutation } from "../../../redux/features/schedule/oneAppointmentScheduleApi";
 
-const DeleteAppointmentPopup = ({ id }: { id: string }) => {
+const DeleteOneOnOneAppointmentPopup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [deleteIt, { data, isLoading, isSuccess, isError, error }] =
-    useDeleteAppointmentMutation();
+    useDeleteOneAppointmentMutation();
   const confirm = () => {
     deleteIt(id);
   };
@@ -56,4 +56,4 @@ const DeleteAppointmentPopup = ({ id }: { id: string }) => {
   );
 };
 
-export default DeleteAppointmentPopup;
+export default DeleteOneOnOneAppointmentPopup;

@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Modal } from "antd";
+import { Button, Form, Modal } from "antd";
 import { useEffect, useState } from "react";
-import AppointmentSteps from "../step/AppointmentSteps";
-import { useCreateAppointmentMutation } from "../../../redux/features/schedule/appointmentScheduleApi";
 import Swal from "sweetalert2";
+import { CiEdit } from "react-icons/ci";
+import { useUpdateOneAppointmentMutation } from "../../../redux/features/schedule/oneAppointmentScheduleApi";
+import OneOnOneAppointmentSteps from "../step/OneOnOneAppointmentSteps";
 
-const AddAppointmentModal = () => {
+const UpdateOneOnOneAppointmentModal = ({ record }: any) => {
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const [open, setModalOpen] = useState(false);
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateAppointmentMutation();
+  const [update, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateOneAppointmentMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -34,31 +35,35 @@ const AddAppointmentModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+  const onSubmit = (values: any) => {
+    update({ id: record?._id, body: values });
+  };
   const onCancle = () => {
     setModalOpen(false);
     setCurrent(0);
-    form.resetFields();
-  };
-  const onSubmit = (values: any) => {
-    create(values);
   };
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="btn primary-btn">
-        Create Appointment
-      </button>
+      <Button
+        type="primary"
+        onClick={() => setModalOpen(true)}
+        className="w-full flex gap-1 justify-center items-center"
+      >
+        <CiEdit className="size-5 text-white" /> Update
+      </Button>
       <Modal
         width={800}
+        maskClosable={false}
         footer={null}
-        title="Create New Appointment"
+        title="Update Appointment"
         centered
         open={open}
         onCancel={onCancle}
-        maskClosable={false}
       >
-        <AppointmentSteps
+        <OneOnOneAppointmentSteps
           current={current}
           setCurrent={setCurrent}
+          record={record}
           form={form}
           onSubmit={onSubmit}
           loading={isLoading}
@@ -68,4 +73,4 @@ const AddAppointmentModal = () => {
   );
 };
 
-export default AddAppointmentModal;
+export default UpdateOneOnOneAppointmentModal;

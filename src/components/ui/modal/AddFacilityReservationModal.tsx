@@ -5,28 +5,72 @@ import Swal from "sweetalert2";
 import { useForm } from "antd/es/form/Form";
 import FacilityReservationForm from "../form/FacilityReservationForm";
 import { useCreateFacilityReservationMutation } from "../../../redux/features/reservation/facilityReservation";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
+import { useGetfacilityMutation } from "../../../redux/features/schedule/facilityScheduleApi";
 
 const AddFacilityReservationModal = () => {
-  const [selectSlots, setSelectSlots] = useState<any[]>([]);
+  const user = useSelector(selectCurrentUser);
+  const [data, setData] = useState(null);
+  const [selectSlots, setSelectSlots] = useState<any>([]);
   const [open, setModalOpen] = useState(false);
+  const [facilityId, setFacilityId] = useState("");
   const [form] = useForm();
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateFacilityReservationMutation();
+  const [checkForm] = useForm();
+  const [
+    getData,
+    {
+      data: facility,
+      isSuccess: querySuccess,
+      isLoading: queryLoading,
+      isError: queryError,
+      error: queryErrorDetails,
+    },
+  ] = useGetfacilityMutation();
+  const [
+    create,
+    { data: createData, isLoading, isSuccess: createSuccess, isError, error },
+  ] = useCreateFacilityReservationMutation();
   const onFinish = (values: any) => {
-    create(values);
+    values.facility = facilityId;
+    const bookings: any = [];
+    selectSlots?.forEach((dateSlots: any) =>
+      dateSlots.slots.forEach((slot: string) =>
+        bookings.push({
+          date: dateSlots.date.toISOString().split("T")[0],
+          time_slot: slot,
+          training: facilityId,
+        })
+      )
+    );
+    values.bookings = bookings;
+    create({ id: user?._id, payload: values });
+  };
+  const onCheckFinish = (values: any) => {
+    setFacilityId(values.id);
+    getData(values.id);
   };
   useEffect(() => {
-    if (isSuccess) {
+    if (createSuccess) {
       Swal.fire({
         title: "Success",
         icon: "success",
-        text: `${data?.message}`,
+        text: `${createData?.message}`,
         showConfirmButton: false,
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      setModalOpen(false);
+      setSelectSlots([]);
+      setData(null);
       form.resetFields();
+      checkForm.resetFields();
+      setModalOpen(false);
+    }
+    if (querySuccess) {
+      setData(facility);
+      form.setFieldsValue({
+        sport: facility?.results.sport,
+      });
     }
     if (isError) {
       Swal.fire({
@@ -36,10 +80,22 @@ const AddFacilityReservationModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [data, isSuccess, isError, form, error]);
+    if (queryError) {
+      Swal.fire({
+        title: "Oops!..",
+        icon: "error",
+        text: `${(queryErrorDetails as any)?.data?.message}`,
+        confirmButtonColor: "#0ABAC3",
+      });
+    }
+  }, [isError, createSuccess, queryError, querySuccess]);
+
   const onCancle = () => {
-    setModalOpen(false);
     form.resetFields();
+    checkForm.resetFields();
+    setSelectSlots([]);
+    setData(null);
+    setModalOpen(false);
   };
   return (
     <>
@@ -57,12 +113,15 @@ const AddFacilityReservationModal = () => {
       >
         <div className="my-5">
           <FacilityReservationForm
-            isSuccess={isSuccess}
             form={form}
             onFinish={onFinish}
-            loading={isLoading}
+            loading={isLoading || queryLoading}
             selectSlots={selectSlots}
             setSelectSlots={setSelectSlots}
+            data={data}
+            facilityId={facilityId}
+            onCheckFinish={onCheckFinish}
+            checkForm={checkForm}
           />
         </div>
       </Modal>

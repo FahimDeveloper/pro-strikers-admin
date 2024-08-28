@@ -18,7 +18,6 @@ const ClassesScheduling = () => {
   const [facility, setFacility] = useState<string | undefined>(undefined);
   const [sport, setSport] = useState<string | undefined>(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
-  const [level, setLevel] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useClassesQuery({
@@ -28,7 +27,6 @@ const ClassesScheduling = () => {
     sport,
     facility,
     trainer,
-    level,
   });
 
   const { Paragraph } = Typography;
@@ -115,19 +113,6 @@ const ClassesScheduling = () => {
       align: "center",
       dataIndex: "sport",
       key: "sport",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.sport.localeCompare(b.sport),
-    },
-    {
-      width: 160,
-      title: "Level",
-      align: "center",
-      dataIndex: "level",
-      key: "level",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
@@ -238,12 +223,6 @@ const ClassesScheduling = () => {
       } else {
         setTrainer(value);
       }
-    } else if (filter === "level") {
-      if (value === "all") {
-        setLevel(undefined);
-      } else {
-        setLevel(value);
-      }
     }
   };
 
@@ -352,32 +331,6 @@ const ClassesScheduling = () => {
               onChange={(value) => onChange(value, "trainer")}
               filterOption={filterOption}
               options={trainerOptions}
-            />
-            <Select
-              className="w-full"
-              showSearch
-              defaultValue={"all"}
-              optionFilterProp="children"
-              onChange={(value) => onChange(value, "level")}
-              filterOption={filterOption}
-              options={[
-                {
-                  label: "All Level",
-                  value: "all",
-                },
-                {
-                  label: "Basic",
-                  value: "basic",
-                },
-                {
-                  label: "Intermediate",
-                  value: "intermediate",
-                },
-                {
-                  label: "Advanced",
-                  value: "advanced",
-                },
-              ]}
             />
           </div>
         </div>

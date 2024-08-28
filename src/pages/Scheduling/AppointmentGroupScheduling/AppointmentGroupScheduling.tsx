@@ -4,27 +4,46 @@ import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
-import AddFacilityModal from "../../../components/ui/modal/AddFacilityModal";
-import { useFacilitiesQuery } from "../../../redux/features/schedule/facilityScheduleApi";
-import { IFacilitySchedule } from "../../../types/facilitySchedule.types";
-import UpdateFacilityModal from "../../../components/ui/modal/UpdateFacilityModal";
+import { IAppointmentSchedule } from "../../../types/appointmentSchedule.types";
 import { BsThreeDots } from "react-icons/bs";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+import { useGroupAppointmentsQuery } from "../../../redux/features/schedule/groupAppointmentScheduleApi";
+import UpdateGroupAppointmentModal from "../../../components/ui/modal/UpdateGroupAppointmentModal";
+import DeleteGroupAppointmentPopup from "../../../components/ui/popup/DeleteGroupAppointmentPopup";
+import AddGroupAppointmentModal from "../../../components/ui/modal/AddGroupAppointmentModal";
 
-const FacilityScheduling = () => {
+const AppointmentGroupScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
-  const [facility, setFacility] = useState<string | undefined>(undefined);
   const [sport, setSport] = useState<string | undefined>(undefined);
+  const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading, isFetching } = useFacilitiesQuery({
+  const { data, isLoading, isFetching } = useGroupAppointmentsQuery({
     search,
-    facility,
-    sport,
     page,
     limit,
+    trainer,
+    sport,
   });
+  const { data: trainerData } = useTrainersQuery(undefined);
+  const options = trainerData?.results?.map((trainer: any) => {
+    return {
+      value: trainer._id,
+      label: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
+  let trainerOptions;
+  if (options) {
+    trainerOptions = [
+      {
+        label: "All Trainer",
+        value: "all",
+      },
+      ...options,
+    ];
+  }
   const { Paragraph } = Typography;
-  const columns: ColumnsType<IFacilitySchedule> = [
+  const columns: ColumnsType<IAppointmentSchedule> = [
     {
       width: 70,
       align: "center",
@@ -37,7 +56,7 @@ const FacilityScheduling = () => {
     },
     {
       width: 240,
-      title: "Facility ID",
+      title: "Appointment ID",
       align: "center",
       dataIndex: "_id",
       key: "_id",
@@ -58,27 +77,14 @@ const FacilityScheduling = () => {
     },
     {
       width: 220,
-      title: "Facility Name",
+      title: "Appointment Name",
       align: "center",
-      dataIndex: "facility_name",
-      key: "facility_name",
+      dataIndex: "appointment_name",
+      key: "appointment_name",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-      sorter: (a, b) => a.facility_name.localeCompare(b.facility_name),
-    },
-    {
-      width: 180,
-      title: "Facility",
-      align: "center",
-      dataIndex: "facility",
-      key: "facility",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.facility.localeCompare(b.facility),
+      sorter: (a, b) => a.appointment_name.localeCompare(b.appointment_name),
     },
     {
       width: 150,
@@ -94,17 +100,30 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
-      width: 130,
-      title: "Duration",
+      width: 180,
+      title: "Trainer",
       align: "center",
-      dataIndex: "duration",
-      key: "duration",
+      dataIndex: "trainer",
+      key: "trainer",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text} minutes
+          {text.first_name} {text.last_name}
         </p>
       ),
-      sorter: (a, b) => a.duration - b.duration,
+      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    },
+    {
+      width: 140,
+      title: "Capacity",
+      align: "center",
+      dataIndex: "capacity",
+      key: "capacity",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text} person
+        </p>
+      ),
+      sorter: (a, b) => a.capacity! - b.capacity!,
     },
     {
       width: 80,
@@ -128,12 +147,12 @@ const FacilityScheduling = () => {
         const items = [
           {
             key: "1",
-            label: <UpdateFacilityModal record={record} />,
+            label: <UpdateGroupAppointmentModal record={record} />,
           },
-          // {
-          //   key: "2",
-          //   label: <DeleteFacilityPopup id={record?._id} />,
-          // },
+          {
+            key: "2",
+            label: <DeleteGroupAppointmentPopup id={record?._id} />,
+          },
         ];
         return (
           <Dropdown menu={{ items }}>
@@ -160,15 +179,14 @@ const FacilityScheduling = () => {
       } else {
         setSport(value);
       }
-    } else if (filter === "facility") {
+    } else if (filter === "trainer") {
       if (value === "all") {
-        setFacility(undefined);
+        setTrainer(undefined);
       } else {
-        setFacility(value);
+        setTrainer(value);
       }
     }
   };
-
   const onSearch = (value: string) => {
     if (value.length < 1) {
       setSearch(undefined);
@@ -183,59 +201,25 @@ const FacilityScheduling = () => {
         <div className="flex justify-between items-end">
           <div className="space-y-1">
             <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-              Facilities
+              Group Appointments
             </h2>
             <p className="text-[#838383] font-semibold text-lg">
-              {data?.count || 0} facilities available
+              {data?.count || 0} appointments available
             </p>
           </div>
-          <AddFacilityModal />
+          <AddGroupAppointmentModal />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="grid grid-cols-5 gap-2 items-center">
           <Input.Search
             onSearch={onSearch}
-            placeholder="Search facility"
-            className="text-sm font-medium text-[#5D5D5D]"
+            placeholder="Search Appointment"
+            className="text-sm font-medium col-span-3 text-[#5D5D5D]"
           />
-          <div className="flex gap-2 items-center">
+          <div className="col-span-2 flex gap-2 items-center">
             <Select
               className="w-full"
               showSearch
-              defaultValue={"all"}
-              optionFilterProp="children"
-              onChange={(value) => onChange(value, "facility")}
-              filterOption={filterOption}
-              options={[
-                {
-                  label: "All Facility",
-                  value: "all",
-                },
-                {
-                  label: "Cricket Cage",
-                  value: "cricket cage",
-                },
-                {
-                  label: "Soccer Cage",
-                  value: "soccer cage",
-                },
-                {
-                  label: "Baseball Cage",
-                  value: "baseball cage",
-                },
-                {
-                  label: "Softball Cage",
-                  value: "softball cage",
-                },
-                {
-                  label: "Hockey Cage",
-                  value: "hockey cage",
-                },
-              ]}
-            />
-            <Select
-              className="w-full"
-              showSearch
-              defaultValue={"all"}
+              defaultValue="all"
               optionFilterProp="children"
               onChange={(value) => onChange(value, "sport")}
               filterOption={filterOption}
@@ -261,10 +245,19 @@ const FacilityScheduling = () => {
                   value: "softball",
                 },
                 {
-                  label: "Hockey",
-                  value: "hockey",
+                  label: "Field Hockey",
+                  value: "field hockey",
                 },
               ]}
+            />
+            <Select
+              className="w-full"
+              showSearch
+              defaultValue="all"
+              optionFilterProp="children"
+              onChange={(value) => onChange(value, "trainer")}
+              filterOption={filterOption}
+              options={trainerOptions}
             />
           </div>
         </div>
@@ -284,4 +277,4 @@ const FacilityScheduling = () => {
   );
 };
 
-export default FacilityScheduling;
+export default AppointmentGroupScheduling;

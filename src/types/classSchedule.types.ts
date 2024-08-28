@@ -27,5 +27,4 @@ export type IClassScheduleParams = {
   facility: string | undefined;
   trainer: string | undefined;
   sport: string | undefined;
-  level: string | undefined;
 };

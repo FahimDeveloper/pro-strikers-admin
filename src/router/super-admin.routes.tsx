@@ -1,9 +1,39 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
-import EventsIndividutalReservation from "../pages/Reservations/EventsIndividualReservation/EventsIndividutalReservation";
-import EventsGroupReservation from "../pages/Reservations/EventsGroupReservation/EventsGroupReservation";
 
+const EventsIndividutalReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/EventsIndividualReservation/EventsIndividutalReservation"
+      )
+  )
+);
+const EventsGroupReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/EventsGroupReservation/EventsGroupReservation"
+      )
+  )
+);
+const AppointmentOneOnOneScheduling = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Scheduling/AppointmentOneOnOneScheduling/AppointmentOneOnOneScheduling"
+      )
+  )
+);
+const AppointmentGroupScheduling = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Scheduling/AppointmentGroupScheduling/AppointmentGroupScheduling"
+      )
+  )
+);
 const Store = LazyLoad(lazy(() => import("../pages/Store/Store")));
 const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
@@ -42,12 +72,6 @@ const AppointmentGroupReservation = LazyLoad(
       import(
         "../pages/Reservations/AppointmentGroupReservation/AppointmentGroupReservation"
       )
-  )
-);
-const AppointmentScheduling = LazyLoad(
-  lazy(
-    () =>
-      import("../pages/Scheduling/AppointmentScheduling/AppointmentScheduling")
   )
 );
 
@@ -105,8 +129,18 @@ export const superAdminPaths = [
       },
       {
         name: "Appointment",
-        path: "scheduling/appointment",
-        element: <AppointmentScheduling />,
+        children: [
+          {
+            name: "One On One",
+            path: "scheduling/appointment/one-on-one",
+            element: <AppointmentOneOnOneScheduling />,
+          },
+          {
+            name: "Group",
+            path: "scheduling/appointment/group",
+            element: <AppointmentGroupScheduling />,
+          },
+        ],
       },
       {
         name: "Facility",

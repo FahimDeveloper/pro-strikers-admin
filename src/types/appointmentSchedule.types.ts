@@ -3,10 +3,11 @@ export type IAppointmentSchedule = {
   appointment_name: string;
   appointment_type: string;
   sport: string;
-  duration: number;
+  duration?: number;
   trainer: string;
   description: string;
   price: number;
+  capacity?: number;
   schedules: IAppointmentDaySchedule[];
 };
 
@@ -21,7 +22,7 @@ export type IAppointmentScheduleParams = {
   search: string | undefined;
   page: number | undefined;
   limit: number | undefined;
-  appointment_type: string | undefined;
+
   trainer: string | undefined;
   sport: string | undefined;
 };

@@ -67,6 +67,9 @@ const BookingPart = ({
       }
     });
   };
+  const totalPrice = selectSlots.reduce((total: number, appointment: any) => {
+    return total + appointment.slots.length * data?.results.price;
+  }, 0);
   return (
     <div className="bg-[#F9FAFB] py-10 rounded-2xl space-y-6 px-5">
       <div className="space-y-2">
@@ -88,9 +91,12 @@ const BookingPart = ({
       )}
       {selectSlots.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#07133D]">
-            Booking Details
-          </h3>
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-semibold text-[#07133D]">
+              Booking Details
+            </h3>
+            <p className="text-base">Total Price: ${totalPrice}</p>
+          </div>
           <div className="space-y-2">
             {selectSlots.map((dateSlots: any, index: number) => (
               <div className="space-y-2" key={index}>

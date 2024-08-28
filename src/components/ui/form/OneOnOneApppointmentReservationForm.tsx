@@ -1,49 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Input } from "antd";
-import { useEffect, useState } from "react";
-import { useForm } from "antd/es/form/Form";
+import { useState } from "react";
 import {
   useGetBookingSlotsQuery,
-  useGroupTrainingBookedSlotsQuery,
+  useOneTrainingBookedSlotsQuery,
 } from "../../../redux/features/slotBooking/slotBookingApi";
-import GroupTrainingSteps from "../step/GroupTrainingReservationSetps";
+import { Button, Form, Input } from "antd";
 import BookingPart from "../../common/BookingPart";
+import GeneralReservationForm from "./GeneralReservationForm";
 
 type TProp = {
   record?: any;
   form: any;
-  onSubmit: any;
-  current: any;
-  setCurrent: any;
+  onFinish: any;
   data: any;
   loading: boolean;
-  isSuccess: boolean;
   selectSlots: any;
   setSelectSlots?: any;
   appointmentId: any;
-  setAppointmentId: any;
-  setSkip: any;
-  skip: any;
+  checkForm: any;
+  onCheckFinish: any;
 };
 
-const GroupAppointmentReservationForm = ({
+const OneOnOneApppointmentReservationForm = ({
   record,
   data,
-  current,
-  setCurrent,
   form,
-  isSuccess,
-  onSubmit,
+  onFinish,
   loading,
   selectSlots,
   setSelectSlots,
   appointmentId,
-  setAppointmentId,
-  setSkip,
+  onCheckFinish,
+  checkForm,
 }: TProp) => {
   const [activeDate, setActiveDate] = useState(new Date());
-  const [checkForm] = useForm();
-
   const slotsCartQuery = useGetBookingSlotsQuery(
     {
       training: appointmentId,
@@ -51,24 +41,13 @@ const GroupAppointmentReservationForm = ({
     },
     { skip: data ? false : true }
   );
-  const slotsBookedQuery = useGroupTrainingBookedSlotsQuery(
+  const slotsBookedQuery = useOneTrainingBookedSlotsQuery(
     {
       training: appointmentId,
       date: activeDate.toISOString().split("T")[0],
     },
     { skip: data ? false : true }
   );
-  useEffect(() => {
-    if (isSuccess) {
-      checkForm.resetFields();
-    }
-  }, [isSuccess, checkForm]);
-
-  const onCheckFinish = (values: any) => {
-    setAppointmentId(values.id);
-    setSkip(false);
-  };
-
   return (
     <div className="space-y-5">
       <Form onFinish={onCheckFinish} form={checkForm} layout="vertical">
@@ -104,11 +83,9 @@ const GroupAppointmentReservationForm = ({
         />
       )}
       {selectSlots.length > 0 && (
-        <GroupTrainingSteps
+        <GeneralReservationForm
           record={record}
-          current={current}
-          setCurrent={setCurrent}
-          onSubmit={onSubmit}
+          onFinish={onFinish}
           form={form}
           loading={loading}
         />
@@ -117,4 +94,4 @@ const GroupAppointmentReservationForm = ({
   );
 };
 
-export default GroupAppointmentReservationForm;
+export default OneOnOneApppointmentReservationForm;

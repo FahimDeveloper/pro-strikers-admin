@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Modal } from "antd";
 import { useEffect, useState } from "react";
-import AppointmentSteps from "../step/AppointmentSteps";
-import { useUpdateAppointmentMutation } from "../../../redux/features/schedule/appointmentScheduleApi";
 import Swal from "sweetalert2";
 import { CiEdit } from "react-icons/ci";
+import { useUpdateGroupAppointmentMutation } from "../../../redux/features/schedule/groupAppointmentScheduleApi";
+import GroupAppointmentSteps from "../step/GroupAppointmentSteps";
 
-const UpdateAppointmentModal = ({ record }: any) => {
+const UpdateGroupAppointmentModal = ({ record }: any) => {
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const [open, setModalOpen] = useState(false);
   const [update, { data, isLoading, isSuccess, isError, error }] =
-    useUpdateAppointmentMutation();
+    useUpdateGroupAppointmentMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -60,7 +60,7 @@ const UpdateAppointmentModal = ({ record }: any) => {
         open={open}
         onCancel={onCancle}
       >
-        <AppointmentSteps
+        <GroupAppointmentSteps
           current={current}
           setCurrent={setCurrent}
           record={record}
@@ -73,4 +73,4 @@ const UpdateAppointmentModal = ({ record }: any) => {
   );
 };
 
-export default UpdateAppointmentModal;
+export default UpdateGroupAppointmentModal;

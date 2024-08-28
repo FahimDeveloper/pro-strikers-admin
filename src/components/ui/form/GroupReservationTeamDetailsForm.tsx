@@ -6,16 +6,26 @@ import { AiOutlineMinusCircle } from "react-icons/ai";
 const GroupReservationTeamDetailsForm = ({
   form,
   record,
+  formData,
 }: {
   form: any;
   record: any;
+  formData: any;
 }) => {
   useEffect(() => {
     form.setFieldsValue({
       team_name: record?.team_name,
-      team: record?.team,
+      team: record?.team || [
+        {
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          age: formData.age,
+          email: formData.email,
+          contact: formData.phone,
+        },
+      ],
     });
-  }, [record, form]);
+  }, [record, form, formData]);
   return (
     <Form form={form} layout="vertical">
       <Form.Item
@@ -49,7 +59,10 @@ const GroupReservationTeamDetailsForm = ({
                     name={[name, "first_name"]}
                     rules={[{ required: true, message: "Missing first name" }]}
                   >
-                    <Input placeholder="Type here..." />
+                    <Input
+                      readOnly={index < 1 ? true : false}
+                      placeholder="Type here..."
+                    />
                   </Form.Item>
                   <Form.Item
                     label="Last Name"
@@ -58,7 +71,10 @@ const GroupReservationTeamDetailsForm = ({
                     name={[name, "last_name"]}
                     rules={[{ required: true, message: "Missing last name" }]}
                   >
-                    <Input placeholder="Type here..." />
+                    <Input
+                      readOnly={index < 1 ? true : false}
+                      placeholder="Type here..."
+                    />
                   </Form.Item>
                   <Form.Item
                     label="Age"
@@ -70,6 +86,7 @@ const GroupReservationTeamDetailsForm = ({
                     ]}
                   >
                     <InputNumber
+                      readOnly={index < 1 ? true : false}
                       placeholder="Type here..."
                       className="w-full"
                       min={0}
@@ -85,7 +102,10 @@ const GroupReservationTeamDetailsForm = ({
                     name={[name, "email"]}
                     rules={[{ required: true, message: "Missing email" }]}
                   >
-                    <Input placeholder="Type here..." />
+                    <Input
+                      readOnly={index < 1 ? true : false}
+                      placeholder="Type here..."
+                    />
                   </Form.Item>
                   <Form.Item
                     label="Contact"
@@ -94,7 +114,10 @@ const GroupReservationTeamDetailsForm = ({
                     name={[name, "contact"]}
                     rules={[{ required: true, message: "Missing contact" }]}
                   >
-                    <Input placeholder="Type here..." />
+                    <Input
+                      readOnly={index < 1 ? true : false}
+                      placeholder="Type here..."
+                    />
                   </Form.Item>
                 </div>
               </div>

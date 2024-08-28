@@ -4,28 +4,24 @@ import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
-import AddAppointmentModal from "../../../components/ui/modal/AddAppointmentModal";
-import { useAppointmentsQuery } from "../../../redux/features/schedule/appointmentScheduleApi";
+import AddOneOnOneAppointmentModal from "../../../components/ui/modal/AddOneOnOneAppointmentModal";
+import { useOneAppointmentsQuery } from "../../../redux/features/schedule/oneAppointmentScheduleApi";
 import { IAppointmentSchedule } from "../../../types/appointmentSchedule.types";
-import DeleteAppointmentPopup from "../../../components/ui/popup/DeleteAppointmentPopup";
-import UpdateAppointmentModal from "../../../components/ui/modal/UpdateAppointmentModal";
 import { BsThreeDots } from "react-icons/bs";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+import UpdateOneOnOneAppointmentModal from "../../../components/ui/modal/UpdateOneOnOnAppointmentModal";
+import DeleteOneOnOneAppointmentPopup from "../../../components/ui/popup/DeleteOneOnOneAppointmentPopup";
 
-const AppointmentScheduling = () => {
+const AppointmentOneOnOneScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
-  const [appointmentType, setAppointmentType] = useState<string | undefined>(
-    undefined
-  );
   const [sport, setSport] = useState<string | undefined>(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const { data, isLoading, isFetching } = useAppointmentsQuery({
+  const { data, isLoading, isFetching } = useOneAppointmentsQuery({
     search,
     page,
     limit,
-    appointment_type: appointmentType,
     trainer,
     sport,
   });
@@ -80,7 +76,7 @@ const AppointmentScheduling = () => {
       ),
     },
     {
-      width: 220,
+      width: 240,
       title: "Appointment Name",
       align: "center",
       dataIndex: "appointment_name",
@@ -89,19 +85,6 @@ const AppointmentScheduling = () => {
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
       sorter: (a, b) => a.appointment_name.localeCompare(b.appointment_name),
-    },
-    {
-      width: 180,
-      title: "Appointment Type",
-      align: "center",
-      dataIndex: "appointment_type",
-      key: "appointment_type",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.appointment_type.localeCompare(b.appointment_type),
     },
     {
       width: 150,
@@ -140,7 +123,7 @@ const AppointmentScheduling = () => {
           {text} minutes
         </p>
       ),
-      sorter: (a, b) => a.duration - b.duration,
+      sorter: (a, b) => a.duration! - b.duration!,
     },
     {
       width: 80,
@@ -164,11 +147,11 @@ const AppointmentScheduling = () => {
         const items = [
           {
             key: "1",
-            label: <UpdateAppointmentModal record={record} />,
+            label: <UpdateOneOnOneAppointmentModal record={record} />,
           },
           {
             key: "2",
-            label: <DeleteAppointmentPopup id={record?._id} />,
+            label: <DeleteOneOnOneAppointmentPopup id={record?._id} />,
           },
         ];
         return (
@@ -190,13 +173,7 @@ const AppointmentScheduling = () => {
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const onChange = (value: string, filter: string) => {
-    if (filter === "appointment_type") {
-      if (value === "all") {
-        setAppointmentType(undefined);
-      } else {
-        setAppointmentType(value);
-      }
-    } else if (filter === "sport") {
+    if (filter === "sport") {
       if (value === "all") {
         setSport(undefined);
       } else {
@@ -224,43 +201,21 @@ const AppointmentScheduling = () => {
         <div className="flex justify-between items-end">
           <div className="space-y-1">
             <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-              Appointments
+              One On One Appointments
             </h2>
             <p className="text-[#838383] font-semibold text-lg">
               {data?.count || 0} appointments available
             </p>
           </div>
-          <AddAppointmentModal />
+          <AddOneOnOneAppointmentModal />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="grid grid-cols-5 gap-2 items-center">
           <Input.Search
             onSearch={onSearch}
             placeholder="Search Appointment"
-            className="text-sm font-medium text-[#5D5D5D]"
+            className="text-sm font-medium col-span-3 text-[#5D5D5D]"
           />
-          <div className="flex gap-2 items-center">
-            <Select
-              className="w-full"
-              showSearch
-              defaultValue="all"
-              optionFilterProp="children"
-              onChange={(value) => onChange(value, "appointment_type")}
-              filterOption={filterOption}
-              options={[
-                {
-                  label: "All Appointments",
-                  value: "all",
-                },
-                {
-                  label: "One on One",
-                  value: "one on one",
-                },
-                {
-                  label: "Group training",
-                  value: "group training",
-                },
-              ]}
-            />
+          <div className="col-span-2 flex gap-2 items-center">
             <Select
               className="w-full"
               showSearch
@@ -322,4 +277,4 @@ const AppointmentScheduling = () => {
   );
 };
 
-export default AppointmentScheduling;
+export default AppointmentOneOnOneScheduling;

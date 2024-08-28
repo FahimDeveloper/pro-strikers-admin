@@ -24,10 +24,10 @@ const appointmentOneOnOneReservationApi =
         providesTags: ["reservation"],
       }),
       createAppointmentOneOnOneReservation: builder.mutation<any, any>({
-        query: (body) => ({
-          url: "/reservations/appointments/one-on-one/create",
+        query: ({ id, payload }) => ({
+          url: `/reservations/appointments/one-on-one/create/${id}`,
           method: "POST",
-          body,
+          body: payload,
         }),
         invalidatesTags: ["reservations"],
       }),

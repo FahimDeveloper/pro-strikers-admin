@@ -23,7 +23,9 @@ export const navigationGenerator = (navigationsPath: TPath[], role: string) => {
           children: route.children.map((child, index) => {
             if (child.name && child.children) {
               return {
-                key: `${role}/${child.name.toLowerCase() + index}`,
+                key: `${role}/${route.name}/${
+                  child.name.toLowerCase() + index
+                }`,
                 label: child.name,
                 children: child.children.map((grandChild) => {
                   return {

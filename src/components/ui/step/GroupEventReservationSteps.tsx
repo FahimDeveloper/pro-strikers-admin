@@ -28,7 +28,13 @@ const GroupEventReservationSteps = ({
     },
     {
       title: "Team Details",
-      content: <GroupReservationTeamDetailsForm form={form} record={record} />,
+      content: (
+        <GroupReservationTeamDetailsForm
+          formData={formData}
+          form={form}
+          record={record}
+        />
+      ),
     },
   ];
   const next = () => {

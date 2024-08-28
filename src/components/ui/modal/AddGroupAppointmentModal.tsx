@@ -1,22 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal } from "antd";
+import { Form, Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { useForm } from "antd/es/form/Form";
-import { useCreateAppointmentGroupReservationMutation } from "../../../redux/features/reservation/appointmentGroupReservatonApi";
-import GeneralReservationForm from "../form/GeneralReservationForm";
+import { useCreateGroupAppointmentMutation } from "../../../redux/features/schedule/groupAppointmentScheduleApi";
+import GroupAppointmentSteps from "../step/GroupAppointmentSteps";
 
-const AddGroupAppointmentReservationModal = () => {
+const AddGroupAppointmentModal = () => {
+  const [form] = Form.useForm();
+  const [current, setCurrent] = useState(0);
   const [open, setModalOpen] = useState(false);
-  const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateAppointmentGroupReservationMutation();
-  const onFinish = (values: any) => {
-    const issueDate = new Date();
-    values.issue_date = issueDate.toISOString();
-    create(values);
-  };
+    useCreateGroupAppointmentMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -27,8 +21,9 @@ const AddGroupAppointmentReservationModal = () => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      setModalOpen(false);
       form.resetFields();
+      setModalOpen(false);
+      setCurrent(0);
     }
     if (isError) {
       Swal.fire({
@@ -41,32 +36,36 @@ const AddGroupAppointmentReservationModal = () => {
   }, [data, isSuccess, isError, form, error]);
   const onCancle = () => {
     setModalOpen(false);
+    setCurrent(0);
     form.resetFields();
+  };
+  const onSubmit = (values: any) => {
+    create(values);
   };
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
-        Add Reservation
+        Create Appointment
       </button>
       <Modal
         width={800}
         footer={null}
-        title="Create New Appointment Group Reservation"
+        title="Create New Appointment"
         centered
         open={open}
         onCancel={onCancle}
         maskClosable={false}
       >
-        <div className="my-5">
-          <GeneralReservationForm
-            form={form}
-            loading={isLoading}
-            onFinish={onFinish}
-          />
-        </div>
+        <GroupAppointmentSteps
+          current={current}
+          setCurrent={setCurrent}
+          form={form}
+          onSubmit={onSubmit}
+          loading={isLoading}
+        />
       </Modal>
     </>
   );
 };
 
-export default AddGroupAppointmentReservationModal;
+export default AddGroupAppointmentModal;

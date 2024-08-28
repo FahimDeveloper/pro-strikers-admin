@@ -24,9 +24,16 @@ const facilityScheduleApi = facilityScheduleApiSlice.injectEndpoints({
       query: (id) => ({
         url: `/schedule/facilities/${id}`,
         method: "GET",
-        keepUnusedDataFor: 0,
       }),
       providesTags: ["facility"],
+    }),
+    getfacility: builder.mutation<any, string>({
+      query: (id) => {
+        return {
+          url: `/schedule/facilities/${id}`,
+          method: "POST",
+        };
+      },
     }),
     createFacility: builder.mutation<any, IFacilitySchedule>({
       query: (body) => ({
@@ -60,7 +67,9 @@ const facilityScheduleApi = facilityScheduleApiSlice.injectEndpoints({
 export const {
   useFacilitiesQuery,
   useFacilityQuery,
+  useLazyFacilityQuery,
   useCreateFacilityMutation,
   useUpdateFacilityMutation,
   useDeleteFacilityMutation,
+  useGetfacilityMutation,
 } = facilityScheduleApi;

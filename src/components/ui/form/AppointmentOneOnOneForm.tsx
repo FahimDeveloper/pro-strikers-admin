@@ -3,7 +3,7 @@ import { Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
-const AppointmentForm = ({ record, form }: any) => {
+const AppointmentOneOnOneForm = ({ record, form }: any) => {
   const { data: trainerData } = useTrainersQuery(undefined);
   const trainerOptions = trainerData?.results?.map((trainer: any) => {
     return {
@@ -15,7 +15,6 @@ const AppointmentForm = ({ record, form }: any) => {
     if (record) {
       form.setFieldsValue({
         appointment_name: record?.appointment_name,
-        appointment_type: record?.appointment_type,
         duration: record?.duration,
         sport: record?.sport,
         trainer: record?.trainer._id,
@@ -27,7 +26,7 @@ const AppointmentForm = ({ record, form }: any) => {
   return (
     <>
       <Form form={form} layout="vertical" className="space-y-4">
-        <div className="flex gap-x-5">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-4">
           <Form.Item
             name="appointment_name"
             className="w-full m-0"
@@ -36,30 +35,6 @@ const AppointmentForm = ({ record, form }: any) => {
           >
             <Input placeholder="Enter appointment name" />
           </Form.Item>
-          <Form.Item
-            name="appointment_type"
-            className="w-full m-0"
-            label="Appointment Type"
-            rules={[
-              { required: true, message: "Please select Appointment Type" },
-            ]}
-          >
-            <Select
-              placeholder="Select Appointment"
-              options={[
-                {
-                  label: "One On One",
-                  value: "one on one",
-                },
-                {
-                  label: "Group Training",
-                  value: "group training",
-                },
-              ]}
-            />
-          </Form.Item>
-        </div>
-        <div className="grid grid-cols-3 gap-x-5">
           <Form.Item
             name="duration"
             className="w-full m-0"
@@ -146,4 +121,4 @@ const AppointmentForm = ({ record, form }: any) => {
   );
 };
 
-export default AppointmentForm;
+export default AppointmentOneOnOneForm;

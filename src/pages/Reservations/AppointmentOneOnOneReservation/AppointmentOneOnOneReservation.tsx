@@ -8,6 +8,8 @@ import DeleteVoucherPopup from "../../../components/ui/popup/DeleteVoucherPopup"
 import { BsThreeDots } from "react-icons/bs";
 import { useAppointmentOneOnOneReservationsQuery } from "../../../redux/features/reservation/appointmentOneOnOneReservatonApi";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+import moment from "moment";
+import AddOneOnOneAppointmentReservationModal from "../../../components/ui/modal/AddOneOnOneAppointmentReservationModal";
 
 const AppointmentOneOnOneReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
@@ -94,6 +96,16 @@ const AppointmentOneOnOneReservation = () => {
       ),
     },
     {
+      width: 160,
+      align: "center",
+      title: "Phone Number",
+      dataIndex: "phone",
+      key: "phone",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+    },
+    {
       width: 220,
       align: "center",
       title: "Appointment Name",
@@ -138,23 +150,13 @@ const AppointmentOneOnOneReservation = () => {
       width: 160,
       align: "center",
       title: "Issue Date",
-      dataIndex: "issue_date",
-      key: "issue_date",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("MMMM Do YYYY")}
+        </p>
       ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    },
-    {
-      width: 160,
-      align: "center",
-      title: "Facility Date",
-      dataIndex: "appointment_date",
-      key: "appointment_date",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
       width: 80,
@@ -180,18 +182,21 @@ const AppointmentOneOnOneReservation = () => {
   ];
   return (
     <div className="space-y-5">
-      <div className="space-y-1">
-        <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-          Appointment One On One Reservation
-        </h2>
-        <p className="text-[#838383] font-semibold text-lg">
-          {data?.count || 0} reservation available
-        </p>
+      <div className="flex justify-between items-end">
+        <div className="space-y-1">
+          <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
+            Appointment One On One Reservation
+          </h2>
+          <p className="text-[#838383] font-semibold text-lg">
+            {data?.count || 0} reservation available
+          </p>
+        </div>
+        <AddOneOnOneAppointmentReservationModal />
       </div>
       <div className="grid grid-cols-5 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search voucher"
+          placeholder="Search by email or phone number"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
         <Select

@@ -12,14 +12,12 @@ import DeleteEventIndividualReservationPopup from "../../../components/ui/popup/
 
 const EventsIndividutalReservation = () => {
   const [sport, setSport] = useState<string | undefined>(undefined);
-  const [skillLevel, setSkillLevel] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useEventIndividualReservationsQuery({
     search,
     sport,
-    skill_level: skillLevel,
     page,
     limit,
   });
@@ -41,19 +39,11 @@ const EventsIndividutalReservation = () => {
     }
   };
 
-  const onChange = (value: string, filter: string) => {
-    if (filter == "skil") {
-      if (value === "all") {
-        setSkillLevel(undefined);
-      } else {
-        setSkillLevel(value);
-      }
-    } else if (filter === "sport") {
-      if (value === "all") {
-        setSport(undefined);
-      } else {
-        setSport(value);
-      }
+  const onChange = (value: string) => {
+    if (value === "all") {
+      setSport(undefined);
+    } else {
+      setSport(value);
     }
   };
   const columns: ColumnsType<IEventIndividualReservation> = [
@@ -113,19 +103,6 @@ const EventsIndividutalReservation = () => {
         </p>
       ),
       sorter: (a, b) => a.sport.localeCompare(b.sport),
-    },
-    {
-      width: 140,
-      align: "center",
-      title: "Skill Level",
-      dataIndex: "skill_level",
-      key: "skill_level",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.skill_level.localeCompare(b.skill_level),
     },
     {
       width: 160,
@@ -207,38 +184,11 @@ const EventsIndividutalReservation = () => {
         />
         <div className="col-span-3 flex gap-2">
           <Select
-            placeholder="Select level"
             className="w-full"
             showSearch
             defaultValue={"all"}
             optionFilterProp="children"
-            onChange={(value) => onChange(value, "skill")}
-            filterOption={filterOption}
-            options={[
-              {
-                label: "All Level",
-                value: "all",
-              },
-              {
-                label: "Basic",
-                value: "basic",
-              },
-              {
-                label: "Intermediate",
-                value: "intermediate",
-              },
-              {
-                label: "Advanced",
-                value: "advanced",
-              },
-            ]}
-          />
-          <Select
-            className="w-full"
-            showSearch
-            defaultValue={"all"}
-            optionFilterProp="children"
-            onChange={(value) => onChange(value, "sport")}
+            onChange={onChange}
             filterOption={filterOption}
             options={[
               {

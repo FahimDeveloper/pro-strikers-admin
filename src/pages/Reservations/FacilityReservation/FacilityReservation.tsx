@@ -62,8 +62,8 @@ const FacilityReservation = () => {
       width: 260,
       align: "center",
       title: "Email",
-      dataIndex: "user_email",
-      key: "user_email",
+      dataIndex: "email",
+      key: "email",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
@@ -103,20 +103,7 @@ const FacilityReservation = () => {
       key: "issue_date",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
-        </p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    },
-    {
-      width: 160,
-      align: "center",
-      title: "Facility Date",
-      dataIndex: "facility_date",
-      key: "facility_date",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
+          {moment(text).format("MMMM Do YYYY")}
         </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),

@@ -2,6 +2,39 @@
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
 
+const EventsIndividutalReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/EventsIndividualReservation/EventsIndividutalReservation"
+      )
+  )
+);
+const EventsGroupReservation = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Reservations/EventsGroupReservation/EventsGroupReservation"
+      )
+  )
+);
+const AppointmentOneOnOneScheduling = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Scheduling/AppointmentOneOnOneScheduling/AppointmentOneOnOneScheduling"
+      )
+  )
+);
+const AppointmentGroupScheduling = LazyLoad(
+  lazy(
+    () =>
+      import(
+        "../pages/Scheduling/AppointmentGroupScheduling/AppointmentGroupScheduling"
+      )
+  )
+);
+
 const Store = LazyLoad(lazy(() => import("../pages/Store/Store")));
 const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
@@ -42,12 +75,6 @@ const FacilityReservation = LazyLoad(
       import("../pages/Reservations/FacilityReservation/FacilityReservation")
   )
 );
-const AppointmentScheduling = LazyLoad(
-  lazy(
-    () =>
-      import("../pages/Scheduling/AppointmentScheduling/AppointmentScheduling")
-  )
-);
 const ClassesScheduling = LazyLoad(
   lazy(() => import("../pages/Scheduling/ClassesScheduling/ClassesScheduling"))
 );
@@ -81,8 +108,18 @@ export const adminPaths = [
       },
       {
         name: "Appointment",
-        path: "scheduling/appointment",
-        element: <AppointmentScheduling />,
+        children: [
+          {
+            name: "One On One",
+            path: "scheduling/appointment/one-on-one",
+            element: <AppointmentOneOnOneScheduling />,
+          },
+          {
+            name: "Group",
+            path: "scheduling/appointment/group",
+            element: <AppointmentGroupScheduling />,
+          },
+        ],
       },
       {
         name: "Facility",
@@ -134,13 +171,13 @@ export const adminPaths = [
         children: [
           {
             name: "Individual",
-            path: "events/individual",
-            element: <AppointmentOneOnOneReservation />,
+            path: "reservation/events/individual",
+            element: <EventsIndividutalReservation />,
           },
           {
             name: "Group",
-            path: "events/group",
-            element: <AppointmentGroupReservation />,
+            path: "reservation/events/group",
+            element: <EventsGroupReservation />,
           },
         ],
       },

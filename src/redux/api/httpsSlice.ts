@@ -13,7 +13,7 @@ export const authApiSlice = createApi({
 export const adminApiSlice = createApi({
   reducerPath: "adminApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["admins", "admin", "trianers"],
+  tagTypes: ["admins", "admin", "trainers"],
   endpoints: () => ({}),
 });
 
@@ -24,8 +24,14 @@ export const userApiSlice = createApi({
   endpoints: () => ({}),
 });
 
-export const appointmentScheduleApiSlice = createApi({
-  reducerPath: "appointmentScheduleApi",
+export const oneAppointmentScheduleApiSlice = createApi({
+  reducerPath: "oneAppointmentScheduleApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["appointment", "appointments"],
+  endpoints: () => ({}),
+});
+export const groupAppointmentScheduleApiSlice = createApi({
+  reducerPath: "groupAppointmentScheduleApi",
   baseQuery: baseQueryWithRefreshToken,
   tagTypes: ["appointment", "appointments"],
   endpoints: () => ({}),
@@ -145,6 +151,11 @@ export const eventGroupReservationApiSlice = createApi({
 export const slotBookingApiSlice = createApi({
   reducerPath: "slotBookingApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["carts", "booked"],
+  tagTypes: [
+    "carts",
+    "group-training-booking",
+    "facility-booking",
+    "one-training-booking",
+  ],
   endpoints: () => ({}),
 });
