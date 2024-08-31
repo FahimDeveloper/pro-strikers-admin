@@ -35,7 +35,6 @@ export type IEventIndividualReservation = {
   city: string;
   state: string;
   zip_code: string;
-  skill_level: string;
 };
 
 export interface IEventGroupReservation {
@@ -46,8 +45,6 @@ export interface IEventGroupReservation {
   email: string;
   phone: string;
   age: number;
-  // preferred_time: string;
-  // preferred_date: string;
   event: string | IEvent;
   street_address: string;
   sport: string;

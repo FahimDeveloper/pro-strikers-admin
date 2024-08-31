@@ -42,11 +42,11 @@ const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
 const LaneManage = LazyLoad(
   lazy(() => import("../pages/LaneManage/LaneManage"))
 );
-const ClassesReservation = LazyLoad(
-  lazy(
-    () => import("../pages/Reservations/ClassesReservation/ClassesReservation")
-  )
-);
+// const ClassesReservation = LazyLoad(
+//   lazy(
+//     () => import("../pages/Reservations/ClassesReservation/ClassesReservation")
+//   )
+// );
 const CoursesReservation = LazyLoad(
   lazy(
     () => import("../pages/Reservations/CoursesReservation/CoursesReservation")
@@ -157,11 +157,11 @@ export const superAdminPaths = [
   {
     name: "Reservation",
     children: [
-      {
-        name: "Classes",
-        path: "reservation/classes",
-        element: <ClassesReservation />,
-      },
+      // {
+      //   name: "Classes",
+      //   path: "reservation/classes",
+      //   element: <ClassesReservation />,
+      // },
       {
         name: "Appointment",
         children: [

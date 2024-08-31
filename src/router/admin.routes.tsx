@@ -59,11 +59,11 @@ const AppointmentGroupReservation = LazyLoad(
       )
   )
 );
-const ClassesReservation = LazyLoad(
-  lazy(
-    () => import("../pages/Reservations/ClassesReservation/ClassesReservation")
-  )
-);
+// const ClassesReservation = LazyLoad(
+//   lazy(
+//     () => import("../pages/Reservations/ClassesReservation/ClassesReservation")
+//   )
+// );
 const CoursesReservation = LazyLoad(
   lazy(
     () => import("../pages/Reservations/CoursesReservation/CoursesReservation")
@@ -136,11 +136,11 @@ export const adminPaths = [
   {
     name: "Reservation",
     children: [
-      {
-        name: "Classes",
-        path: "reservation/classes",
-        element: <ClassesReservation />,
-      },
+      // {
+      //   name: "Classes",
+      //   path: "reservation/classes",
+      //   element: <ClassesReservation />,
+      // },
       {
         name: "Appointment",
         children: [
