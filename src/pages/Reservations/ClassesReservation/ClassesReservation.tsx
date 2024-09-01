@@ -15,13 +15,13 @@ import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 const ClassesReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
-  const [category, setCategory] = useState<string | undefined>(undefined);
+  const [sport, setSport] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useClassReservationsQuery({
     search,
-    category,
+    sport,
     trainer,
     page,
     limit,
@@ -29,9 +29,9 @@ const ClassesReservation = () => {
   const onChange = (value: string, filter: string) => {
     if (filter === "sport") {
       if (value == "all") {
-        setCategory(undefined);
+        setSport(undefined);
       } else {
-        setCategory(value);
+        setSport(value);
       }
     } else if (filter === "trainer") {
       if (value == "all") {
@@ -87,71 +87,70 @@ const ClassesReservation = () => {
       },
     },
     {
+      width: 220,
+      align: "center",
+      title: "Name",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {record?.first_name} {record?.last_name}
+        </p>
+      ),
+    },
+    {
       width: 280,
       align: "center",
       title: "Email",
-      dataIndex: "user_email",
-      key: "user_email",
+      dataIndex: "email",
+      key: "email",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
     },
     {
-      width: 220,
-      align: "center",
-      title: "Class Name",
-      dataIndex: "class",
-      key: "class",
-      render: (_, record) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {record?.class.class_name}
-        </p>
-      ),
-      sorter: (a, b) => a.class.class_name.localeCompare(b.class.class_name),
-    },
-    {
       width: 120,
       align: "center",
-      title: "Sport",
-      dataIndex: "category",
-      key: "category",
+      title: "Contact",
+      dataIndex: "phone",
+      key: "phone",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
           {text}
         </p>
       ),
-      sorter: (a, b) => a.category.localeCompare(b.category),
     },
     {
-      width: 140,
+      width: 120,
       align: "center",
-      title: "Level",
-      dataIndex: "level",
-      key: "level",
-      render: (_, record) => (
+      title: "Sport",
+      dataIndex: "sport",
+      key: "sport",
+      render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {record.class.level}
+          {text}
         </p>
       ),
-      sorter: (a, b) => a.class.level.localeCompare(b.class.level),
+      sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
-      width: 160,
-      align: "center",
+      width: 180,
       title: "Trainer",
+      align: "center",
       dataIndex: "trainer",
       key: "trainer",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text !== null ? `${text.first_name} ${text.last_name}` : "Not Found"}
+        </p>
       ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
       width: 160,
       align: "center",
       title: "Issue Date",
-      dataIndex: "issue_date",
-      key: "issue_date",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
           {moment(text).format("DD/MM/YYYY")}
@@ -167,10 +166,42 @@ const ClassesReservation = () => {
       key: "class_date",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
+          {moment(text).format("MMMM Do YYYY")}
         </p>
       ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "City",
+      dataIndex: "city",
+      key: "city",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.city.localeCompare(b.city),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "State",
+      dataIndex: "state",
+      key: "state",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.state.localeCompare(b.state),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Zip/Postal Code",
+      dataIndex: "zip_code",
+      key: "zip_code",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
     },
     {
       width: 80,
@@ -214,7 +245,7 @@ const ClassesReservation = () => {
       <div className="grid grid-cols-5 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search user by email"
+          placeholder="Search reservation by email or phone number"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
         <Select

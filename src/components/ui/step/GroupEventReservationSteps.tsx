@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import GroupReservationGeneralForm from "../form/GroupReservationGeneralForm";
-import GroupReservationTeamDetailsForm from "../form/GroupReservationTeamDetailsForm";
 import { Button, Steps } from "antd";
+import EventGroupReservationForm from "../form/EventGroupReservationForm";
 import { IEventGroupReservation } from "../../../types/event.types";
+import EventGroupReservationDetailsForm from "../form/EventGroupReservationDetailsForm";
 
 const GroupEventReservationSteps = ({
   record,
@@ -24,12 +24,12 @@ const GroupEventReservationSteps = ({
   const steps = [
     {
       title: "General Details",
-      content: <GroupReservationGeneralForm form={form} record={record} />,
+      content: <EventGroupReservationForm form={form} record={record} />,
     },
     {
       title: "Team Details",
       content: (
-        <GroupReservationTeamDetailsForm
+        <EventGroupReservationDetailsForm
           formData={formData}
           form={form}
           record={record}

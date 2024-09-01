@@ -85,6 +85,18 @@ const AppointmentGroupReservation = () => {
       },
     },
     {
+      width: 220,
+      align: "center",
+      title: "Name",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {record?.first_name} {record?.last_name}
+        </p>
+      ),
+    },
+    {
       width: 260,
       align: "center",
       title: "Email",
@@ -95,25 +107,13 @@ const AppointmentGroupReservation = () => {
       ),
     },
     {
-      width: 160,
+      width: 120,
       align: "center",
-      title: "Phone",
+      title: "Contact",
       dataIndex: "phone",
       key: "phone",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
-      ),
-    },
-    {
-      width: 220,
-      align: "center",
-      title: "Appointment Name",
-      dataIndex: "appointment",
-      key: "appointment",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text?.appointment_name}
-        </p>
       ),
     },
     {
@@ -149,10 +149,56 @@ const AppointmentGroupReservation = () => {
       key: "issue_date",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
+          {moment(text).format("MMMM Do YYYY")}
         </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Appointment Date",
+      dataIndex: "date",
+      key: "date",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("MMMM Do YYYY")}
+        </p>
+      ),
+      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "City",
+      dataIndex: "city",
+      key: "city",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.city.localeCompare(b.city),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "State",
+      dataIndex: "state",
+      key: "state",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.state.localeCompare(b.state),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Zip/Postal Code",
+      dataIndex: "zip_code",
+      key: "zip_code",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
     },
     {
       width: 80,
@@ -192,7 +238,7 @@ const AppointmentGroupReservation = () => {
       <div className="grid grid-cols-5 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search reservation by email or phone"
+          placeholder="Search reservation by email or phone number"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
         <Select

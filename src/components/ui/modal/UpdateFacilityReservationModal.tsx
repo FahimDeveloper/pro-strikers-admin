@@ -3,9 +3,9 @@ import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "antd/es/form/Form";
-import FacilityReservationForm from "../form/FacilityReservationForm";
 import { useUpdateFacilityReservationMutation } from "../../../redux/features/reservation/facilityReservation";
 import { CiEdit } from "react-icons/ci";
+import FacilityReservationDetailsForm from "../form/FacilityReservationDetailsForm";
 
 const UpdateFacilityReservationModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
@@ -59,7 +59,7 @@ const UpdateFacilityReservationModal = ({ record }: any) => {
         maskClosable={false}
       >
         <div className="my-5">
-          <FacilityReservationForm
+          <FacilityReservationDetailsForm
             record={record}
             form={form}
             onFinish={onFinish}

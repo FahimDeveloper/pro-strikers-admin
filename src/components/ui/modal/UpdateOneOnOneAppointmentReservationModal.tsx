@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useForm } from "antd/es/form/Form";
 import { CiEdit } from "react-icons/ci";
 import { useUpdateAppointmentOneOnOneReservationMutation } from "../../../redux/features/reservation/appointmentOneOnOneReservatonApi";
-import OneOnOneApppointmentReservationForm from "../form/OneOnOneAppointmentReservationForm";
+import OneOnOneAppointmentReservationDetailsForm from "../form/OneOnOneAppointmentReservationDetailsForm";
 
 const UpdateOneOnOneAppointmentReservationModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
@@ -59,7 +59,7 @@ const UpdateOneOnOneAppointmentReservationModal = ({ record }: any) => {
         maskClosable={false}
       >
         <div className="my-5">
-          <OneOnOneApppointmentReservationForm
+          <OneOnOneAppointmentReservationDetailsForm
             record={record}
             form={form}
             onFinish={onFinish}

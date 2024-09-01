@@ -2,23 +2,23 @@
 import { Button, Form, Input } from "antd";
 import { useState } from "react";
 import BookingPart from "../../common/BookingPart";
-import GeneralReservationForm from "./GeneralReservationForm";
 import {
   useFacilityBookedSlotsQuery,
   useGetBookingSlotsQuery,
 } from "../../../redux/features/slotBooking/slotBookingApi";
+import FacilityReservationDetailsForm from "./FacilityReservationDetailsForm";
 
 type TProp = {
   record?: any;
   form: any;
   onFinish: any;
-  data: any;
+  data?: any;
   loading: boolean;
-  checkForm: any;
-  selectSlots: any;
-  setSelectSlots: any;
-  facilityId: any;
-  onCheckFinish: any;
+  checkForm?: any;
+  selectSlots?: any;
+  setSelectSlots?: any;
+  facilityId?: any;
+  onCheckFinish?: any;
 };
 
 const FacilityReservationForm = ({
@@ -84,7 +84,7 @@ const FacilityReservationForm = ({
         />
       )}
       {selectSlots.length > 0 && (
-        <GeneralReservationForm
+        <FacilityReservationDetailsForm
           record={record}
           form={form}
           onFinish={onFinish}

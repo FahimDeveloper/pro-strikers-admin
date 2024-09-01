@@ -3,9 +3,9 @@ import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "antd/es/form/Form";
-import GroupAppointmentReservationForm from "../form/GroupAppointmentReservationForm";
 import { useUpdateAppointmentGroupReservationMutation } from "../../../redux/features/reservation/appointmentGroupReservatonApi";
 import { CiEdit } from "react-icons/ci";
+import AppointmentGroupReservationForm from "../form/AppointmentGroupReservationForm";
 
 const AddGroupAppointmentReservationModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
@@ -59,7 +59,7 @@ const AddGroupAppointmentReservationModal = ({ record }: any) => {
         maskClosable={false}
       >
         <div className="my-5">
-          <GroupAppointmentReservationForm
+          <AppointmentGroupReservationForm
             record={record}
             form={form}
             onFinish={onFinish}

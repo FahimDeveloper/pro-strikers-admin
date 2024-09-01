@@ -11,12 +11,12 @@ import { BsThreeDots } from "react-icons/bs";
 import DeleteClassPopup from "../../../components/ui/popup/DeleteClassPopup";
 import UpdateClassModal from "../../../components/ui/modal/UpdateClassModal";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
-import moment from "moment";
 
 const ClassesScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [facility, setFacility] = useState<string | undefined>(undefined);
   const [sport, setSport] = useState<string | undefined>(undefined);
+  const [level, setLevel] = useState<string | undefined>(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
@@ -27,6 +27,7 @@ const ClassesScheduling = () => {
     sport,
     facility,
     trainer,
+    level,
   });
 
   const { Paragraph } = Typography;
@@ -128,34 +129,20 @@ const ClassesScheduling = () => {
       key: "trainer",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text.first_name} {text.last_name}
-        </p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    },
-    {
-      width: 140,
-      title: "Start Date",
-      align: "center",
-      dataIndex: "start_date",
-      key: "start_date",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
+          {text !== null ? `${text.first_name} ${text.last_name}` : "Not Found"}
         </p>
       ),
     },
     {
       width: 140,
-      title: "End Date",
+      title: "Level",
       align: "center",
-      dataIndex: "end_date",
-      key: "end_date",
+      dataIndex: "level",
+      key: "level",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
-        </p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
+      sorter: (a, b) => a.level.localeCompare(b.level),
     },
     {
       width: 80,
@@ -222,6 +209,12 @@ const ClassesScheduling = () => {
         setTrainer(undefined);
       } else {
         setTrainer(value);
+      }
+    } else if (filter === "level") {
+      if (value === "all") {
+        setLevel(undefined);
+      } else {
+        setLevel(value);
       }
     }
   };
@@ -320,6 +313,29 @@ const ClassesScheduling = () => {
                 {
                   label: "Field Hockey",
                   value: "field hockey",
+                },
+              ]}
+            />
+            <Select
+              placeholder="Select level"
+              defaultValue={"all"}
+              onChange={(value) => onChange(value, "level")}
+              options={[
+                {
+                  label: "All Level",
+                  value: "all",
+                },
+                {
+                  label: "Basic",
+                  value: "basic",
+                },
+                {
+                  label: "Intermediate",
+                  value: "intermediate",
+                },
+                {
+                  label: "Advanced",
+                  value: "advanced",
                 },
               ]}
             />

@@ -2,7 +2,7 @@
 import { Button, Form, Input, InputNumber } from "antd";
 import { useEffect } from "react";
 
-const GeneralReservationForm = ({
+const FacilityReservationDetailsForm = ({
   record,
   form,
   loading,
@@ -32,16 +32,6 @@ const GeneralReservationForm = ({
   return (
     <Form onFinish={onFinish} form={form} layout="vertical">
       <div className="grid grid-cols-2 gap-4">
-        {!record && (
-          <Form.Item
-            label="Appointment Id"
-            name="appointment"
-            className="m-0 col-span-2"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Type here..." />
-          </Form.Item>
-        )}
         <Form.Item
           label="First Name"
           name="first_name"
@@ -140,4 +130,4 @@ const GeneralReservationForm = ({
   );
 };
 
-export default GeneralReservationForm;
+export default FacilityReservationDetailsForm;

@@ -25,7 +25,8 @@ export type IEventParams = {
 
 export type IEventIndividualReservation = {
   _id?: string;
-  player_name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   age: number;

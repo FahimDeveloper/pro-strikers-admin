@@ -148,19 +148,6 @@ const CoursesReservation = () => {
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
-      width: 140,
-      align: "center",
-      title: "Skill Level",
-      dataIndex: "skill_level",
-      key: "skill_level",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.skill_level.localeCompare(b.skill_level),
-    },
-    {
       width: 160,
       align: "center",
       title: "City",

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DatePicker, Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 import weekday from "dayjs/plugin/weekday";
@@ -22,13 +22,14 @@ const ClassForm = ({ record, form }: any) => {
         class_name: record?.class_name,
         sport: record?.sport,
         description: record?.description,
-        start_date: record?.start_date
-          ? dayjs(record?.start_date, "DD/MM/YYYY")
-          : "",
-        end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
+        // start_date: record?.start_date
+        //   ? dayjs(record?.start_date, "DD/MM/YYYY")
+        //   : "",
+        // end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
         facility: record?.facility,
         trainer: record?.trainer._id,
         capacity: record?.capacity,
+        level: record?.level,
         price: record?.price,
       });
     }
@@ -45,6 +46,56 @@ const ClassForm = ({ record, form }: any) => {
           >
             <Input placeholder="Enter class name" />
           </Form.Item>
+          <Form.Item
+            rules={[{ required: true }]}
+            name="level"
+            className="w-full m-0"
+            label="Level"
+          >
+            <Select
+              placeholder="Select level"
+              options={[
+                {
+                  label: "Basic",
+                  value: "basic",
+                },
+                {
+                  label: "Intermediate",
+                  value: "intermediate",
+                },
+                {
+                  label: "Advanced",
+                  value: "advanced",
+                },
+              ]}
+            />
+          </Form.Item>
+        </div>
+        <Form.Item
+          rules={[{ required: true }]}
+          name="description"
+          className="m-0"
+          label="Description"
+        >
+          <Input.TextArea placeholder="Enter class description" rows={4} />
+        </Form.Item>
+        <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+          {/* <Form.Item
+            rules={[{ required: true }]}
+            name="start_date"
+            className="w-full m-0"
+            label="Start Date"
+          >
+            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true }]}
+            name="end_date"
+            className="w-full m-0"
+            label="End Date"
+          >
+            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
+          </Form.Item> */}
           <Form.Item
             name="sport"
             className="w-full m-0"
@@ -77,33 +128,6 @@ const ClassForm = ({ record, form }: any) => {
               ]}
             />
           </Form.Item>
-        </div>
-        <Form.Item
-          rules={[{ required: true }]}
-          name="description"
-          className="m-0"
-          label="Description"
-        >
-          <Input.TextArea placeholder="Enter class description" rows={4} />
-        </Form.Item>
-        <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-          <Form.Item
-            rules={[{ required: true }]}
-            name="start_date"
-            className="w-full m-0"
-            label="Start Date"
-          >
-            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
-          </Form.Item>
-          <Form.Item
-            rules={[{ required: true }]}
-            name="end_date"
-            className="w-full m-0"
-            label="End Date"
-          >
-            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
-          </Form.Item>
-
           <Form.Item
             rules={[{ required: true }]}
             name="trainer"
@@ -156,19 +180,19 @@ const ClassForm = ({ record, form }: any) => {
               ]}
             />
           </Form.Item>
-          <Form.Item
-            rules={[{ required: true }]}
-            name="price"
-            className="m-0"
-            label="Class Fee"
-          >
-            <InputNumber
-              min={0}
-              className="w-full"
-              placeholder="Enter class price"
-            />
-          </Form.Item>
         </div>
+        <Form.Item
+          rules={[{ required: true }]}
+          name="price"
+          className="m-0 w-48"
+          label="Class Fee"
+        >
+          <InputNumber
+            min={0}
+            className="w-full"
+            placeholder="Enter class price"
+          />
+        </Form.Item>
       </Form>
     </>
   );

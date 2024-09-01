@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Input, InputNumber } from "antd";
-import { IEventGroupReservation } from "../../../types/event.types";
+import { Button, Form, Input, InputNumber } from "antd";
 import { useEffect } from "react";
-import dayjs from "dayjs";
-import weekday from "dayjs/plugin/weekday";
-import localeData from "dayjs/plugin/localeData";
 
-const GroupReservationGeneralForm = ({
+const OneOnOneAppointmentReservationDetailsForm = ({
   record,
   form,
+  loading,
+  onFinish,
 }: {
   form: any;
-  record: IEventGroupReservation | undefined;
+  record?: any;
+  onFinish: any;
+  loading: any;
 }) => {
-  dayjs.extend(weekday);
-  dayjs.extend(localeData);
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
@@ -32,18 +30,8 @@ const GroupReservationGeneralForm = ({
     }
   }, [record, form]);
   return (
-    <Form form={form} layout="vertical">
+    <Form onFinish={onFinish} form={form} layout="vertical">
       <div className="grid grid-cols-2 gap-4">
-        {!record && (
-          <Form.Item
-            label="Event Id"
-            className="col-span-2 m-0"
-            name="event"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Type here..." />
-          </Form.Item>
-        )}
         <Form.Item
           label="First Name"
           name="first_name"
@@ -95,7 +83,7 @@ const GroupReservationGeneralForm = ({
           label="Sport"
           rules={[{ required: true }]}
         >
-          <Input placeholder="Type here.." />
+          <Input readOnly placeholder="Type here.." />
         </Form.Item>
 
         <Form.Item
@@ -131,8 +119,15 @@ const GroupReservationGeneralForm = ({
           <Input placeholder="Type here.." />
         </Form.Item>
       </div>
+      <div className="mt-5 flex justify-end">
+        <Form.Item className="m-0">
+          <Button loading={loading} htmlType="submit" className="primary-btn">
+            {record ? "Update" : "Create"}
+          </Button>
+        </Form.Item>
+      </div>
     </Form>
   );
 };
 
-export default GroupReservationGeneralForm;
+export default OneOnOneAppointmentReservationDetailsForm;

@@ -59,6 +59,18 @@ const FacilityReservation = () => {
       },
     },
     {
+      width: 220,
+      align: "center",
+      title: "Name",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {record?.first_name} {record?.last_name}
+        </p>
+      ),
+    },
+    {
       width: 260,
       align: "center",
       title: "Email",
@@ -69,18 +81,16 @@ const FacilityReservation = () => {
       ),
     },
     {
-      width: 220,
+      width: 140,
       align: "center",
-      title: "Facility Name",
-      dataIndex: "facility",
-      key: "facility",
-      render: (_, record) => (
+      title: "Contact",
+      dataIndex: "phone",
+      key: "phone",
+      render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {record?.facility.facility_name}
+          {text}
         </p>
       ),
-      sorter: (a, b) =>
-        a.facility.facility_name.localeCompare(b.facility.facility_name),
     },
     {
       width: 120,
@@ -107,6 +117,39 @@ const FacilityReservation = () => {
         </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "City",
+      dataIndex: "city",
+      key: "city",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.city.localeCompare(b.city),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "State",
+      dataIndex: "state",
+      key: "state",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.state.localeCompare(b.state),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Zip/Postal Code",
+      dataIndex: "zip_code",
+      key: "zip_code",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
     },
     {
       width: 80,
@@ -151,7 +194,7 @@ const FacilityReservation = () => {
       <div className="grid grid-cols-3 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search user by email"
+          placeholder="Search reservation by email or phone number"
           className="text-sm col-span-2 font-medium text-[#5D5D5D]"
         />
         <Select

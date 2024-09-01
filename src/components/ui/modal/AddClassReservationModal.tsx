@@ -1,20 +1,42 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "antd/es/form/Form";
-import { useCreateClassReservationMutation } from "../../../redux/features/reservation/classReservation";
+import {
+  useCheckClassMutation,
+  useCreateClassReservationMutation,
+} from "../../../redux/features/reservation/classReservation";
 import ClassReservationForm from "../form/ClassReservationForm";
 
 const AddClassReservationModal = () => {
   const [open, setModalOpen] = useState(false);
+  const [classDate, setClassDate] = useState();
+  const [classData, setClassData] = useState({});
   const [form] = useForm();
+  const [checkForm] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateClassReservationMutation();
+  const [
+    check,
+    {
+      data: checkData,
+      isLoading: checkLoading,
+      isSuccess: checkSuccess,
+      isError: checkError,
+      error: errorDetails,
+    },
+  ] = useCheckClassMutation();
   const onFinish = (values: any) => {
-    const issueDate = new Date();
-    values.issue_date = issueDate.toISOString();
+    values.trainer = checkData?.results.trainer;
+    values.class_date = classDate;
+    values.class = checkData?.results._id;
     create(values);
+  };
+  const onCheckFinish = (values: any) => {
+    setClassDate(values.date);
+    check(values);
   };
   useEffect(() => {
     if (isSuccess) {
@@ -37,10 +59,26 @@ const AddClassReservationModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [data, isSuccess, isError, form, error]);
+    if (checkSuccess) {
+      setClassData(checkData?.results);
+      form.setFieldsValue({
+        sport: checkData.results.sport,
+      });
+    }
+    if (checkError) {
+      Swal.fire({
+        title: "Oops!..",
+        icon: "error",
+        text: `${(errorDetails as any)?.data?.message}`,
+        confirmButtonColor: "#0ABAC3",
+      });
+    }
+  }, [isSuccess, isError, form, error, checkError, checkSuccess]);
   const onCancle = () => {
+    setClassData({});
     setModalOpen(false);
     form.resetFields();
+    checkForm.resetFields();
   };
   return (
     <>
@@ -58,10 +96,12 @@ const AddClassReservationModal = () => {
       >
         <div className="my-5">
           <ClassReservationForm
-            isSuccess={isSuccess}
+            onCheckFinish={onCheckFinish}
             form={form}
             onFinish={onFinish}
-            loading={isLoading}
+            loading={isLoading || checkLoading}
+            checkData={classData}
+            checkForm={checkForm}
           />
         </div>
       </Modal>

@@ -107,7 +107,9 @@ const AppointmentGroupScheduling = () => {
       key: "trainer",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text.first_name} {text.last_name}
+          {!text === null
+            ? `${text.first_name} ${text.last_name}`
+            : "Not Found"}
         </p>
       ),
       sorter: (a, b) => a.trainer.localeCompare(b.trainer),

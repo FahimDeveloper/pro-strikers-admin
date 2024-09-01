@@ -6,8 +6,6 @@ export interface IClassSchedule {
   facility: string;
   trainer: string;
   level: string;
-  start_date: string;
-  end_date: string;
   capacity: number;
   price: number;
   schedules: IClassDaySchedule[];
@@ -27,4 +25,5 @@ export type IClassScheduleParams = {
   facility: string | undefined;
   trainer: string | undefined;
   sport: string | undefined;
+  level: string | undefined;
 };

@@ -4,8 +4,8 @@ import { useForm } from "antd/es/form/Form";
 import { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import Swal from "sweetalert2";
-import EventIndividualReservationForm from "../form/EventIndividualReservationForm";
 import { useUpdateEventIndividualReservationMutation } from "../../../redux/features/reservation/eventIndividualReservation";
+import EventIndividualReservationForm from "../form/EventIndividualReservationForm";
 
 const UpdateEventIndividualReservationModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);

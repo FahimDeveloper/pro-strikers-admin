@@ -3,7 +3,7 @@ import { Button, Form, Input, InputNumber } from "antd";
 import { useEffect } from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 
-const GroupReservationTeamDetailsForm = ({
+const EventGroupReservationDetailsForm = ({
   form,
   record,
   formData,
@@ -134,4 +134,4 @@ const GroupReservationTeamDetailsForm = ({
   );
 };
 
-export default GroupReservationTeamDetailsForm;
+export default EventGroupReservationDetailsForm;

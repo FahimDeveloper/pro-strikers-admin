@@ -13,6 +13,13 @@ const appointmentGroupReservationApi =
         }),
         providesTags: ["reservations"],
       }),
+      checkGroupAppointment: builder.mutation<any, any>({
+        query: (payload) => ({
+          url: `/schedule/appointments/group/by-id-date`,
+          method: "POST",
+          body: payload,
+        }),
+      }),
       appointmentGroupReservation: builder.query<any, any>({
         query: (id) => ({
           url: `/reservations/appointments/group/${id}`,
@@ -21,8 +28,8 @@ const appointmentGroupReservationApi =
         providesTags: ["reservation"],
       }),
       createAppointmentGroupReservation: builder.mutation<any, any>({
-        query: ({ id, payload }) => ({
-          url: `/reservations/appointments/group/create/${id}`,
+        query: (payload) => ({
+          url: "/reservations/appointments/group/create",
           method: "POST",
           body: payload,
         }),
@@ -52,4 +59,5 @@ export const {
   useCreateAppointmentGroupReservationMutation,
   useUpdateAppointmentGroupReservationMutation,
   useDeleteAppointmentGroupReservationMutation,
+  useCheckGroupAppointmentMutation,
 } = appointmentGroupReservationApi;

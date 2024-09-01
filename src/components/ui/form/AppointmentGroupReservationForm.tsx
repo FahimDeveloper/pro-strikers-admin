@@ -2,7 +2,7 @@
 import { Button, DatePicker, Form, Input, InputNumber } from "antd";
 import { useEffect } from "react";
 
-const ClassReservationForm = ({
+const AppointmentGroupReservationForm = ({
   record,
   form,
   loading,
@@ -45,7 +45,7 @@ const ClassReservationForm = ({
           layout="vertical"
         >
           <Form.Item
-            label="Class Id"
+            label="Appointment Id"
             name="id"
             className="m-0 w-full"
             rules={[{ required: true }]}
@@ -53,7 +53,7 @@ const ClassReservationForm = ({
             <Input placeholder="Type here..." />
           </Form.Item>
           <Form.Item
-            label="Class Date"
+            label="Appointment Date"
             name="date"
             className="m-0 w-full"
             rules={[{ required: true }]}
@@ -174,4 +174,4 @@ const ClassReservationForm = ({
   );
 };
 
-export default ClassReservationForm;
+export default AppointmentGroupReservationForm;

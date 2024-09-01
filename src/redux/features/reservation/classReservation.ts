@@ -19,6 +19,13 @@ const classReservationApi = classReservationApiSlice.injectEndpoints({
       }),
       providesTags: ["reservation"],
     }),
+    checkClass: builder.mutation<any, any>({
+      query: (payload) => ({
+        url: `/schedule/classes/by-id-date`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
     createClassReservation: builder.mutation<any, any>({
       query: (body) => ({
         url: "/reservations/classes/create",
@@ -51,4 +58,5 @@ export const {
   useCreateClassReservationMutation,
   useUpdateClassReservationMutation,
   useDeleteClassReservationMutation,
+  useCheckClassMutation,
 } = classReservationApi;

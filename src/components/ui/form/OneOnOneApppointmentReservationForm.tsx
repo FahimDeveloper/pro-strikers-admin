@@ -6,7 +6,7 @@ import {
 } from "../../../redux/features/slotBooking/slotBookingApi";
 import { Button, Form, Input } from "antd";
 import BookingPart from "../../common/BookingPart";
-import GeneralReservationForm from "./GeneralReservationForm";
+import OneOnOneAppointmentReservationDetailsForm from "./OneOnOneAppointmentReservationDetailsForm";
 
 type TProp = {
   record?: any;
@@ -22,7 +22,6 @@ type TProp = {
 };
 
 const OneOnOneApppointmentReservationForm = ({
-  record,
   data,
   form,
   onFinish,
@@ -83,8 +82,7 @@ const OneOnOneApppointmentReservationForm = ({
         />
       )}
       {selectSlots.length > 0 && (
-        <GeneralReservationForm
-          record={record}
+        <OneOnOneAppointmentReservationDetailsForm
           onFinish={onFinish}
           form={form}
           loading={loading}

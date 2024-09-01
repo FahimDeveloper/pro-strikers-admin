@@ -86,6 +86,18 @@ const AppointmentOneOnOneReservation = () => {
       },
     },
     {
+      width: 220,
+      align: "center",
+      title: "Name",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {record?.first_name} {record?.last_name}
+        </p>
+      ),
+    },
+    {
       width: 260,
       align: "center",
       title: "Email",
@@ -96,30 +108,14 @@ const AppointmentOneOnOneReservation = () => {
       ),
     },
     {
-      width: 160,
+      width: 120,
       align: "center",
-      title: "Phone Number",
+      title: "Contact",
       dataIndex: "phone",
       key: "phone",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
-    },
-    {
-      width: 220,
-      align: "center",
-      title: "Appointment Name",
-      dataIndex: "appointment",
-      key: "appointment",
-      render: (_, record) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {record?.appointment.appointment_name}
-        </p>
-      ),
-      sorter: (a, b) =>
-        a.appointment.appointment_name.localeCompare(
-          b.appointment.appointment_name
-        ),
     },
     {
       width: 120,
@@ -142,7 +138,7 @@ const AppointmentOneOnOneReservation = () => {
       key: "trainer",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
-          {text.first_name} {text.last_name}
+          {text !== null ? `${text.first_name} ${text.last_name}` : "Not Found"}
         </p>
       ),
     },
@@ -157,6 +153,39 @@ const AppointmentOneOnOneReservation = () => {
           {moment(text).format("MMMM Do YYYY")}
         </p>
       ),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "City",
+      dataIndex: "city",
+      key: "city",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.city.localeCompare(b.city),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "State",
+      dataIndex: "state",
+      key: "state",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => a.state.localeCompare(b.state),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Zip/Postal Code",
+      dataIndex: "zip_code",
+      key: "zip_code",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+      ),
+      sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
     },
     {
       width: 80,
@@ -196,7 +225,7 @@ const AppointmentOneOnOneReservation = () => {
       <div className="grid grid-cols-5 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search by email or phone number"
+          placeholder="Search reservation by email or phone number"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
         <Select

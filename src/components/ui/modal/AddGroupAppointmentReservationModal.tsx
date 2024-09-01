@@ -4,18 +4,39 @@ import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "antd/es/form/Form";
-import { useCreateAppointmentGroupReservationMutation } from "../../../redux/features/reservation/appointmentGroupReservatonApi";
-import GeneralReservationForm from "../form/GeneralReservationForm";
+import {
+  useCheckGroupAppointmentMutation,
+  useCreateAppointmentGroupReservationMutation,
+} from "../../../redux/features/reservation/appointmentGroupReservatonApi";
+import AppointmentGroupReservationForm from "../form/AppointmentGroupReservationForm";
 
 const AddGroupAppointmentReservationModal = () => {
   const [open, setModalOpen] = useState(false);
+  const [appointmentDate, setAppointmentDate] = useState();
+  const [appointmentData, setAppointmentData] = useState({});
   const [form] = useForm();
+  const [checkForm] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateAppointmentGroupReservationMutation();
+  const [
+    check,
+    {
+      data: checkData,
+      isLoading: checkLoading,
+      isSuccess: checkSuccess,
+      isError: checkError,
+      error: errorDetails,
+    },
+  ] = useCheckGroupAppointmentMutation();
   const onFinish = (values: any) => {
-    const issueDate = new Date();
-    values.issue_date = issueDate.toISOString();
+    values.trainer = checkData?.results.trainer;
+    values.appointment_date = appointmentDate;
+    values.appointment = checkData?.results._id;
     create(values);
+  };
+  const onCheckFinish = (values: any) => {
+    setAppointmentDate(values.date);
+    check(values);
   };
   useEffect(() => {
     if (isSuccess) {
@@ -38,10 +59,26 @@ const AddGroupAppointmentReservationModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [data, isSuccess, isError, form, error]);
+    if (checkSuccess) {
+      setAppointmentData(checkData?.results);
+      form.setFieldsValue({
+        sport: checkData.results.sport,
+      });
+    }
+    if (checkError) {
+      Swal.fire({
+        title: "Oops!..",
+        icon: "error",
+        text: `${(errorDetails as any)?.data?.message}`,
+        confirmButtonColor: "#0ABAC3",
+      });
+    }
+  }, [isSuccess, isError, form, error, checkError, checkSuccess]);
   const onCancle = () => {
+    setAppointmentData({});
     setModalOpen(false);
     form.resetFields();
+    checkForm.resetFields();
   };
   return (
     <>
@@ -58,10 +95,13 @@ const AddGroupAppointmentReservationModal = () => {
         maskClosable={false}
       >
         <div className="my-5">
-          <GeneralReservationForm
+          <AppointmentGroupReservationForm
+            onCheckFinish={onCheckFinish}
             form={form}
-            loading={isLoading}
             onFinish={onFinish}
+            loading={isLoading || checkLoading}
+            checkData={appointmentData}
+            checkForm={checkForm}
           />
         </div>
       </Modal>

@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
-import { IEventIndividualReservation } from "../../../types/event.types";
+import { IEventGroupReservation } from "../../../types/event.types";
+import { Form, Input, InputNumber, Select } from "antd";
 
-const EventIndividualReservationForm = ({
+const EventGroupReservationForm = ({
   form,
-  onFinish,
   record,
-  loading,
 }: {
   form: any;
-  onFinish: any;
-  record?: IEventIndividualReservation;
-  loading: boolean;
+  record?: IEventGroupReservation;
 }) => {
   useEffect(() => {
     form.setFieldsValue({
@@ -29,7 +25,7 @@ const EventIndividualReservationForm = ({
     });
   }, [record, form]);
   return (
-    <Form form={form} onFinish={onFinish} layout="vertical">
+    <Form form={form} layout="vertical">
       {!record && (
         <Form.Item
           label="Event Id"
@@ -151,13 +147,8 @@ const EventIndividualReservationForm = ({
           <Input placeholder="Type here.." />
         </Form.Item>
       </div>
-      <Form.Item className="flex mt-5 justify-end">
-        <Button htmlType="submit" loading={loading} className="primary-btn">
-          {record ? "Update" : "Create"} Reservation
-        </Button>
-      </Form.Item>
     </Form>
   );
 };
 
-export default EventIndividualReservationForm;
+export default EventGroupReservationForm;
