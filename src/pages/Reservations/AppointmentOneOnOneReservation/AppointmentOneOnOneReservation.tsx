@@ -4,12 +4,13 @@ import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
 import { ColumnsType } from "antd/es/table";
-import DeleteVoucherPopup from "../../../components/ui/popup/DeleteVoucherPopup";
 import { BsThreeDots } from "react-icons/bs";
 import { useAppointmentOneOnOneReservationsQuery } from "../../../redux/features/reservation/appointmentOneOnOneReservatonApi";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 import moment from "moment";
 import AddOneOnOneAppointmentReservationModal from "../../../components/ui/modal/AddOneOnOneAppointmentReservationModal";
+import UpdateOneOnOneAppointmentReservationModal from "../../../components/ui/modal/UpdateOneOnOneAppointmentReservationModal";
+import DeleteOneOnOneAppointmentReservationPopup from "../../../components/ui/popup/DeleteOneOnOneAppointmentReservation";
 
 const AppointmentOneOnOneReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
@@ -198,7 +199,15 @@ const AppointmentOneOnOneReservation = () => {
         const items = [
           {
             key: "1",
-            label: <DeleteVoucherPopup id={record?._id} />,
+            label: (
+              <UpdateOneOnOneAppointmentReservationModal record={record} />
+            ),
+          },
+          {
+            key: "1",
+            label: (
+              <DeleteOneOnOneAppointmentReservationPopup id={record?._id} />
+            ),
           },
         ];
         return (

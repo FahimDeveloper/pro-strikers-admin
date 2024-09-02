@@ -12,7 +12,7 @@ type TProp = {
 const CourseReservationForm = ({ record, form, onFinish, loading }: TProp) => {
   useEffect(() => {
     form.setFieldsValue({
-      first_name: record?.player_name,
+      first_name: record?.first_name,
       last_name: record?.last_name,
       email: record?.email,
       phone: record?.phone,

@@ -3,12 +3,12 @@ import { Button, Popconfirm } from "antd";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
-import { useDeleteUserMutation } from "../../../redux/features/user/userApi";
+import { useDeleteEventIndividualReservationMutation } from "../../../redux/features/reservation/eventIndividualReservation";
 
 const DeleteEventIndividualReservationPopup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [deleteIt, { data, isLoading, isSuccess, isError, error }] =
-    useDeleteUserMutation();
+    useDeleteEventIndividualReservationMutation();
   const confirm = () => {
     deleteIt(id);
   };
@@ -37,7 +37,7 @@ const DeleteEventIndividualReservationPopup = ({ id }: { id: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="You want to delete this user?"
+      description="You want to delete this reservation?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

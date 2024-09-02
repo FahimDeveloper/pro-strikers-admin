@@ -244,6 +244,10 @@ const ClientForm = ({
                       label: "Teams & Organizations",
                       value: "teams & organizations",
                     },
+                    {
+                      label: "Youth Training Membership",
+                      value: "youth training membership",
+                    },
                   ]}
                 />
               </Form.Item>

@@ -134,19 +134,19 @@ const CoursesReservation = () => {
       ),
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
-    {
-      width: 140,
-      align: "center",
-      title: "Trainer",
-      dataIndex: "trainer",
-      key: "trainer",
-      render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
-      ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    },
+    // {
+    //   width: 140,
+    //   align: "center",
+    //   title: "Trainer",
+    //   dataIndex: "trainer",
+    //   key: "trainer",
+    //   render: (text) => (
+    //     <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+    //       {text}
+    //     </p>
+    //   ),
+    //   sorter: (a, b) => a.trainer.localeCompare(b.trainer),
+    // },
     {
       width: 160,
       align: "center",

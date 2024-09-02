@@ -7,13 +7,13 @@ import { useUpdateAppointmentGroupReservationMutation } from "../../../redux/fea
 import { CiEdit } from "react-icons/ci";
 import AppointmentGroupReservationForm from "../form/AppointmentGroupReservationForm";
 
-const AddGroupAppointmentReservationModal = ({ record }: any) => {
+const UpdateGroupAppointmentReservationModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateAppointmentGroupReservationMutation();
   const onFinish = (values: any) => {
-    update(values);
+    update({ id: record?._id, body: values });
   };
   useEffect(() => {
     if (isSuccess) {
@@ -71,4 +71,4 @@ const AddGroupAppointmentReservationModal = ({ record }: any) => {
   );
 };
 
-export default AddGroupAppointmentReservationModal;
+export default UpdateGroupAppointmentReservationModal;

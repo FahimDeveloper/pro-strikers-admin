@@ -61,11 +61,11 @@ const EventsIndividutalReservation = () => {
       width: 180,
       align: "center",
       title: "Player Name",
-      dataIndex: "player_name",
-      key: "player_name",
-      render: (text) => (
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
+          {record?.first_name} {record?.last_name}
         </p>
       ),
     },

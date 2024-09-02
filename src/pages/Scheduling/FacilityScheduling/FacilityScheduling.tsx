@@ -9,6 +9,7 @@ import { useFacilitiesQuery } from "../../../redux/features/schedule/facilitySch
 import { IFacilitySchedule } from "../../../types/facilitySchedule.types";
 import UpdateFacilityModal from "../../../components/ui/modal/UpdateFacilityModal";
 import { BsThreeDots } from "react-icons/bs";
+import DeleteFacilityPopup from "../../../components/ui/popup/DeleteFacilityPopup";
 
 const FacilityScheduling = () => {
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -130,10 +131,10 @@ const FacilityScheduling = () => {
             key: "1",
             label: <UpdateFacilityModal record={record} />,
           },
-          // {
-          //   key: "2",
-          //   label: <DeleteFacilityPopup id={record?._id} />,
-          // },
+          {
+            key: "2",
+            label: <DeleteFacilityPopup id={record?._id} />,
+          },
         ];
         return (
           <Dropdown menu={{ items }}>

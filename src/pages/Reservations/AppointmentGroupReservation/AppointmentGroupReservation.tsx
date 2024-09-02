@@ -4,12 +4,13 @@ import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
 import { ColumnsType } from "antd/es/table";
-import DeleteVoucherPopup from "../../../components/ui/popup/DeleteVoucherPopup";
 import { BsThreeDots } from "react-icons/bs";
 import { useAppointmentGroupReservationsQuery } from "../../../redux/features/reservation/appointmentGroupReservatonApi";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 import AddGroupAppointmentReservationModal from "../../../components/ui/modal/AddGroupAppointmentReservationModal";
 import moment from "moment";
+import UpdateGroupAppointmentReservationModal from "../../../components/ui/modal/UpdateGroupAppointmentReservationModal";
+import DeleteGroupAppointmentReservationPopup from "../../../components/ui/popup/DeleteGroupAppointmentReservationPopup";
 
 const AppointmentGroupReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
@@ -211,7 +212,11 @@ const AppointmentGroupReservation = () => {
         const items = [
           {
             key: "1",
-            label: <DeleteVoucherPopup id={record?._id} />,
+            label: <UpdateGroupAppointmentReservationModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteGroupAppointmentReservationPopup id={record?._id} />,
           },
         ];
         return (

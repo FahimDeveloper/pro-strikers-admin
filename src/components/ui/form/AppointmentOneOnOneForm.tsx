@@ -61,7 +61,32 @@ const AppointmentOneOnOneForm = ({ record, form }: any) => {
             label="Sport"
             rules={[{ required: true, message: "Please select Sport" }]}
           >
-            <Input readOnly placeholder="enter sport" />
+            <Select
+              className="w-full"
+              placeholder="Select sport"
+              options={[
+                {
+                  label: "Cricket",
+                  value: "cricket",
+                },
+                {
+                  label: "Soccer",
+                  value: "soccer",
+                },
+                {
+                  label: "Baseball",
+                  value: "baseball",
+                },
+                {
+                  label: "Softball",
+                  value: "softball",
+                },
+                {
+                  label: "Field Hockey",
+                  value: "field hockey",
+                },
+              ]}
+            />
           </Form.Item>
           <Form.Item
             rules={[{ required: true, message: "Please select Trainer" }]}

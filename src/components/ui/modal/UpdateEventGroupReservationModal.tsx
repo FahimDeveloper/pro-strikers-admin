@@ -24,6 +24,7 @@ const UpdateEventGroupReservationModal = ({ record }: any) => {
         iconColor: "#0ABAC3",
       });
       setModalOpen(false);
+      setCurrent(0);
       form.resetFields();
     }
     if (isError) {

@@ -52,7 +52,7 @@ const eventIndividualReservationApi =
         }),
         providesTags: ["individual-reservation"],
       }),
-      deleteEventIndividualReservation: builder.mutation<void, string>({
+      deleteEventIndividualReservation: builder.mutation<any, string>({
         query: (id) => ({
           url: `/reservations/events/individual/delete/${id}`,
           method: "DELETE",

@@ -13,7 +13,7 @@ const UpdateCourseReservationModal = ({ record }: any) => {
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateCourseReservationMutation();
   const onFinish = (values: any) => {
-    update(values);
+    update({ id: record?._id, body: values });
   };
   useEffect(() => {
     if (isSuccess) {

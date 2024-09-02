@@ -35,10 +35,10 @@ const classReservationApi = classReservationApiSlice.injectEndpoints({
       invalidatesTags: ["reservations"],
     }),
     updateClassReservation: builder.mutation<any, any>({
-      query: ({ id, body }) => ({
+      query: ({ id, payload }) => ({
         url: `/reservations/classes/update/${id}`,
         method: "PATCH",
-        body,
+        body: payload,
       }),
       invalidatesTags: ["reservations", "reservation"],
     }),

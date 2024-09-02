@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import UserForm from "../form/ClientForm";
 import Swal from "sweetalert2";
 import { useCreateUserMutation } from "../../../redux/features/user/userApi";
-import { generateRandomPassword } from "../../../utils/createRandomPassword";
 
 const AddClientModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -13,7 +12,6 @@ const AddClientModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateUserMutation();
   const onFinish = (values: any) => {
-    values.password = generateRandomPassword();
     const formData = new FormData();
     if (values.membership) {
       values.status = true;

@@ -13,7 +13,7 @@ const UpdateOneOnOneAppointmentReservationModal = ({ record }: any) => {
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateAppointmentOneOnOneReservationMutation();
   const onFinish = (values: any) => {
-    update(values);
+    update({ id: record?._id, body: values });
   };
   useEffect(() => {
     if (isSuccess) {
