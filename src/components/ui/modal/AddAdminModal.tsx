@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import AdminForm from "../form/AdminForm";
 import { useCreateAdminMutation } from "../../../redux/features/admin/adminApi";
 import { useForm } from "antd/es/form/Form";
-import { generateRandomPassword } from "../../../utils/createRandomPassword";
 
 const AddAdminModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -15,7 +14,6 @@ const AddAdminModal = () => {
     useCreateAdminMutation();
   const onFinish = (values: any) => {
     const formData = new FormData();
-    values.password = generateRandomPassword();
     if (values.image) {
       formData.append("image", values.image[0].originFileObj);
       delete values.image;
