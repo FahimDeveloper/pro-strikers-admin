@@ -30,10 +30,10 @@ const authApi = authApiSlice.injectEndpoints({
       }),
     }),
     verifyCode: builder.mutation({
-      query: ({ token, code }) => ({
-        url: `/auth/forgot-password/code-verify/${token}`,
+      query: (body) => ({
+        url: `/auth/forgot-password/code-verify`,
         method: "POST",
-        body: code,
+        body: body,
       }),
     }),
     ResetPassword: builder.mutation({
