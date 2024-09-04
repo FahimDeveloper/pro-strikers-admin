@@ -5,6 +5,7 @@ import { navigationGenerator } from "../../utils/navigationGenerator";
 import { Menu } from "antd";
 import logo from "../../assets/icon/logo.svg";
 import { useAppSelector } from "../../hooks/useAppHooks";
+import { trainerPaths } from "../../router/trainer.routes";
 
 const userRole = {
   SUPER_ADMIN: "super-admin",
@@ -21,6 +22,9 @@ const Sidebar = ({ locationKey }: { locationKey: string }) => {
       break;
     case userRole.ADMIN:
       sidebarItems = navigationGenerator(adminPaths, userRole.ADMIN);
+      break;
+    case userRole.TRAINER:
+      sidebarItems = navigationGenerator(trainerPaths, userRole.TRAINER);
       break;
     default:
       break;

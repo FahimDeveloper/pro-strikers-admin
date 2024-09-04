@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   useLinkVerifyQuery,
   useResetPasswordMutation,
-  useSendVerifyCodeMutation,
+  useVerifyCodeMutation,
 } from "../../redux/features/auth/authApi";
 import { FaSpinner } from "react-icons/fa";
 import logo from "../../assets/icon/login-logo.svg";
@@ -15,7 +15,6 @@ import Swal from "sweetalert2";
 const VerifyCode = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state);
   const { token } = useParams();
   const [form] = useForm();
   const {
@@ -34,7 +33,7 @@ const VerifyCode = () => {
       isError: isOtpVerfiyError,
       error: otpVerifyError,
     },
-  ] = useSendVerifyCodeMutation();
+  ] = useVerifyCodeMutation();
   const [resetPass, { data, isLoading, isSuccess, isError, error }] =
     useResetPasswordMutation();
   const onFinish = (values: any) => {

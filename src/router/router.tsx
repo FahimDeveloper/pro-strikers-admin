@@ -9,6 +9,7 @@ import PrivetRoute from "./PrivetRoute";
 import SendResetMail from "../pages/SendResetMail/SendResetMail";
 import VerifyCode from "../pages/VerifyCode/VerifyCode";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
+import { trainerPaths } from "./trainer.routes";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,15 @@ const router = createBrowserRouter([
       </PrivetRoute>
     ),
     children: routesGenerator(adminPaths),
+  },
+  {
+    path: "/trainer",
+    element: (
+      <PrivetRoute>
+        <App />
+      </PrivetRoute>
+    ),
+    children: routesGenerator(trainerPaths),
   },
 ]);
 
