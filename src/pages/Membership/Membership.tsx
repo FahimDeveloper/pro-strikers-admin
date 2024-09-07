@@ -52,13 +52,13 @@ const Membership = () => {
       },
     },
     {
-      width: 260,
+      width: 300,
       align: "center",
       title: "Client Name",
       dataIndex: "full_name",
       key: "full_name",
       render: (_, record) => (
-        <div className="flex items-center ms-10 gap-5">
+        <div className="flex items-center justify-between ms-7 gap-5">
           <Image src={record?.image} style={{ width: 50 }} />
           <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
             {record?.first_name} {record?.last_name}
