@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
+import Payment from "../pages/Payment/Payment";
 
 const EventsIndividutalReservation = LazyLoad(
   lazy(
@@ -243,6 +244,11 @@ export const superAdminPaths = [
     name: "Voucher",
     path: "voucher",
     element: <Voucher />,
+  },
+  {
+    name: "Payments",
+    path: "payments",
+    element: <Payment />,
   },
   {
     name: "Reports",

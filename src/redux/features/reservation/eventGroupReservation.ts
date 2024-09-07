@@ -10,7 +10,7 @@ const eventGroupReservationApi = eventGroupReservationApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createEventGroupReservation: builder.mutation<any, IEventGroupReservation>({
       query: (payload) => ({
-        url: "/reservations/events/group/create",
+        url: "/reservations/events/group/admin/create",
         method: "POST",
         body: payload,
       }),
@@ -21,7 +21,7 @@ const eventGroupReservationApi = eventGroupReservationApiSlice.injectEndpoints({
       { id: string; payload: IEventGroupReservation }
     >({
       query: ({ id, payload }) => ({
-        url: `/reservations/events/group/update/${id}`,
+        url: `/reservations/events/group/admin/update/${id}`,
         method: "PATCH",
         body: payload,
       }),
@@ -47,7 +47,7 @@ const eventGroupReservationApi = eventGroupReservationApiSlice.injectEndpoints({
     }),
     deleteEventGroupReservation: builder.mutation<any, string>({
       query: (id) => ({
-        url: `/reservations/events/group/delete/${id}`,
+        url: `/reservations/events/group/admin/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["group-reservations"],

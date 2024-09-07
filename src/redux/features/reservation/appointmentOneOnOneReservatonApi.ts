@@ -25,7 +25,7 @@ const appointmentOneOnOneReservationApi =
       }),
       createAppointmentOneOnOneReservation: builder.mutation<any, any>({
         query: ({ id, payload }) => ({
-          url: `/reservations/appointments/one-on-one/create/${id}`,
+          url: `/reservations/appointments/one-on-one/admin/create/${id}`,
           method: "POST",
           body: payload,
         }),
@@ -33,7 +33,7 @@ const appointmentOneOnOneReservationApi =
       }),
       updateAppointmentOneOnOneReservation: builder.mutation<any, any>({
         query: ({ id, body }) => ({
-          url: `/reservations/appointments/one-on-one/update/${id}`,
+          url: `/reservations/appointments/one-on-one/admin/update/${id}`,
           method: "PATCH",
           body,
         }),
@@ -41,7 +41,7 @@ const appointmentOneOnOneReservationApi =
       }),
       deleteAppointmentOneOnOneReservation: builder.mutation<any, any>({
         query: (id) => ({
-          url: `/reservations/appointments/one-on-one/delete/${id}`,
+          url: `/reservations/appointments/one-on-one/admin/delete/${id}`,
           method: "DELETE",
         }),
         invalidatesTags: ["reservations"],

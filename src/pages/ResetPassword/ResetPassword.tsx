@@ -42,7 +42,7 @@ const ResetPassword = () => {
     if (isError) {
       Swal.fire({
         title: "Oops..",
-        text: `${(error as any)?.data?.message}`,
+        text: `${(error as any)?.data?.message || "something went wrong"}`,
         icon: "error",
         confirmButtonColor: "#0ABAC3",
       });

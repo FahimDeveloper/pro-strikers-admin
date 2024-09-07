@@ -66,7 +66,7 @@ const Clients = () => {
       key: "gender",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
+          {text ? text : "Not Given"}
         </p>
       ),
       sorter: (a, b) => a.gender.localeCompare(b.gender),
@@ -78,7 +78,9 @@ const Clients = () => {
       dataIndex: "phone",
       key: "phone",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {text ? text : "Not Given"}
+        </p>
       ),
     },
     {
@@ -93,6 +95,18 @@ const Clients = () => {
         </p>
       ),
       sorter: (a, b) => Number(a.membership) - Number(b.membership),
+    },
+    {
+      width: 180,
+      title: "Porvider",
+      align: "center",
+      dataIndex: "provider",
+      key: "provider",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text}
+        </p>
+      ),
     },
     {
       width: 80,

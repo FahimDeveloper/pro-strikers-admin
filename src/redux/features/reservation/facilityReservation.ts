@@ -21,7 +21,7 @@ const facilityReservationApi = facilityReservationApiSlice.injectEndpoints({
     }),
     createFacilityReservation: builder.mutation<any, any>({
       query: ({ id, payload }) => ({
-        url: `/reservations/facilities/create/${id}`,
+        url: `/reservations/facilities/admin/create/${id}`,
         method: "POST",
         body: payload,
       }),
@@ -29,7 +29,7 @@ const facilityReservationApi = facilityReservationApiSlice.injectEndpoints({
     }),
     updateFacilityReservation: builder.mutation<any, any>({
       query: ({ id, body }) => ({
-        url: `/reservations/facilities/update/${id}`,
+        url: `/reservations/facilities/admin/update/${id}`,
         method: "PATCH",
         body,
       }),
@@ -37,7 +37,7 @@ const facilityReservationApi = facilityReservationApiSlice.injectEndpoints({
     }),
     deleteFacilityReservation: builder.mutation<any, any>({
       query: (id) => ({
-        url: `/reservations/facilities/delete/${id}`,
+        url: `/reservations/facilities/admin/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["reservations"],

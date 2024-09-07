@@ -14,7 +14,7 @@ const eventIndividualReservationApi =
         IEventIndividualReservation
       >({
         query: (payload) => ({
-          url: "/reservations/events/individual/create",
+          url: "/reservations/events/individual/admin/create",
           method: "POST",
           body: payload,
         }),
@@ -25,7 +25,7 @@ const eventIndividualReservationApi =
         { id: string; payload: IEventIndividualReservation }
       >({
         query: ({ id, payload }) => ({
-          url: `/reservations/events/individual/update/${id}`,
+          url: `/reservations/events/individual/admin/update/${id}`,
           method: "PATCH",
           body: payload,
         }),
@@ -54,7 +54,7 @@ const eventIndividualReservationApi =
       }),
       deleteEventIndividualReservation: builder.mutation<any, string>({
         query: (id) => ({
-          url: `/reservations/events/individual/delete/${id}`,
+          url: `/reservations/events/individual/admin/delete/${id}`,
           method: "DELETE",
         }),
         invalidatesTags: ["individual-reservations"],

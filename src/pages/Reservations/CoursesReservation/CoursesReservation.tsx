@@ -9,11 +9,11 @@ import { useCourseReservationsQuery } from "../../../redux/features/reservation/
 import AddCourseReservationModal from "../../../components/ui/modal/AddCourseReservationModal";
 import DeleteCourseReservationPopup from "../../../components/ui/popup/DeleteCourseReservationPopup";
 import UpdateCourseReservationModal from "../../../components/ui/modal/UpdateCourseReservationModal";
-import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+// import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 import { ICourseReservation } from "../../../types/couse.types";
 
 const CoursesReservation = () => {
-  const { data: trainerData } = useTrainersQuery(undefined);
+  // const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [sport, setSport] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -27,22 +27,22 @@ const CoursesReservation = () => {
     limit,
   });
 
-  const options = trainerData?.results?.map((trainer: any) => {
-    return {
-      value: `${trainer.first_name} ${trainer.last_name}`,
-      label: `${trainer.first_name} ${trainer.last_name}`,
-    };
-  });
-  let trainerOptions;
-  if (options) {
-    trainerOptions = [
-      {
-        label: "All Trainer",
-        value: "all",
-      },
-      ...options,
-    ];
-  }
+  // const options = trainerData?.results?.map((trainer: any) => {
+  //   return {
+  //     value: `${trainer.first_name} ${trainer.last_name}`,
+  //     label: `${trainer.first_name} ${trainer.last_name}`,
+  //   };
+  // });
+  // let trainerOptions;
+  // if (options) {
+  //   trainerOptions = [
+  //     {
+  //       label: "All Trainer",
+  //       value: "all",
+  //     },
+  //     ...options,
+  //   ];
+  // }
 
   const onChange = (value: string, filter: string) => {
     if (filter === "sport") {
@@ -134,6 +134,18 @@ const CoursesReservation = () => {
       ),
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
+    {
+      width: 160,
+      align: "center",
+      title: "Voucher Applied",
+      dataIndex: "voucher_applied",
+      key: "voucher_applied",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text ? "Yes" : "No"}
+        </p>
+      ),
+    },
     // {
     //   width: 140,
     //   align: "center",
@@ -219,7 +231,7 @@ const CoursesReservation = () => {
         </div>
         <AddCourseReservationModal />
       </div>
-      <div className="grid grid-cols-5 gap-2 items-center">
+      <div className="grid grid-cols-4 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
           placeholder="Search by player name or email"
@@ -259,7 +271,7 @@ const CoursesReservation = () => {
             },
           ]}
         />
-        <Select
+        {/* <Select
           className="w-full"
           showSearch
           defaultValue={"all"}
@@ -267,7 +279,7 @@ const CoursesReservation = () => {
           onChange={(value) => onChange(value, "trainer")}
           filterOption={filterOption}
           options={trainerOptions}
-        />
+        /> */}
       </div>
       <DataTable
         columns={columns}

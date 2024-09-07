@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Button, Popconfirm } from "antd";
-import { useDeleteCourseMutation } from "../../../redux/features/schedule/courseScheduleApi";
 import { MdDeleteOutline } from "react-icons/md";
+import { useDeletePaymentMutation } from "../../../redux/features/payment/paymentApi";
 
-const DeleteCoursePopup = ({ id }: { id: string }) => {
+const DeletePaymentPopup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [deleteIt, { data, isLoading, isSuccess, isError, error }] =
-    useDeleteCourseMutation();
+    useDeletePaymentMutation();
   const confirm = () => {
     deleteIt(id);
   };
@@ -37,7 +37,7 @@ const DeleteCoursePopup = ({ id }: { id: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="You want to delete this course?"
+      description="You want to delete this payment"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}
@@ -56,4 +56,4 @@ const DeleteCoursePopup = ({ id }: { id: string }) => {
   );
 };
 
-export default DeleteCoursePopup;
+export default DeletePaymentPopup;

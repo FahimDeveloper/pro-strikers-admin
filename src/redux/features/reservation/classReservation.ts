@@ -28,7 +28,7 @@ const classReservationApi = classReservationApiSlice.injectEndpoints({
     }),
     createClassReservation: builder.mutation<any, any>({
       query: (body) => ({
-        url: "/reservations/classes/create",
+        url: "/reservations/classes/admin/create",
         method: "POST",
         body,
       }),
@@ -36,7 +36,7 @@ const classReservationApi = classReservationApiSlice.injectEndpoints({
     }),
     updateClassReservation: builder.mutation<any, any>({
       query: ({ id, payload }) => ({
-        url: `/reservations/classes/update/${id}`,
+        url: `/reservations/classes/admin/update/${id}`,
         method: "PATCH",
         body: payload,
       }),
@@ -44,7 +44,7 @@ const classReservationApi = classReservationApiSlice.injectEndpoints({
     }),
     deleteClassReservation: builder.mutation<any, any>({
       query: (id) => ({
-        url: `/reservations/classes/delete/${id}`,
+        url: `/reservations/classes/admin/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["reservations"],

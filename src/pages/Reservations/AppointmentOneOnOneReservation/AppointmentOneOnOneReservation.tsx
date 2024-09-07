@@ -134,6 +134,18 @@ const AppointmentOneOnOneReservation = () => {
     {
       width: 160,
       align: "center",
+      title: "Voucher Applied",
+      dataIndex: "voucher_applied",
+      key: "voucher_applied",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text ? "Yes" : "No"}
+        </p>
+      ),
+    },
+    {
+      width: 160,
+      align: "center",
       title: "Trainer",
       dataIndex: "trainer",
       key: "trainer",

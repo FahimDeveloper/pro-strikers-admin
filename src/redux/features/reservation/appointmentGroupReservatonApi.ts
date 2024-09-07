@@ -29,7 +29,7 @@ const appointmentGroupReservationApi =
       }),
       createAppointmentGroupReservation: builder.mutation<any, any>({
         query: (payload) => ({
-          url: "/reservations/appointments/group/create",
+          url: "/reservations/appointments/group/admin/create",
           method: "POST",
           body: payload,
         }),
@@ -37,7 +37,7 @@ const appointmentGroupReservationApi =
       }),
       updateAppointmentGroupReservation: builder.mutation<any, any>({
         query: ({ id, body }) => ({
-          url: `/reservations/appointments/group/update/${id}`,
+          url: `/reservations/appointments/group/admin/update/${id}`,
           method: "PATCH",
           body,
         }),
@@ -45,7 +45,7 @@ const appointmentGroupReservationApi =
       }),
       deleteAppointmentGroupReservation: builder.mutation<any, any>({
         query: (id) => ({
-          url: `/reservations/appointments/group/delete/${id}`,
+          url: `/reservations/appointments/group/admin/delete/${id}`,
           method: "DELETE",
         }),
         invalidatesTags: ["reservations"],

@@ -67,8 +67,12 @@ const VoucherForm = ({ record, onFinish, form, loading }: TProp) => {
                 value: "class",
               },
               {
-                label: "Course",
+                label: "Bootcamp",
                 value: "course",
+              },
+              {
+                label: "Event",
+                value: "event",
               },
             ]}
           />

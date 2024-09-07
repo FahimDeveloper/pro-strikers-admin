@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal } from "antd";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import { useForm } from "antd/es/form/Form";
-import { useUpdateFacilityReservationMutation } from "../../../redux/features/reservation/facilityReservation";
-import { CiEdit } from "react-icons/ci";
-import FacilityReservationDetailsForm from "../form/FacilityReservationDetailsForm";
+import { useEffect, useState } from "react";
+import { useUpdatePaymentMutation } from "../../../redux/features/payment/paymentApi";
+import Swal from "sweetalert2";
+import { Modal } from "antd";
+import PaymentForm from "../form/PaymentForm";
+import { IPayment } from "../../../types/payment";
 
-const UpdateFacilityReservationModal = ({ record }: any) => {
+const UpdatePaymentModal = ({ record }: { record: IPayment }) => {
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
-    useUpdateFacilityReservationMutation();
+    useUpdatePaymentMutation();
   const onFinish = (values: any) => {
     update(values);
   };
+
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -39,27 +40,24 @@ const UpdateFacilityReservationModal = ({ record }: any) => {
   }, [data, isSuccess, isError, form, error]);
   const onCancle = () => {
     setModalOpen(false);
+    form.resetFields();
   };
   return (
     <>
-      <Button
-        type="primary"
-        onClick={() => setModalOpen(true)}
-        className="w-full flex gap-1 justify-center items-center"
-      >
-        <CiEdit className="size-5 text-white" /> Update
-      </Button>
+      <button onClick={() => setModalOpen(true)} className="btn primary-btn">
+        Add Payment
+      </button>
       <Modal
         width={800}
         footer={null}
-        title="Update Facility Reservation"
+        title="Update Payment"
         centered
         open={open}
         onCancel={onCancle}
         maskClosable={false}
       >
         <div className="my-5">
-          <FacilityReservationDetailsForm
+          <PaymentForm
             record={record}
             form={form}
             onFinish={onFinish}
@@ -71,4 +69,4 @@ const UpdateFacilityReservationModal = ({ record }: any) => {
   );
 };
 
-export default UpdateFacilityReservationModal;
+export default UpdatePaymentModal;

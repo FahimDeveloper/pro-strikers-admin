@@ -134,6 +134,18 @@ const ClassesReservation = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
+      width: 160,
+      align: "center",
+      title: "Voucher Applied",
+      dataIndex: "voucher_applied",
+      key: "voucher_applied",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text ? "Yes" : "No"}
+        </p>
+      ),
+    },
+    {
       width: 180,
       title: "Trainer",
       align: "center",
