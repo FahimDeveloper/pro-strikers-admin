@@ -74,7 +74,7 @@ const Payment = () => {
       dataIndex: "amount",
       key: "amount",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">${text}</p>
       ),
     },
     {
