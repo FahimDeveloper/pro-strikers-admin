@@ -35,7 +35,7 @@ const Payment = () => {
       },
     },
     {
-      width: 260,
+      width: 300,
       align: "center",
       title: "Transection ID",
       dataIndex: "transaction_id",
@@ -51,9 +51,7 @@ const Payment = () => {
               }),
           }}
         >
-          <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-            ${text}
-          </p>
+          {text}
         </Paragraph>
       ),
     },
