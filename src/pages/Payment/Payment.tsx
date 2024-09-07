@@ -38,8 +38,8 @@ const Payment = () => {
       width: 260,
       align: "center",
       title: "Transection ID",
-      dataIndex: "transection_id",
-      key: "transection_id",
+      dataIndex: "transaction_id",
+      key: "transaction_id",
       render: (text) => (
         <Paragraph
           copyable={{
