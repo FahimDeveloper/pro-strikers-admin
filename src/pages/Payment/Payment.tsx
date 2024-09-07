@@ -52,7 +52,7 @@ const Payment = () => {
           }}
         >
           <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-            {text}
+            ${text}
           </p>
         </Paragraph>
       ),
@@ -99,7 +99,7 @@ const Payment = () => {
       key: "createdAt",
       render: (text) => (
         <p className="font-medium text-sm leading-5 text-[#151515]">
-          {moment(text).format("DD/MM/YYYY")}
+          {moment(text).format("MMMM Do YYYY")}
         </p>
       ),
     },
