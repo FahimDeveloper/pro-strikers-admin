@@ -41,15 +41,17 @@ const BookingTimeSlots = ({
   const token = useSelector(selectCurrentToken);
   const navigate = useNavigate();
   const location = useLocation();
-  const day = useMemo(
-    () =>
-      training?.schedules?.find(
+  const day = useMemo(() => {
+    if (activeDate < new Date()) {
+      return;
+    } else {
+      return training?.schedules?.find(
         (schedule: any) =>
           schedule.day ===
           activeDate.toLocaleDateString("en-US", { weekday: "long" })
-      ),
-    [training, activeDate]
-  );
+      );
+    }
+  }, [training, activeDate]);
 
   const slots = useMemo(() => {
     if (day && day.active) {
