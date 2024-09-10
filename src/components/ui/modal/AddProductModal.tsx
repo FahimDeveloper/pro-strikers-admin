@@ -52,7 +52,6 @@ const AddProductModal = () => {
     });
     delete values.images;
     formData.append("data", JSON.stringify(values));
-    console.log(values);
     create(formData);
   };
   return (

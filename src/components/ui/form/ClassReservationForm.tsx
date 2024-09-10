@@ -58,7 +58,11 @@ const ClassReservationForm = ({
             className="m-0 w-full"
             rules={[{ required: true }]}
           >
-            <DatePicker className="w-full" placeholder="select date" />
+            <DatePicker
+              className="w-full"
+              placeholder="select date"
+              format={"DD-MM-YYYY"}
+            />
           </Form.Item>
           <Form.Item className="m-0">
             <Button loading={loading} htmlType="submit" type="primary">

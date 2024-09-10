@@ -5,6 +5,7 @@ import CourseForm from "../form/CourseForm";
 import { useCreateCourseMutation } from "../../../redux/features/schedule/courseScheduleApi";
 import { useForm } from "antd/es/form/Form";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 
 const AddCourseModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -12,6 +13,8 @@ const AddCourseModal = () => {
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateCourseMutation();
   const onFinish = (values: any) => {
+    values.start_date = dayjs(values.start_date).format();
+    values.end_date = dayjs(values.end_date).format();
     create(values);
   };
   useEffect(() => {

@@ -9,6 +9,7 @@ import {
   useCreateAppointmentGroupReservationMutation,
 } from "../../../redux/features/reservation/appointmentGroupReservatonApi";
 import AppointmentGroupReservationForm from "../form/AppointmentGroupReservationForm";
+import dayjs from "dayjs";
 
 const AddGroupAppointmentReservationModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -35,6 +36,7 @@ const AddGroupAppointmentReservationModal = () => {
     create(values);
   };
   const onCheckFinish = (values: any) => {
+    values.date = dayjs(values.date).format();
     setAppointmentDate(values.date);
     check(values);
   };

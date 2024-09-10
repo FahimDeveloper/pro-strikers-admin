@@ -39,9 +39,9 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
         trainer: record?.trainer._id,
         capacity: record?.capacity,
         start_date: record?.start_date
-          ? dayjs(record?.start_date, "DD/MM/YYYY")
+          ? dayjs(record?.start_date, "DD-MM-YYYY")
           : "",
-        end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
+        end_date: record?.end_date ? dayjs(record?.end_date, "DD-MM-YYYY") : "",
         start_time: record?.start_time
           ? dayjs(record?.start_time, "HH:mm A")
           : "",
@@ -130,7 +130,11 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
             label="Start Date"
             rules={[{ required: true }]}
           >
-            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
+            <DatePicker
+              className="w-full"
+              format={"DD-MM-YYYY"}
+              picker="date"
+            />
           </Form.Item>
           <Form.Item
             name="end_date"
@@ -138,7 +142,11 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
             label="End Date"
             rules={[{ required: true }]}
           >
-            <DatePicker className="w-full" format={"DD/MM/YYYY"} />
+            <DatePicker
+              className="w-full"
+              format={"DD-MM-YYYY"}
+              picker="date"
+            />
           </Form.Item>
           <Form.Item
             name="start_time"

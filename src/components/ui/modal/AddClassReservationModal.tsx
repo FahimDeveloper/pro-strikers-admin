@@ -9,6 +9,7 @@ import {
   useCreateClassReservationMutation,
 } from "../../../redux/features/reservation/classReservation";
 import ClassReservationForm from "../form/ClassReservationForm";
+import dayjs from "dayjs";
 
 const AddClassReservationModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -35,6 +36,8 @@ const AddClassReservationModal = () => {
     create(values);
   };
   const onCheckFinish = (values: any) => {
+    const date = dayjs(values.date);
+    values.date = date.format();
     setClassDate(values.date);
     check(values);
   };

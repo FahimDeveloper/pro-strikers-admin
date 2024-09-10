@@ -37,7 +37,6 @@ const VerifyCode = () => {
   const [resetPass, { data, isLoading, isSuccess, isError, error }] =
     useResetPasswordMutation();
   const onFinish = (values: any) => {
-    console.log(values.otp);
     const otp = Number(values.otp);
     sendOtp({ token, otp });
   };
