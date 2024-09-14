@@ -168,7 +168,6 @@ const ClassesReservation = () => {
           {moment(text).format("DD/MM/YYYY")}
         </p>
       ),
-      sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     },
     {
       width: 160,
