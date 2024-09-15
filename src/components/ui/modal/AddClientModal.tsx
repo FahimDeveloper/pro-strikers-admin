@@ -18,7 +18,11 @@ const AddClientModal = () => {
       const issueDate = new Date();
       values.issue_date = issueDate.toISOString();
       const expiryDate = new Date(issueDate);
-      expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+      if (values?.plan === "monthly") {
+        expiryDate.setMonth(expiryDate.getMonth() + 1);
+      } else if (values?.plan === "yearly") {
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+      }
       values.expiry_date = expiryDate.toISOString();
     } else {
       values.package_name = undefined;
