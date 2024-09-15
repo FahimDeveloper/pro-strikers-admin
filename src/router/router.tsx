@@ -1,14 +1,23 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/Login/Login";
+import LazyLoad from "../components/common/LozyLoad";
+import { lazy } from "react";
 import App from "../App";
 import { routesGenerator } from "../utils/routesGenerator";
 import { superAdminPaths } from "./super-admin.routes";
 import { adminPaths } from "./admin.routes";
 import ProtectRoute from "./ProtectRoute";
 import PrivetRoute from "./PrivetRoute";
-import SendResetMail from "../pages/SendResetMail/SendResetMail";
-import VerifyCode from "../pages/VerifyCode/VerifyCode";
-import ResetPassword from "../pages/ResetPassword/ResetPassword";
+const Login = LazyLoad(lazy(() => import("../pages/Login/Login")));
+const SendResetMail = LazyLoad(
+  lazy(() => import("../pages/SendResetMail/SendResetMail"))
+);
+const VerifyCode = LazyLoad(
+  lazy(() => import("../pages/VerifyCode/VerifyCode"))
+);
+const ResetPassword = LazyLoad(
+  lazy(() => import("../pages/ResetPassword/ResetPassword"))
+);
 import { trainerPaths } from "./trainer.routes";
 
 const router = createBrowserRouter([

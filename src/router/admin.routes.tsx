@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
-import Payment from "../pages/Payment/Payment";
+const Payment = LazyLoad(lazy(() => import("../pages/Payment/Payment")));
 
 const EventsIndividutalReservation = LazyLoad(
   lazy(
