@@ -6,8 +6,8 @@ export interface IAdmin {
   email: string;
   phone: string;
   date_of_birth: string;
-  gender: "male" | "female";
-  role: "super-admin" | "admin" | "trainer";
+  gender: string;
+  role: string;
   description: string;
   password: string;
 }
