@@ -6,12 +6,7 @@ import { Menu } from "antd";
 import logo from "../../assets/icon/logo.svg";
 import { useAppSelector } from "../../hooks/useAppHooks";
 import { trainerPaths } from "../../router/trainer.routes";
-
-const userRole = {
-  SUPER_ADMIN: "super-admin",
-  ADMIN: "admin",
-  TRAINER: "trainer",
-};
+import { userRole } from "../../utils/role";
 
 const Sidebar = ({ locationKey }: { locationKey: string }) => {
   const { user } = useAppSelector((state) => state.auth);
