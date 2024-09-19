@@ -6,17 +6,13 @@ import DataTable from "../../components/common/DataTable";
 import DataPagination from "../../components/common/DataPagination";
 import AddAdminModal from "../../components/ui/modal/AddAdminModal";
 import { useAdminsQuery } from "../../redux/features/admin/adminApi";
-import { BsThreeDots } from "react-icons/bs";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { userRole } from "../../utils/role";
 import UpdateAdminModal from "../../components/ui/modal/UpdateAdminModal";
 import DeleteAdminPopup from "../../components/ui/popup/DeleteAdminPopup";
+import { BsThreeDots } from "react-icons/bs";
 
 const TeamMembers = () => {
   const [role, setRole] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
-  const user = useSelector(selectCurrentUser);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useAdminsQuery({
@@ -96,28 +92,16 @@ const TeamMembers = () => {
       dataIndex: "action",
       key: "action",
       render: (_, record) => {
-        let items;
-        switch (user?.role) {
-          case userRole.SUPER_ADMIN:
-            items = [
-              {
-                key: "1",
-                label: <UpdateAdminModal record={record} />,
-              },
-              {
-                key: "2",
-                label: <DeleteAdminPopup id={record?._id} />,
-              },
-            ];
-            break;
-          case userRole.ADMIN:
-            items = [
-              {
-                key: "1",
-                label: <UpdateAdminModal record={record} />,
-              },
-            ];
-        }
+        const items = [
+          {
+            key: "1",
+            label: <UpdateAdminModal record={record} />,
+          },
+          {
+            key: "2",
+            label: <DeleteAdminPopup id={record?._id} />,
+          },
+        ];
         return (
           <Dropdown menu={{ items }}>
             <BsThreeDots className="size-5 cursor-pointer" />
