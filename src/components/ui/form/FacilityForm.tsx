@@ -108,7 +108,11 @@ const FacilityForm = ({ record, form }: any) => {
             label="Lane"
             rules={[{ required: true, message: "Please select Lane" }]}
           >
-            <Select placeholder="Select lane" options={laneOptions} />
+            <Select
+              mode="multiple"
+              placeholder="Select lane"
+              options={laneOptions}
+            />
           </Form.Item>
           <Form.Item
             name="duration"

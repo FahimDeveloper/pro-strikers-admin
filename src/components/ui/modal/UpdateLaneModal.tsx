@@ -8,6 +8,7 @@ import { useUpdateLaneMutation } from "../../../redux/features/Lane/laneApi";
 
 const UpdateLaneModal = ({ record }: any) => {
   const [form] = Form.useForm();
+  const [addon, setAddon] = useState(false);
   const [open, setModalOpen] = useState(false);
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateLaneMutation();
@@ -37,7 +38,32 @@ const UpdateLaneModal = ({ record }: any) => {
     setModalOpen(false);
   };
   const onFinish = (values: any) => {
-    update(values);
+    const formData = new FormData();
+    const oldAddons: any = [];
+    const newAddons: any = [];
+    const newImages: any = [];
+    values.addons.forEach((addon: any) => {
+      if (addon?.addon_image[0].originFileObj) {
+        newImages.push(addon.addon_image[0].originFileObj);
+        delete addon.addon_image;
+        newAddons.push(addon);
+      } else if (addon?.addon_image[0].url) {
+        oldAddons.push({ ...addon, addon_image: addon.addon_image[0].url });
+      }
+    });
+    if (newImages.length > 0) {
+      delete values.addons;
+      values.old_addons = [...oldAddons];
+      values.new_addons = [...newAddons];
+      newImages.forEach((image: any) => {
+        formData.append("image", image);
+      });
+      formData.append("data", JSON.stringify(values));
+      update({ id: record?._id, body: formData });
+    } else {
+      values.addons = [...oldAddons];
+      update({ id: record?._id, body: values });
+    }
   };
   return (
     <>
@@ -62,6 +88,8 @@ const UpdateLaneModal = ({ record }: any) => {
           form={form}
           onFinish={onFinish}
           loading={isLoading}
+          addon={addon}
+          setAddon={setAddon}
         />
       </Modal>
     </>

@@ -118,7 +118,7 @@ const EventForm = ({
           <Form.Item
             name="image"
             className="m-0 mb-2"
-            rules={[{ required: true, message: "Please select user image" }]}
+            rules={[{ required: true, message: "Please select event image" }]}
             valuePropName="fileList"
             getValueFromEvent={normFile}
           >

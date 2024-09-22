@@ -2,13 +2,13 @@
 import { Button, Popconfirm } from "antd";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-import { useDeleteAdminMutation } from "../../../redux/features/admin/adminApi";
 import { MdDeleteOutline } from "react-icons/md";
+import { useDeleteLaneMutation } from "../../../redux/features/Lane/laneApi";
 
 const DeleteLanePopup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [deleteIt, { data, isLoading, isSuccess, isError, error }] =
-    useDeleteAdminMutation();
+    useDeleteLaneMutation();
   const confirm = () => {
     deleteIt(id);
   };
