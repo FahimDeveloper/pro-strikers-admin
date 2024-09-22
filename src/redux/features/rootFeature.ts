@@ -1,6 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import {
+  addonApislice,
   adminApiSlice,
   appointmentGroupReservationApiSlice,
   appointmentOneOnOneReservationApiSlice,
@@ -67,6 +68,7 @@ export const rootReducers = combineReducers({
   auth: persistedAuthReducer,
   [slotBookingApiSlice.reducerPath]: slotBookingApiSlice.reducer,
   [paymentApiSlice.reducerPath]: paymentApiSlice.reducer,
+  [addonApislice.reducerPath]: addonApislice.reducer,
 });
 
 export const rootMiddlewares = [
@@ -93,4 +95,5 @@ export const rootMiddlewares = [
   eventIndividualReservationApiSlice.middleware,
   slotBookingApiSlice.middleware,
   paymentApiSlice.middleware,
+  addonApislice.middleware,
 ];

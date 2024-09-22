@@ -2,8 +2,9 @@
 export function createTimeSlots(
   startTime: string,
   endTime: string,
-  duration: number
-): string[] {
+  duration: number,
+  lane?: string
+): [{ lane: string; slots: string[] }] | Array<string> {
   const start = new Date(startTime).getTime();
   let end = new Date(endTime).getTime();
   const durationMillis = duration * 60 * 1000;
@@ -32,5 +33,9 @@ export function createTimeSlots(
     slots.push(`${formatTime(startSlot)} - ${formatTime(endSlot)}`);
   }
 
-  return slots;
+  if (lane) {
+    return [{ lane: lane!, slots }];
+  } else {
+    return slots;
+  }
 }

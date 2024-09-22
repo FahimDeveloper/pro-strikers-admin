@@ -9,7 +9,8 @@ import {
   useDeleteBookingSlotMutation,
 } from "../../redux/features/slotBooking/slotBookingApi";
 import DateSlider from "./DateSlider";
-import BookingTimeSlots from "./BookingTimeSlots";
+import FacilityBookingTimeSlots from "./FacilityBookingTimeSlots";
+import OneTrainingBookingTimeSlots from "./OneTrainingBookingTimeSlots";
 
 const BookingPart = ({
   data,
@@ -19,6 +20,7 @@ const BookingPart = ({
   setActiveDate,
   slotsCartQuery,
   slotsBookedQuery,
+  lane,
 }: {
   data: any;
   selectSlots: any;
@@ -27,6 +29,7 @@ const BookingPart = ({
   setActiveDate: any;
   slotsCartQuery: any;
   slotsBookedQuery: any;
+  lane?: string;
 }) => {
   const createCartBooking = useAddToCartSlotMutation();
   const [deleteSlot] = useDeleteBookingSlotMutation();
@@ -78,8 +81,19 @@ const BookingPart = ({
         </p>
         <DateSlider activeDate={activeDate} setActiveDate={setActiveDate} />
       </div>
-      {data?.results && (
-        <BookingTimeSlots
+      {data?.results && lane ? (
+        <FacilityBookingTimeSlots
+          activeDate={activeDate}
+          training={data?.results}
+          slotsCartQuery={slotsCartQuery}
+          slotsBookedQuery={slotsBookedQuery}
+          addToCart={createCartBooking}
+          selectSlots={selectSlots}
+          setSelectSlots={setSelectSlots}
+          lane={lane}
+        />
+      ) : (
+        <OneTrainingBookingTimeSlots
           activeDate={activeDate}
           training={data?.results}
           slotsCartQuery={slotsCartQuery}

@@ -13,7 +13,7 @@ import {
 import { createTimeSlots } from "../../utils/createBookingTimeSlots";
 import { collectBookingTimeSlots } from "../../utils/collectBookingTimeSlots";
 
-const BookingTimeSlots = ({
+const OneTrainingBookingTimeSlots = ({
   activeDate,
   training,
   slotsCartQuery,
@@ -127,7 +127,7 @@ const BookingTimeSlots = ({
     <>
       {slots?.length > 0 ? (
         <div className="grid grid-cols-5 gap-1">
-          {slots.map((slot, index) => (
+          {(slots as string[]).map((slot, index) => (
             <button
               disabled={
                 createLoading ||
@@ -184,4 +184,4 @@ const BookingTimeSlots = ({
   );
 };
 
-export default BookingTimeSlots;
+export default OneTrainingBookingTimeSlots;

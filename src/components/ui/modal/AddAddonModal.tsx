@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Modal } from "antd";
+import { Form, Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import LaneForm from "../form/LaneForm";
-import { CiEdit } from "react-icons/ci";
-import { useUpdateLaneMutation } from "../../../redux/features/Lane/laneApi";
+import AddonForm from "../form/AddonForm";
+import { useCreateAddonMutation } from "../../../redux/features/addon/addonApi";
 
-const UpdateLaneModal = ({ record }: any) => {
+const AddAddonModal = () => {
   const [form] = Form.useForm();
   const [open, setModalOpen] = useState(false);
-  const [update, { data, isLoading, isSuccess, isError, error }] =
-    useUpdateLaneMutation();
+  const [create, { data, isLoading, isSuccess, isError, error }] =
+    useCreateAddonMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -21,8 +20,8 @@ const UpdateLaneModal = ({ record }: any) => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      form.resetFields();
       setModalOpen(false);
+      form.resetFields();
     }
     if (isError) {
       Swal.fire({
@@ -33,39 +32,42 @@ const UpdateLaneModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+
   const onCancle = () => {
     setModalOpen(false);
+    form.resetFields();
   };
   const onFinish = (values: any) => {
-    update({ id: record?._id, body: values });
+    const formData = new FormData();
+    values.addons = values.addons.map((addon: any) => {
+      formData.append("image", addon.addon_image[0].originFileObj);
+      return {
+        addon_title: addon.addon_title,
+        addon_price: addon.addon_price,
+        addon_description: addon.addon_description,
+      };
+    });
+    formData.append("data", JSON.stringify(values));
+    create(formData);
   };
   return (
     <>
-      <Button
-        type="primary"
-        onClick={() => setModalOpen(true)}
-        className="w-full flex gap-1 justify-center items-center"
-      >
-        <CiEdit className="size-5 text-white" /> Update
-      </Button>
+      <button onClick={() => setModalOpen(true)} className="btn primary-btn">
+        Add Addon
+      </button>
       <Modal
         width={800}
         footer={null}
-        title="Update Lane"
+        title="Create New Addon"
         centered
         open={open}
         onCancel={onCancle}
         maskClosable={false}
       >
-        <LaneForm
-          record={record}
-          form={form}
-          onFinish={onFinish}
-          loading={isLoading}
-        />
+        <AddonForm form={form} onFinish={onFinish} loading={isLoading} />
       </Modal>
     </>
   );
 };
 
-export default UpdateLaneModal;
+export default AddAddonModal;

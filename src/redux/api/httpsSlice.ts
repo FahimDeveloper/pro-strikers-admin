@@ -166,3 +166,10 @@ export const slotBookingApiSlice = createApi({
   ],
   endpoints: () => ({}),
 });
+
+export const addonApislice = createApi({
+  reducerPath: "addonApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["addons", "addon"],
+  endpoints: () => ({}),
+});

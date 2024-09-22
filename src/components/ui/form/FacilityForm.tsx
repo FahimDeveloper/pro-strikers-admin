@@ -17,7 +17,7 @@ const FacilityForm = ({ record, form }: any) => {
         facility_name: record?.facility_name,
         facility: record?.facility,
         sport: record?.sport,
-        lane: record?.lane,
+        lanes: record?.lanes,
         duration: record?.duration,
         description: record?.description,
         price: record?.price,
@@ -103,7 +103,7 @@ const FacilityForm = ({ record, form }: any) => {
         </div>
         <div className="grid grid-cols-2 gap-x-5">
           <Form.Item
-            name="lane"
+            name="lanes"
             className="w-full m-0"
             label="Lane"
             rules={[{ required: true, message: "Please select Lane" }]}

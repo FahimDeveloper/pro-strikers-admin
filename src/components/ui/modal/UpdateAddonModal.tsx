@@ -2,15 +2,16 @@
 import { Button, Form, Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import LaneForm from "../form/LaneForm";
 import { CiEdit } from "react-icons/ci";
 import { useUpdateLaneMutation } from "../../../redux/features/Lane/laneApi";
+import AddonForm from "../form/AddonForm";
+import { useUpdateAddonMutation } from "../../../redux/features/addon/addonApi";
 
-const UpdateLaneModal = ({ record }: any) => {
+const UpdateAddonModal = ({ record }: any) => {
   const [form] = Form.useForm();
   const [open, setModalOpen] = useState(false);
   const [update, { data, isLoading, isSuccess, isError, error }] =
-    useUpdateLaneMutation();
+    useUpdateAddonMutation();
   useEffect(() => {
     if (isSuccess) {
       Swal.fire({
@@ -33,11 +34,38 @@ const UpdateLaneModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
+
   const onCancle = () => {
     setModalOpen(false);
   };
+
   const onFinish = (values: any) => {
-    update({ id: record?._id, body: values });
+    const formData = new FormData();
+    const oldAddons: any = [];
+    const newAddons: any = [];
+    const newImages: any = [];
+    values.addons.forEach((addon: any) => {
+      if (addon?.addon_image[0].originFileObj) {
+        newImages.push(addon.addon_image[0].originFileObj);
+        delete addon.addon_image;
+        newAddons.push(addon);
+      } else if (addon?.addon_image[0].url) {
+        oldAddons.push({ ...addon, addon_image: addon.addon_image[0].url });
+      }
+    });
+    if (newImages.length > 0) {
+      delete values.addons;
+      values.old_addons = [...oldAddons];
+      values.new_addons = [...newAddons];
+      newImages.forEach((image: any) => {
+        formData.append("image", image);
+      });
+      formData.append("data", JSON.stringify(values));
+      update({ id: record?._id, body: formData });
+    } else {
+      values.addons = [...oldAddons];
+      update({ id: record?._id, body: values });
+    }
   };
   return (
     <>
@@ -51,13 +79,13 @@ const UpdateLaneModal = ({ record }: any) => {
       <Modal
         width={800}
         footer={null}
-        title="Update Lane"
+        title="Update Addon"
         centered
         open={open}
         onCancel={onCancle}
         maskClosable={false}
       >
-        <LaneForm
+        <AddonForm
           record={record}
           form={form}
           onFinish={onFinish}
@@ -68,4 +96,4 @@ const UpdateLaneModal = ({ record }: any) => {
   );
 };
 
-export default UpdateLaneModal;
+export default UpdateAddonModal;

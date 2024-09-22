@@ -2,6 +2,9 @@
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
 const Payment = LazyLoad(lazy(() => import("../pages/Payment/Payment")));
+const AddonManage = LazyLoad(
+  lazy(() => import("../pages/AddonManage/AddonManage"))
+);
 
 const EventsIndividutalReservation = LazyLoad(
   lazy(
@@ -203,6 +206,11 @@ export const adminPaths = [
     name: "Lane Manage",
     path: "lane-manage",
     element: <LaneManage />,
+  },
+  {
+    name: "Addon Manage",
+    path: "addon-manage",
+    element: <AddonManage />,
   },
   {
     name: "Store",
