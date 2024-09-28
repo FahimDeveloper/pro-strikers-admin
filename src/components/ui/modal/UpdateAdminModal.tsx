@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal, UploadFile } from "antd";
+import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import AdminForm from "../form/AdminForm";
@@ -9,7 +9,6 @@ import { CiEdit } from "react-icons/ci";
 
 const UpdateAdminModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateAdminMutation();
@@ -19,10 +18,10 @@ const UpdateAdminModal = ({ record }: any) => {
       formData.append("image", values.image[0].originFileObj);
       delete values.image;
       formData.append("data", JSON.stringify(values));
-      update({ id: record?._id, body: formData });
+      update({ id: record?._id, payload: formData });
     } else {
       delete values.image;
-      update({ id: record?._id, body: values });
+      update({ id: record?._id, payload: values });
     }
   };
   useEffect(() => {
@@ -37,7 +36,6 @@ const UpdateAdminModal = ({ record }: any) => {
       });
       setModalOpen(false);
       form.resetFields();
-      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -72,8 +70,6 @@ const UpdateAdminModal = ({ record }: any) => {
             onFinish={onFinish}
             record={record}
             loading={isLoading}
-            fileList={fileList}
-            setFileList={setFileList}
           />
         </div>
       </Modal>

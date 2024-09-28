@@ -2,7 +2,7 @@
 import {
   IClassSchedule,
   IClassScheduleParams,
-} from "../../../types/classSchedule.types";
+} from "../../../types/class.types";
 import { IncomingQueryType } from "../../../types/index.types";
 import { classScheduleApiSlice } from "../../api/httpsSlice";
 

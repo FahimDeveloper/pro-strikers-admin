@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
+import Profile from "../pages/Profile/Profile";
 
 const AppointmentOneOnOneScheduling = LazyLoad(
   lazy(
@@ -138,5 +139,9 @@ export const trainerPaths = [
         element: <CoursesReservation />,
       },
     ],
+  },
+  {
+    path: "profile",
+    element: <Profile />,
   },
 ];

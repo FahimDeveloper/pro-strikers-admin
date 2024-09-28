@@ -11,6 +11,8 @@ import moment from "moment";
 import DeleteClassReservationPopup from "../../../components/ui/popup/DeleteCalssReservationPopup";
 import UpdateClassReservationModal from "../../../components/ui/modal/UpdateClassReservationModal";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
+import { collectDateStatus } from "../../../utils/collectDateStatus";
+import DetailsClassReservationModal from "../../../components/ui/modal/DetailsClassReservationModal";
 
 const ClassesReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
@@ -158,6 +160,35 @@ const ClassesReservation = () => {
       ),
     },
     {
+      width: 120,
+      align: "center",
+      title: "Status",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => {
+        const status = collectDateStatus(record.class_date);
+        return (
+          <p className="font-medium text-sm leading-5 text-[#151515]">
+            {status === "completed" && (
+              <div className="px-2 py-1 bg-[#D6FFC8] rounded-md text-[#0D2B03]">
+                Completed
+              </div>
+            )}
+            {status === "today" && (
+              <div className="px-2 py-1 bg-yellow-200 text-yellow-800 rounded-md">
+                Today
+              </div>
+            )}
+            {status === "upcoming" && (
+              <div className="px-2 py-1 bg-[#FFF3C8] rounded-md text-[#6A5300]">
+                Upcoming
+              </div>
+            )}
+          </p>
+        );
+      },
+    },
+    {
       width: 160,
       align: "center",
       title: "Issue Date",
@@ -213,6 +244,15 @@ const ClassesReservation = () => {
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
       sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
+    },
+    {
+      width: 90,
+      align: "center",
+      fixed: "right",
+      title: "Details",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => <DetailsClassReservationModal record={record} />,
     },
     {
       width: 80,

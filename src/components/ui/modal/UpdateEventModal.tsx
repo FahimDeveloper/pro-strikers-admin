@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal, UploadFile } from "antd";
+import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import EventForm from "../form/EventForm";
 import { useUpdateEventMutation } from "../../../redux/features/event/eventApi";
@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import { CiEdit } from "react-icons/ci";
 
 const UpdateEventModal = ({ record }: any) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
@@ -37,7 +36,6 @@ const UpdateEventModal = ({ record }: any) => {
       });
       setModalOpen(false);
       form.resetFields();
-      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -67,8 +65,6 @@ const UpdateEventModal = ({ record }: any) => {
         onCancel={() => setModalOpen(false)}
       >
         <EventForm
-          fileList={fileList}
-          setFileList={setFileList}
           record={record}
           form={form}
           loading={isLoading}

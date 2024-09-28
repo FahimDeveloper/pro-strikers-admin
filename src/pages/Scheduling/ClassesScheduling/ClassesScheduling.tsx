@@ -6,7 +6,7 @@ import DataPagination from "../../../components/common/DataPagination";
 import { useState } from "react";
 import AddClassesModal from "../../../components/ui/modal/AddClassModal";
 import { useClassesQuery } from "../../../redux/features/schedule/classScheduleApi";
-import { IClassSchedule } from "../../../types/classSchedule.types";
+import { IClassSchedule } from "../../../types/class.types";
 import { BsThreeDots } from "react-icons/bs";
 import DeleteClassPopup from "../../../components/ui/popup/DeleteClassPopup";
 import UpdateClassModal from "../../../components/ui/modal/UpdateClassModal";

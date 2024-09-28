@@ -10,6 +10,7 @@ import AddFacilityReservationModal from "../../../components/ui/modal/AddFacilit
 import moment from "moment";
 import DeleteFacilityReservationPopup from "../../../components/ui/popup/DeleteFacilityReservationPopup";
 import UpdateFacilityReservationModal from "../../../components/ui/modal/UpdateFacilityReservationModal";
+import DetailsFacilityReservationModal from "../../../components/ui/modal/DetailsFacilityReservationModal";
 
 const FacilityReservation = () => {
   const [sport, setSport] = useState<string | undefined>(undefined);
@@ -162,6 +163,17 @@ const FacilityReservation = () => {
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
       sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
+    },
+    {
+      width: 90,
+      align: "center",
+      fixed: "right",
+      title: "Details",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
+        <DetailsFacilityReservationModal record={record} />
+      ),
     },
     {
       width: 80,

@@ -11,6 +11,7 @@ import moment from "moment";
 import AddOneOnOneAppointmentReservationModal from "../../../components/ui/modal/AddOneOnOneAppointmentReservationModal";
 import UpdateOneOnOneAppointmentReservationModal from "../../../components/ui/modal/UpdateOneOnOneAppointmentReservationModal";
 import DeleteOneOnOneAppointmentReservationPopup from "../../../components/ui/popup/DeleteOneOnOneAppointmentReservation";
+import DetailsOneOnOneAppointmentReservationModal from "../../../components/ui/modal/DetailsOneOnOneAppointmentReservationModal";
 
 const AppointmentOneOnOneReservation = () => {
   const { data: trainerData } = useTrainersQuery(undefined);
@@ -199,6 +200,17 @@ const AppointmentOneOnOneReservation = () => {
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
       sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
+    },
+    {
+      width: 90,
+      align: "center",
+      fixed: "right",
+      title: "Details",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
+        <DetailsOneOnOneAppointmentReservationModal record={record} />
+      ),
     },
     {
       width: 80,

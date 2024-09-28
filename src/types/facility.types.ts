@@ -4,10 +4,9 @@ export interface IFacilitySchedule {
   sport: string;
   facility: string;
   duration: number;
-  trainer: string;
   description: string;
   price: number;
-  lane: string;
+  lanes: [string];
   schedules: Array<IFacilityDaySchedule>;
 }
 
@@ -16,6 +15,35 @@ export interface IFacilityDaySchedule {
   active: boolean;
   start_time: string;
   end_time: string;
+}
+
+export interface IFacilityReservation {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  age: number;
+  facility: IFacilitySchedule;
+  street_address: string;
+  city: string;
+  state: string;
+  sport: string;
+  zip_code: string;
+  bookings: IFacilityBookings[];
+  addons: IAddon[];
+}
+
+export interface IAddon {
+  name: string;
+  hours: number;
+  image: string;
+  price: number;
+}
+
+export interface IFacilityBookings {
+  date: string;
+  time_slot: string;
+  training: string;
 }
 
 export type IFacilityScheduleParams = {

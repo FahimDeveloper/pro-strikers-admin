@@ -4,7 +4,7 @@ import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
-import { IAppointmentSchedule } from "../../../types/appointmentSchedule.types";
+import { IAppointmentSchedule } from "../../../types/appointment.types";
 import { BsThreeDots } from "react-icons/bs";
 import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 import { useGroupAppointmentsQuery } from "../../../redux/features/schedule/groupAppointmentScheduleApi";

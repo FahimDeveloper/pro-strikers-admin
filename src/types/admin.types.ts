@@ -9,7 +9,11 @@ export interface IAdmin {
   gender: string;
   role: string;
   description: string;
-  password: string;
+  street_address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  nationality?: string;
 }
 
 export type IAdminParams = {

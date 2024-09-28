@@ -27,7 +27,7 @@ export type ICourseReservation = {
   email: string;
   phone: string;
   age: number;
-  course: string | ICourseSchedule;
+  course: ICourseSchedule;
   trainer: string;
   street_address: string;
   sport: string;

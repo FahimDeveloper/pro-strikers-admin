@@ -11,6 +11,8 @@ import DeleteCourseReservationPopup from "../../../components/ui/popup/DeleteCou
 import UpdateCourseReservationModal from "../../../components/ui/modal/UpdateCourseReservationModal";
 // import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 import { ICourseReservation } from "../../../types/couse.types";
+import { collectDateStatus } from "../../../utils/collectDateStatus";
+import DetailsCourseReservationModal from "../../../components/ui/modal/DetailsCourseReservationModal";
 
 const CoursesReservation = () => {
   // const { data: trainerData } = useTrainersQuery(undefined);
@@ -146,6 +148,38 @@ const CoursesReservation = () => {
         </p>
       ),
     },
+    {
+      width: 120,
+      align: "center",
+      title: "Status",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => {
+        const status = collectDateStatus(
+          record.course.end_date,
+          record.course.start_date
+        );
+        return (
+          <p className="font-medium text-sm leading-5 text-[#151515]">
+            {status === "completed" && (
+              <div className="px-2 py-1 bg-[#D6FFC8] rounded-md text-[#0D2B03]">
+                Completed
+              </div>
+            )}
+            {status === "running" && (
+              <div className="px-2 py-1 bg-yellow-200 text-yellow-800 rounded-md">
+                Running
+              </div>
+            )}
+            {status === "upcoming" && (
+              <div className="px-2 py-1 bg-[#FFF3C8] rounded-md text-[#6A5300]">
+                Upcoming
+              </div>
+            )}
+          </p>
+        );
+      },
+    },
     // {
     //   width: 140,
     //   align: "center",
@@ -159,6 +193,7 @@ const CoursesReservation = () => {
     //   ),
     //   sorter: (a, b) => a.trainer.localeCompare(b.trainer),
     // },
+
     {
       width: 160,
       align: "center",
@@ -191,6 +226,15 @@ const CoursesReservation = () => {
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
       sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
+    },
+    {
+      width: 90,
+      align: "center",
+      fixed: "right",
+      title: "Details",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => <DetailsCourseReservationModal record={record} />,
     },
     {
       width: 80,

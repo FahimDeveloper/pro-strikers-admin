@@ -12,14 +12,13 @@ import {
 } from "antd";
 import JoditEditor from "jodit-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import Swal from "sweetalert2";
 
 type TProp = {
   record?: any;
   onFinish: any;
   form: any;
   loading: boolean;
-  fileList: any;
-  setFileList: any;
 };
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -30,14 +29,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = (error) => reject(error);
   });
-const PostForm = ({
-  record,
-  onFinish,
-  form,
-  loading,
-  fileList,
-  setFileList,
-}: TProp) => {
+const PostForm = ({ record, onFinish, form, loading }: TProp) => {
   const editor = useRef(null);
   const [content, setContent] = useState<string | undefined>(undefined);
   const config = useMemo(
@@ -53,8 +45,18 @@ const PostForm = ({
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
-    setFileList(newFileList);
+  const beforeUpload = (file: FileType) => {
+    if (file.size > 5242880) {
+      Swal.fire({
+        title: "Oops!..",
+        icon: "error",
+        text: `Image size too large, please use less than 5MB`,
+        confirmButtonColor: "#0ABAC3",
+      });
+      return Upload.LIST_IGNORE; // Prevent the upload by returning LIST_IGNORE
+    }
+    return false;
+  };
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -87,17 +89,7 @@ const PostForm = ({
         content: record?.content,
       });
     }
-    if (record?.image) {
-      setFileList([
-        {
-          uid: "-1",
-          name: record?.image,
-          status: "done",
-          url: record?.image,
-        },
-      ]);
-    }
-  }, [record, form, setFileList]);
+  }, [record, form]);
   return (
     <>
       <Form
@@ -117,12 +109,10 @@ const PostForm = ({
             <Upload
               listType="picture-card"
               style={{ justifyContent: "center" }}
-              fileList={fileList}
-              onChange={handleChange}
               onPreview={handlePreview}
-              beforeUpload={() => false}
+              beforeUpload={beforeUpload}
             >
-              {fileList.length < 1 && "+ Upload"}
+              {"+ Upload"}
             </Upload>
           </Form.Item>
           <p className="text-[#3A394B] text-sm">Upload Post Thumbnail</p>

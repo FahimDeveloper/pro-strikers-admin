@@ -3,7 +3,7 @@
 import {
   IFacilitySchedule,
   IFacilityScheduleParams,
-} from "../../../types/facilitySchedule.types";
+} from "../../../types/facility.types";
 import { IncomingQueryType } from "../../../types/index.types";
 import { facilityScheduleApiSlice } from "../../api/httpsSlice";
 

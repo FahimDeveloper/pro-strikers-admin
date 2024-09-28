@@ -36,10 +36,10 @@ const adminApi = adminApiSlice.injectEndpoints({
       invalidatesTags: ["admins", "trainers"],
     }),
     updateAdmin: builder.mutation<any, any>({
-      query: ({ id, body }) => ({
+      query: ({ id, payload }) => ({
         url: `/admins/update/${id}`,
         method: "PATCH",
-        body,
+        body: payload,
       }),
       invalidatesTags: ["admins", "admin"],
     }),

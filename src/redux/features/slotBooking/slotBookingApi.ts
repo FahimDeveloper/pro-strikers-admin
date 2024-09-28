@@ -68,7 +68,7 @@ const slotBookingApi = slotBookingApiSlice.injectEndpoints({
         training: string;
         time_slot: string;
       }>,
-      { date: string; training: string }
+      { date: string; training: string; lane: string }
     >({
       query: (params) => ({
         url: "/reservations/facilities/slots",

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, UploadFile } from "antd";
+import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import EventForm from "../form/EventForm";
 import { useCreateEventMutation } from "../../../redux/features/event/eventApi";
@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 
 const AddEventModal = () => {
   const [open, setModalOpen] = useState(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateEventMutation();
@@ -31,7 +30,6 @@ const AddEventModal = () => {
       });
       setModalOpen(false);
       form.resetFields();
-      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -60,13 +58,7 @@ const AddEventModal = () => {
         onCancel={onCancle}
         maskClosable={false}
       >
-        <EventForm
-          fileList={fileList}
-          setFileList={setFileList}
-          form={form}
-          loading={isLoading}
-          onFinish={onFinish}
-        />
+        <EventForm form={form} loading={isLoading} onFinish={onFinish} />
       </Modal>
     </>
   );

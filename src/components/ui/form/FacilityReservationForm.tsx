@@ -19,6 +19,11 @@ type TProp = {
   setSelectSlots?: any;
   facilityId?: any;
   onCheckFinish?: any;
+  lane?: any;
+  setLane?: any;
+  addons?: any;
+  setAddons?: any;
+  addonsData: any;
 };
 
 const FacilityReservationForm = ({
@@ -32,12 +37,19 @@ const FacilityReservationForm = ({
   data,
   facilityId,
   onCheckFinish,
+  lane,
+  setLane,
+  setAddons,
+  addons,
+  addonsData,
 }: TProp) => {
   const [activeDate, setActiveDate] = useState(new Date());
+
   const slotsCartQuery = useGetBookingSlotsQuery(
     {
       training: facilityId,
       date: activeDate.toISOString().split("T")[0],
+      lane: lane,
     },
     { skip: data ? false : true }
   );
@@ -45,6 +57,7 @@ const FacilityReservationForm = ({
     {
       training: facilityId,
       date: activeDate.toISOString().split("T")[0],
+      lane: lane,
     },
     { skip: data ? false : true }
   );
@@ -81,6 +94,11 @@ const FacilityReservationForm = ({
           setSelectSlots={setSelectSlots}
           slotsBookedQuery={slotsBookedQuery}
           slotsCartQuery={slotsCartQuery}
+          lane={lane}
+          setLane={setLane}
+          addons={addons}
+          setAddons={setAddons}
+          addonsData={addonsData}
         />
       )}
       {selectSlots.length > 0 && (

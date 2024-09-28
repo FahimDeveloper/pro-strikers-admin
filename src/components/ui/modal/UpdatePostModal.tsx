@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal, UploadFile } from "antd";
+import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import PostForm from "../form/PostForm";
 import { useForm } from "antd/es/form/Form";
@@ -8,7 +8,6 @@ import { useUpdatePostMutation } from "../../../redux/features/post/postApi";
 import { CiEdit } from "react-icons/ci";
 
 const UpdatePostModal = ({ record }: any) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setModalOpen] = useState(false);
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
@@ -36,7 +35,6 @@ const UpdatePostModal = ({ record }: any) => {
       });
       setModalOpen(false);
       form.resetFields();
-      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -66,8 +64,6 @@ const UpdatePostModal = ({ record }: any) => {
         onCancel={() => setModalOpen(false)}
       >
         <PostForm
-          fileList={fileList}
-          setFileList={setFileList}
           record={record}
           onFinish={onFinish}
           form={form}

@@ -1,39 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Modal } from "antd";
-import { useEffect, useState } from "react";
-import UserForm from "../form/ClientForm";
+import { Button, Modal } from "antd";
+import { CiEdit } from "react-icons/ci";
 import Swal from "sweetalert2";
-import { useCreateUserMutation } from "../../../redux/features/user/userApi";
+import { useEffect, useState } from "react";
+import { useForm } from "antd/es/form/Form";
+import ProfileForm from "../form/ProfileForm";
+import { IAdmin } from "../../../types/admin.types";
+import { useUpdateAdminMutation } from "../../../redux/features/admin/adminApi";
 
-const AddClientModal = () => {
+const UpdateProfileModal = ({ record }: { record: IAdmin }) => {
   const [open, setModalOpen] = useState(false);
-  const [form] = Form.useForm();
-  const [create, { data, isLoading, isSuccess, isError, error }] =
-    useCreateUserMutation();
+  const [form] = useForm();
+  const [update, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateAdminMutation();
   const onFinish = (values: any) => {
     const formData = new FormData();
-    if (values.membership) {
-      values.status = true;
-      const issueDate = new Date();
-      values.issue_date = issueDate.toISOString();
-      const expiryDate = new Date(issueDate);
-      if (values?.plan === "monthly") {
-        expiryDate.setMonth(expiryDate.getMonth() + 1);
-      } else if (values?.plan === "yearly") {
-        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-      }
-      values.expiry_date = expiryDate.toISOString();
-    } else {
-      values.package_name = undefined;
-      values.plan = undefined;
-    }
-    if (values.image) {
+    if (values.image[0].originFileObj) {
       formData.append("image", values.image[0].originFileObj);
       delete values.image;
       formData.append("data", JSON.stringify(values));
-      create(formData);
+      update({ id: record?._id, payload: formData });
     } else {
-      create(values);
+      delete values.image;
+      update({ id: record?._id, payload: values });
     }
   };
   useEffect(() => {
@@ -60,28 +49,32 @@ const AddClientModal = () => {
   }, [data, isSuccess, form, isError, error]);
   const onCancle = () => {
     setModalOpen(false);
-    form.resetFields();
   };
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="primary-btn">
-        Add Client
-      </button>
+      <Button type="default" onClick={() => setModalOpen(true)}>
+        Edit <CiEdit />
+      </Button>
       <Modal
         width={800}
         footer={null}
-        title="Create New User"
+        title="Update Info"
         centered
         open={open}
         onCancel={onCancle}
         maskClosable={false}
       >
         <div className="my-5">
-          <UserForm form={form} onFinish={onFinish} loading={isLoading} />
+          <ProfileForm
+            record={record}
+            form={form}
+            onFinish={onFinish}
+            loading={isLoading}
+          />
         </div>
       </Modal>
     </>
   );
 };
 
-export default AddClientModal;
+export default UpdateProfileModal;

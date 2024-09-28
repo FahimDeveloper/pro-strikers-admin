@@ -9,6 +9,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { useEventIndividualReservationsQuery } from "../../../redux/features/reservation/eventIndividualReservation";
 import UpdateEventIndividualReservationModal from "../../../components/ui/modal/UpdateEventIndividualReservationModal";
 import DeleteEventIndividualReservationPopup from "../../../components/ui/popup/DeleteEventIndividualReservationPopup";
+import { collectDateStatus } from "../../../utils/collectDateStatus";
+import DetailsIndividualEventReservationModal from "../../../components/ui/modal/DetailsIndividualEventReservationModal";
 
 const EventsIndividutalReservation = () => {
   const [sport, setSport] = useState<string | undefined>(undefined);
@@ -105,6 +107,38 @@ const EventsIndividutalReservation = () => {
       sorter: (a, b) => a.sport.localeCompare(b.sport),
     },
     {
+      width: 120,
+      align: "center",
+      title: "Status",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => {
+        const status = collectDateStatus(
+          record.event.end_date,
+          record?.event.start_date
+        );
+        return (
+          <p className="font-medium text-sm leading-5 text-[#151515]">
+            {status === "completed" && (
+              <div className="px-2 py-1 bg-[#D6FFC8] rounded-md text-[#0D2B03]">
+                Completed
+              </div>
+            )}
+            {status === "running" && (
+              <div className="px-2 py-1 bg-yellow-200 text-yellow-800 rounded-md">
+                Running
+              </div>
+            )}
+            {status === "upcoming" && (
+              <div className="px-2 py-1 bg-[#FFF3C8] rounded-md text-[#6A5300]">
+                Upcoming
+              </div>
+            )}
+          </p>
+        );
+      },
+    },
+    {
       width: 160,
       align: "center",
       title: "Voucher Applied",
@@ -148,6 +182,17 @@ const EventsIndividutalReservation = () => {
         <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
       sorter: (a, b) => Number(a.zip_code) - Number(b.zip_code),
+    },
+    {
+      width: 90,
+      align: "center",
+      fixed: "right",
+      title: "Details",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_, record) => (
+        <DetailsIndividualEventReservationModal record={record} />
+      ),
     },
     {
       width: 80,

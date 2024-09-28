@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Modal, UploadFile } from "antd";
+import { Button, Form, Modal } from "antd";
 import { useEffect, useState } from "react";
 import UserForm from "../form/ClientForm";
 import Swal from "sweetalert2";
@@ -8,20 +8,10 @@ import { CiEdit } from "react-icons/ci";
 
 const UpdateClientModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = Form.useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation();
   const onFinish = (values: any) => {
-    // const newDate = new Date();
-    // const expiryDate = new Date(record?.expiry_date);
-    // if (newDate > expiryDate) {
-    //   const issueDate = new Date();
-    //   values.issue_date = issueDate.toISOString();
-    //   const expiryDate = new Date(issueDate);
-    //   expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-    //   values.expiry_date = expiryDate.toISOString();
-    // }
     if (!record?.issue_date && !record?.expiry_date && values.membership) {
       values.status = true;
       const issueDate = new Date();
@@ -55,7 +45,6 @@ const UpdateClientModal = ({ record }: any) => {
       });
       form.resetFields();
       setModalOpen(false);
-      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -86,8 +75,6 @@ const UpdateClientModal = ({ record }: any) => {
       >
         <div className="my-5">
           <UserForm
-            fileList={fileList}
-            setFileList={setFileList}
             record={record}
             form={form}
             onFinish={onFinish}

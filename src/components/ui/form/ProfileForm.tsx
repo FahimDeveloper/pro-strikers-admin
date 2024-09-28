@@ -19,13 +19,6 @@ import Swal from "sweetalert2";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
-type TProp = {
-  record?: any;
-  onFinish: any;
-  form: any;
-  loading: boolean;
-};
-
 const getBase64 = (file: FileType): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -34,7 +27,14 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
+type TProp = {
+  record?: any;
+  onFinish: any;
+  form: any;
+  loading: boolean;
+};
+
+const ProfileForm = ({ form, record, onFinish, loading }: TProp) => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
 
@@ -46,7 +46,7 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
         text: `Image size too large, please use less than 5MB`,
         confirmButtonColor: "#0ABAC3",
       });
-      return Upload.LIST_IGNORE; // Prevent the upload by returning LIST_IGNORE
+      return Upload.LIST_IGNORE;
     }
     return false;
   };
@@ -65,32 +65,30 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
     }
     return e && e.fileList;
   };
-
+  dayjs.extend(weekday);
+  dayjs.extend(localeData);
   useEffect(() => {
-    dayjs.extend(weekday);
-    dayjs.extend(localeData);
-    if (record) {
-      form.setFieldsValue({
-        first_name: record?.first_name,
-        last_name: record?.last_name,
-        email: record?.email,
-        gender: record?.gender,
-        phone: record?.phone,
-        image: record?.image && [
-          {
-            uid: "-1",
-            name: record?.image,
-            status: "done",
-            url: record?.image,
-          },
-        ],
-        description: record?.description,
-        date_of_birth: record?.date_of_birth
-          ? dayjs(record?.date_of_birth, "DD/MM/YYYY")
-          : "",
-        role: record?.role,
-      });
-    }
+    form.setFieldsValue({
+      first_name: record?.first_name,
+      last_name: record?.last_name,
+      email: record?.email,
+      gender: record?.gender,
+      phone: record?.phone,
+      nationality: record?.nationality,
+      country: record?.country,
+      state: record?.state,
+      city: record?.city,
+      street_address: record?.street_address,
+      image: record?.image && [
+        {
+          uid: "-1",
+          name: record?.image,
+          status: "done",
+          url: record?.image,
+        },
+      ],
+      date_of_birth: record?.date_of_birth ? dayjs(record?.date_of_birth) : "",
+    });
   }, [record, form]);
 
   return (
@@ -99,32 +97,33 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        className="space-y-8"
+        className="space-y-5"
       >
         <div className="flex flex-col items-center justify-center">
           <Form.Item
             name="image"
             className="m-0 mb-2"
-            rules={[{ required: false, message: "Please select user image" }]}
+            rules={[{ required: false, message: "Please select image" }]}
             valuePropName="fileList"
             getValueFromEvent={normFile}
           >
             <Upload
               listType="picture-card"
-              style={{ justifyContent: "center" }}
+              className="justify-center"
               onPreview={handlePreview}
               beforeUpload={beforeUpload}
             >
               {"+ Upload"}
             </Upload>
           </Form.Item>
-          <p className="text-[#3A394B] text-sm">Upload Member Image</p>
+          <p className="text-[#3A394B] text-sm">Upload Image</p>
         </div>
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-x-5">
+          <p className="font-medium text-base">Personal Details</p>
+          <div className="grid grid-cols-3 gap-x-5 gap-y-3">
             <Form.Item
               name="first_name"
-              label="Member First Name"
+              label="First Name"
               className="w-full m-0"
               rules={[{ required: true, message: "Please enter First Name" }]}
             >
@@ -132,14 +131,26 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
             </Form.Item>
             <Form.Item
               name="last_name"
-              label="Member Last Name"
+              label="Last Name"
               className="w-full m-0"
               rules={[{ required: true, message: "Please enter Last Name" }]}
             >
               <Input placeholder="Enter last name" />
             </Form.Item>
-          </div>
-          <div className="grid grid-cols-2 gap-x-5">
+            <Form.Item
+              name="gender"
+              label="Gender"
+              className="w-full m-0"
+              rules={[{ required: true, message: "Please select Gender" }]}
+            >
+              <Select
+                placeholder="Select gender"
+                options={[
+                  { label: "Male", value: "male" },
+                  { label: "Female", value: "female" },
+                ]}
+              />
+            </Form.Item>
             <Form.Item
               className="w-full m-0"
               name="email"
@@ -159,62 +170,59 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
             >
               <Input placeholder="Enter your phone" />
             </Form.Item>
-          </div>
-          <div className="grid grid-cols-3 gap-x-5">
-            <Form.Item
-              name="gender"
-              label="Gender"
-              className="w-full m-0"
-              rules={[{ required: true, message: "Please select Gender" }]}
-            >
-              <Select
-                placeholder="Select gender"
-                options={[
-                  { label: "Male", value: "male" },
-                  { label: "Female", value: "female" },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item
-              className="w-full m-0"
-              name="role"
-              label="Role"
-              rules={[{ required: true }]}
-            >
-              <Select
-                placeholder="Select role"
-                options={[
-                  { label: "Admin", value: "admin" },
-                  { label: "Super Admin", value: "super-admin" },
-                  { label: "Trainer", value: "trainer" },
-                  { label: "Manager", value: "manager" },
-                  { label: "Staff", value: "staff" },
-                ]}
-              />
-            </Form.Item>
             <Form.Item
               className="w-full m-0"
               name="date_of_birth"
               label="Date of Birth"
             >
-              <DatePicker format={"DD/MM/YYYY"} className="w-full" />
+              <DatePicker className="w-full" format={"DD/MM/YYYY"} />
+            </Form.Item>
+            <Form.Item
+              className="w-full m-0"
+              name="nationality"
+              label="Nationality"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Enter your nationality" />
+            </Form.Item>
+            <Form.Item
+              className="w-full m-0"
+              name="country"
+              label="Country"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Enter your country" />
+            </Form.Item>
+            <Form.Item
+              className="w-full m-0"
+              name="state"
+              label="State"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Enter your state" />
+            </Form.Item>
+            <Form.Item
+              className="w-full m-0"
+              name="city"
+              label="City"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Enter your city" />
+            </Form.Item>
+            <Form.Item
+              className="w-full m-0 col-span-2"
+              name="street_address"
+              label="Street Address"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Enter your street address" />
             </Form.Item>
           </div>
-          <Form.Item
-            className="w-full m-0 col-span-2"
-            name="description"
-            label="Description"
-            rules={[{ required: true }]}
-          >
-            <Input.TextArea rows={5} />
-          </Form.Item>
         </div>
         <div className="flex justify-end">
           <Form.Item className="m-0">
             <Button htmlType="submit" loading={loading} className="primary-btn">
-              {record && Object.keys(record).length > 0
-                ? "Update Member"
-                : "Create Member"}
+              Update
             </Button>
           </Form.Item>
         </div>
@@ -234,4 +242,4 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
   );
 };
 
-export default AdminForm;
+export default ProfileForm;

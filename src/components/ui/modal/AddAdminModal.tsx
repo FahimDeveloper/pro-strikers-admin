@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, UploadFile } from "antd";
+import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import AdminForm from "../form/AdminForm";
@@ -8,7 +8,6 @@ import { useForm } from "antd/es/form/Form";
 
 const AddAdminModal = () => {
   const [open, setModalOpen] = useState(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreateAdminMutation();
@@ -35,7 +34,6 @@ const AddAdminModal = () => {
       });
       setModalOpen(false);
       form.resetFields();
-      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -65,13 +63,7 @@ const AddAdminModal = () => {
         maskClosable={false}
       >
         <div className="my-5">
-          <AdminForm
-            form={form}
-            onFinish={onFinish}
-            loading={isLoading}
-            fileList={fileList}
-            setFileList={setFileList}
-          />
+          <AdminForm form={form} onFinish={onFinish} loading={isLoading} />
         </div>
       </Modal>
     </>

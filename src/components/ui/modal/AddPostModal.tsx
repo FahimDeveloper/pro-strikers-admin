@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, UploadFile } from "antd";
+import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import PostForm from "../form/PostForm";
 import { useForm } from "antd/es/form/Form";
@@ -8,7 +8,6 @@ import { useCreatePostMutation } from "../../../redux/features/post/postApi";
 
 const AddPostModal = () => {
   const [open, setModalOpen] = useState(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [form] = useForm();
   const [create, { data, isLoading, isSuccess, isError, error }] =
     useCreatePostMutation();
@@ -30,7 +29,6 @@ const AddPostModal = () => {
       });
       setModalOpen(false);
       form.resetFields();
-      setFileList([]);
     }
     if (isError) {
       Swal.fire({
@@ -59,13 +57,7 @@ const AddPostModal = () => {
         onCancel={onCancle}
         maskClosable={false}
       >
-        <PostForm
-          fileList={fileList}
-          setFileList={setFileList}
-          onFinish={onFinish}
-          form={form}
-          loading={isLoading}
-        />
+        <PostForm onFinish={onFinish} form={form} loading={isLoading} />
       </Modal>
     </>
   );

@@ -6,7 +6,7 @@ import DataTable from "../../../components/common/DataTable";
 import DataPagination from "../../../components/common/DataPagination";
 import AddFacilityModal from "../../../components/ui/modal/AddFacilityModal";
 import { useFacilitiesQuery } from "../../../redux/features/schedule/facilityScheduleApi";
-import { IFacilitySchedule } from "../../../types/facilitySchedule.types";
+import { IFacilitySchedule } from "../../../types/facility.types";
 import UpdateFacilityModal from "../../../components/ui/modal/UpdateFacilityModal";
 import { BsThreeDots } from "react-icons/bs";
 import DeleteFacilityPopup from "../../../components/ui/popup/DeleteFacilityPopup";

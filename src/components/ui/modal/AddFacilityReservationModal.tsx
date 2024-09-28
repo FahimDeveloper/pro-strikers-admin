@@ -9,6 +9,7 @@ import { useCreateFacilityReservationMutation } from "../../../redux/features/re
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
 import { useGetfacilityMutation } from "../../../redux/features/schedule/facilityScheduleApi";
+import { useGetSportAddonsQuery } from "../../../redux/features/addon/addonApi";
 
 const AddFacilityReservationModal = () => {
   const user = useSelector(selectCurrentUser);
@@ -18,6 +19,8 @@ const AddFacilityReservationModal = () => {
   const [facilityId, setFacilityId] = useState("");
   const [form] = useForm();
   const [checkForm] = useForm();
+  const [lane, setLane] = useState<string | undefined>(undefined);
+  const [addons, setAddons] = useState([]);
   const [
     getData,
     {
@@ -28,6 +31,17 @@ const AddFacilityReservationModal = () => {
       error: queryErrorDetails,
     },
   ] = useGetfacilityMutation();
+  const { data: addonsData } = useGetSportAddonsQuery(
+    {
+      sport: facility?.results?.sport,
+    },
+    { skip: facility?.results?._id ? false : true }
+  );
+  useEffect(() => {
+    if (facility?.results?._id) {
+      setLane(facility?.results?.lanes[0]);
+    }
+  }, [facility]);
   const [
     create,
     { data: createData, isLoading, isSuccess: createSuccess, isError, error },
@@ -45,6 +59,7 @@ const AddFacilityReservationModal = () => {
       )
     );
     values.bookings = bookings;
+    values.addons = addons;
     create({ id: user?._id, payload: values });
   };
   const onCheckFinish = (values: any) => {
@@ -123,6 +138,11 @@ const AddFacilityReservationModal = () => {
             facilityId={facilityId}
             onCheckFinish={onCheckFinish}
             checkForm={checkForm}
+            lane={lane}
+            setLane={setLane}
+            addons={addons}
+            setAddons={setAddons}
+            addonsData={addonsData}
           />
         </div>
       </Modal>

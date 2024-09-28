@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
+import Profile from "../pages/Profile/Profile";
 const AddonManage = LazyLoad(
   lazy(() => import("../pages/AddonManage/AddonManage"))
 );
@@ -297,5 +298,9 @@ export const superAdminPaths = [
     name: "Post",
     path: "post",
     element: <Post />,
+  },
+  {
+    path: "profile",
+    element: <Profile />,
   },
 ];

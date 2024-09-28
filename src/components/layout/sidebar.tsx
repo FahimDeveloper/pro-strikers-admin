@@ -46,7 +46,7 @@ const Sidebar = ({ locationKey }: { locationKey: string }) => {
           theme="light"
           mode="inline"
           items={sidebarItems}
-          defaultSelectedKeys={[locationKey]}
+          selectedKeys={[locationKey]}
         />
       </div>
     </Sider>

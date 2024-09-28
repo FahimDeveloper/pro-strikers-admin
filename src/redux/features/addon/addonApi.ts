@@ -12,6 +12,13 @@ const addonApi = addonApislice.injectEndpoints({
       }),
       providesTags: ["addons"],
     }),
+    getSportAddons: builder.query<any, { sport: string }>({
+      query: (params) => ({
+        url: `/addons/sport-addon`,
+        method: "GET",
+        params,
+      }),
+    }),
     addon: builder.query<any, any>({
       query: (id) => ({
         url: `/addons/${id}`,
@@ -51,4 +58,5 @@ export const {
   useCreateAddonMutation,
   useDeleteAddonMutation,
   useUpdateAddonMutation,
+  useGetSportAddonsQuery,
 } = addonApi;

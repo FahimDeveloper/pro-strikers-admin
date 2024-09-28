@@ -2,7 +2,7 @@
 import {
   IAppointmentSchedule,
   IAppointmentScheduleParams,
-} from "../../../types/appointmentSchedule.types";
+} from "../../../types/appointment.types";
 import { IncomingQueryType } from "../../../types/index.types";
 import { groupAppointmentScheduleApiSlice } from "../../api/httpsSlice";
 

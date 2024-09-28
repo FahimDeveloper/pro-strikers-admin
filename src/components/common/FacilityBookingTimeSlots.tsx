@@ -30,7 +30,7 @@ const FacilityBookingTimeSlots = ({
   addToCart: any;
   selectSlots: any;
   setSelectSlots: any;
-  lane: string | undefined;
+  lane: string;
 }) => {
   const [create, { isLoading: createLoading, isSuccess, isError, error }] =
     addToCart;
@@ -159,8 +159,8 @@ const FacilityBookingTimeSlots = ({
                   (slots: any) =>
                     slots.date.toISOString().split("T")[0] ===
                       activeDate.toISOString().split("T")[0] &&
-                    slots.slots.includes(slot) &&
-                    slots.lane === lane
+                    slots.lane === lane &&
+                    slots.slots.includes(slot)
                 )
               }
               key={index}

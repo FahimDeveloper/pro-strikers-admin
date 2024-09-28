@@ -30,7 +30,7 @@ export type IEventIndividualReservation = {
   email: string;
   phone: string;
   age: number;
-  event: string | IEvent;
+  event: IEvent;
   street_address: string;
   sport: string;
   city: string;
@@ -46,7 +46,7 @@ export interface IEventGroupReservation {
   email: string;
   phone: string;
   age: number;
-  event: string | IEvent;
+  event: IEvent;
   street_address: string;
   sport: string;
   city: string;

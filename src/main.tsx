@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./router/router.tsx";
 import { ConfigProvider } from "antd";
 import { PersistGate } from "redux-persist/integration/react";
+import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Fragment>
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       >
         <PersistGate loading={null} persistor={persistor}>
           <RouterProvider router={router} />
+          <Toaster />
         </PersistGate>
       </ConfigProvider>
     </Provider>
