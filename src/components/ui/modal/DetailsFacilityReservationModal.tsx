@@ -168,7 +168,6 @@ const DetailsFacilityReservationModal = ({
             columns={addonColumns}
             dataSource={record.addons}
             pagination={false}
-            rowKey="name"
           />
         )}
       </Modal>
