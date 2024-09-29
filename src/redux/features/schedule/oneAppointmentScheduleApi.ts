@@ -29,8 +29,9 @@ const oneAppointmentScheduleApi =
       }),
       getOneAppointment: builder.mutation<any, any>({
         query: (id) => ({
-          url: `/schedule/appointments/one-on-one/${id}`,
+          url: `/schedule/appointments/one-on-one/appointment`,
           method: "POST",
+          body: { id },
         }),
       }),
       createOneAppointment: builder.mutation<any, IAppointmentSchedule>({

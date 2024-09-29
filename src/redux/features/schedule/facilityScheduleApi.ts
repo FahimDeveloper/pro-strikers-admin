@@ -30,8 +30,9 @@ const facilityScheduleApi = facilityScheduleApiSlice.injectEndpoints({
     getfacility: builder.mutation<any, string>({
       query: (id) => {
         return {
-          url: `/schedule/facilities/${id}`,
+          url: `/schedule/facilities/facility`,
           method: "POST",
+          body: { id: id },
         };
       },
     }),
