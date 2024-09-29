@@ -20,6 +20,11 @@ const DetailsFacilityReservationModal = ({
       render: (text: string) => moment(text).format("dddd, MMMM Do YYYY"),
     },
     {
+      title: "Lane",
+      dataIndex: "lane",
+      key: "lane",
+    },
+    {
       title: "Time Slot",
       dataIndex: "time_slot",
       key: "time_slot",
@@ -84,9 +89,8 @@ const DetailsFacilityReservationModal = ({
         Details
       </Button>
       <Modal
-        width={800}
+        width={900}
         footer={null}
-        title="Facility Reservation Details"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}
@@ -99,9 +103,9 @@ const DetailsFacilityReservationModal = ({
           <Descriptions.Item label="Last Name">
             {record.last_name}
           </Descriptions.Item>
-          <Descriptions.Item label="Email">{record.email}</Descriptions.Item>
           <Descriptions.Item label="Phone">{record.phone}</Descriptions.Item>
           <Descriptions.Item label="Age">{record.age}</Descriptions.Item>
+          <Descriptions.Item label="Email">{record.email}</Descriptions.Item>
         </Descriptions>
 
         <Divider />
@@ -158,13 +162,15 @@ const DetailsFacilityReservationModal = ({
 
         <Divider />
 
-        <Table
-          title={() => <h3 className="text-base font-bold">Addons</h3>}
-          columns={addonColumns}
-          dataSource={record.addons}
-          pagination={false}
-          rowKey="name"
-        />
+        {record?.addons.length > 0 && (
+          <Table
+            title={() => <h3 className="text-base font-bold">Addons</h3>}
+            columns={addonColumns}
+            dataSource={record.addons}
+            pagination={false}
+            rowKey="name"
+          />
+        )}
       </Modal>
     </>
   );

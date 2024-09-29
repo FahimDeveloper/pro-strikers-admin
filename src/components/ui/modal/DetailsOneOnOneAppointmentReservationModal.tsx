@@ -59,7 +59,6 @@ const DetailsOneOnOneAppointmentReservationModal = ({
       <Modal
         width={800}
         footer={null}
-        title="One on one appointment Reservation Details"
         centered
         open={open}
         onCancel={() => setModalOpen(false)}
@@ -72,9 +71,9 @@ const DetailsOneOnOneAppointmentReservationModal = ({
           <Descriptions.Item label="Last Name">
             {record.last_name}
           </Descriptions.Item>
-          <Descriptions.Item label="Email">{record.email}</Descriptions.Item>
           <Descriptions.Item label="Phone">{record.phone}</Descriptions.Item>
           <Descriptions.Item label="Age">{record.age}</Descriptions.Item>
+          <Descriptions.Item label="Email">{record.email}</Descriptions.Item>
         </Descriptions>
 
         <Divider />
