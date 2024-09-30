@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { IEventGroupReservation } from "../../../types/event.types";
-import { Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber } from "antd";
 
 const EventGroupReservationForm = ({
   form,
@@ -26,16 +26,6 @@ const EventGroupReservationForm = ({
   }, [record, form]);
   return (
     <Form form={form} layout="vertical">
-      {!record && (
-        <Form.Item
-          label="Event Id"
-          className="mb-3"
-          name="event"
-          rules={[{ required: true }]}
-        >
-          <Input placeholder="Type here..." />
-        </Form.Item>
-      )}
       <div className="grid grid-cols-2 gap-4">
         <Form.Item
           label="First Name"
@@ -65,33 +55,9 @@ const EventGroupReservationForm = ({
           name="sport"
           className="m-0"
           label="Sport"
-          rules={[{ required: true, message: "Please select Sport" }]}
+          rules={[{ required: true }]}
         >
-          <Select
-            placeholder="Select sport"
-            options={[
-              {
-                label: "Cricket",
-                value: "cricket",
-              },
-              {
-                label: "Soccer",
-                value: "soccer",
-              },
-              {
-                label: "Baseball",
-                value: "baseball",
-              },
-              {
-                label: "Softball",
-                value: "softball",
-              },
-              {
-                label: "Field Hockey",
-                value: "field hockey",
-              },
-            ]}
-          />
+          <Input placeholder="Type here.." readOnly />
         </Form.Item>
         <Form.Item
           label="Phone"

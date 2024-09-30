@@ -37,7 +37,7 @@ const UpdateCourseReservationModal = ({ record }: any) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
   };
   return (
@@ -55,7 +55,7 @@ const UpdateCourseReservationModal = ({ record }: any) => {
         title="Update Course Reservation"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <div className="my-5">

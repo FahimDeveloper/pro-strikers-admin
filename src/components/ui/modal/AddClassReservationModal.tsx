@@ -77,7 +77,7 @@ const AddClassReservationModal = () => {
       });
     }
   }, [isSuccess, isError, form, error, checkError, checkSuccess]);
-  const onCancle = () => {
+  const onCancel = () => {
     setClassData({});
     setModalOpen(false);
     form.resetFields();
@@ -94,7 +94,7 @@ const AddClassReservationModal = () => {
         title="Create New Class Reservation"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <div className="my-5">

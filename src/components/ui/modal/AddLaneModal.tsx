@@ -33,7 +33,7 @@ const AddLaneModal = () => {
     }
   }, [data, isSuccess, isError, form, error]);
 
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     form.resetFields();
   };
@@ -51,7 +51,7 @@ const AddLaneModal = () => {
         title="Create New Lane"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <LaneForm form={form} onFinish={onFinish} loading={isLoading} />

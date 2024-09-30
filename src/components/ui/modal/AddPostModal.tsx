@@ -39,7 +39,7 @@ const AddPostModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     form.resetFields();
   };
@@ -54,7 +54,7 @@ const AddPostModal = () => {
         title="Create New Post"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <PostForm onFinish={onFinish} form={form} loading={isLoading} />

@@ -38,7 +38,7 @@ const AddVoucherModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error, setModalOpen]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     form.resetFields();
   };
@@ -53,7 +53,7 @@ const AddVoucherModal = () => {
         title="Create New Voucher"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <VoucherForm form={form} loading={isLoading} onFinish={onFinish} />

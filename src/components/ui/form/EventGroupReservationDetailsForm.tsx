@@ -122,11 +122,13 @@ const EventGroupReservationDetailsForm = ({
                 </div>
               </div>
             ))}
-            <Form.Item>
-              <Button type="primary" onClick={() => add()}>
-                Add Member
-              </Button>
-            </Form.Item>
+            {fields?.length < 5 && (
+              <Form.Item>
+                <Button type="primary" onClick={() => add()}>
+                  Add Member
+                </Button>
+              </Form.Item>
+            )}
           </div>
         )}
       </Form.List>

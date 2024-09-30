@@ -33,7 +33,7 @@ const AddProductModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     form.resetFields();
   };
@@ -65,7 +65,7 @@ const AddProductModal = () => {
         title="Create New Product"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <ProductForm

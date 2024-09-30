@@ -40,7 +40,7 @@ const AddEventModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     form.resetFields();
   };
@@ -55,7 +55,7 @@ const AddEventModal = () => {
         title="Create New Event"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <EventForm form={form} loading={isLoading} onFinish={onFinish} />

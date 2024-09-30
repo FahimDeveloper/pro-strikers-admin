@@ -47,7 +47,7 @@ const UpdateProfileModal = ({ record }: { record: IAdmin }) => {
       });
     }
   }, [data, isSuccess, form, isError, error]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
   };
   return (
@@ -61,7 +61,7 @@ const UpdateProfileModal = ({ record }: { record: IAdmin }) => {
         title="Update Info"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <div className="my-5">

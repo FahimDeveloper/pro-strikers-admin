@@ -38,7 +38,7 @@ const UpdateOneOnOneAppointmentModal = ({ record }: any) => {
   const onSubmit = (values: any) => {
     update({ id: record?._id, body: values });
   };
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     setCurrent(0);
   };
@@ -58,7 +58,7 @@ const UpdateOneOnOneAppointmentModal = ({ record }: any) => {
         title="Update Appointment"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
       >
         <OneOnOneAppointmentSteps
           current={current}

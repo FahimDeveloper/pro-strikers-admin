@@ -76,7 +76,7 @@ const AddGroupAppointmentReservationModal = () => {
       });
     }
   }, [isSuccess, isError, form, error, checkError, checkSuccess]);
-  const onCancle = () => {
+  const onCancel = () => {
     setAppointmentData({});
     setModalOpen(false);
     form.resetFields();
@@ -93,7 +93,7 @@ const AddGroupAppointmentReservationModal = () => {
         title="Create New Appointment Group Reservation"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <div className="my-5">

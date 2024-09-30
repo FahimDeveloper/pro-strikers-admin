@@ -34,7 +34,7 @@ const AddOneOnOneAppointmentModal = () => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     setCurrent(0);
     form.resetFields();
@@ -53,7 +53,7 @@ const AddOneOnOneAppointmentModal = () => {
         title="Create New Appointment"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <OneOnOneAppointmentSteps

@@ -33,7 +33,7 @@ const AddAddonModal = () => {
     }
   }, [data, isSuccess, isError, form, error]);
 
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     form.resetFields();
   };
@@ -61,7 +61,7 @@ const AddAddonModal = () => {
         title="Create New Addon"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <AddonForm form={form} onFinish={onFinish} loading={isLoading} />

@@ -30,7 +30,7 @@ const DetailsGroupAppointmentReservationModal = ({
         onCancel={() => setModalOpen(false)}
         maskClosable={false}
       >
-        <Descriptions title="Customer Info" bordered column={2}>
+        <Descriptions title="Client Info" bordered column={2}>
           <Descriptions.Item label="First Name">
             {record.first_name}
           </Descriptions.Item>

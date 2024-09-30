@@ -37,7 +37,7 @@ const AddFacilityModal = () => {
   const onSubmit = (values: any) => {
     create(values);
   };
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     setCurrent(0);
     form.resetFields();
@@ -53,7 +53,7 @@ const AddFacilityModal = () => {
         title="Create New Facility"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <FacilitySteps

@@ -94,7 +94,7 @@ const AddOneOnOneAppointmentReservationModal = () => {
     getData(values.id);
   };
 
-  const onCancle = () => {
+  const onCancel = () => {
     form.resetFields();
     checkForm.resetFields();
     setData(null);
@@ -112,7 +112,7 @@ const AddOneOnOneAppointmentReservationModal = () => {
         title="Create New Appointment One On One Reservation"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <div className="my-5">

@@ -39,7 +39,7 @@ const UpdateClassModal = ({ record }: any) => {
   const onSubmit = (values: any) => {
     update({ id: record?._id, body: values });
   };
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     setCurrent(0);
   };
@@ -58,7 +58,7 @@ const UpdateClassModal = ({ record }: any) => {
         title="Update Class"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <ClassSteps

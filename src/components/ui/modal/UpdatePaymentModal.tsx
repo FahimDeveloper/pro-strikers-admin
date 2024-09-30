@@ -38,7 +38,7 @@ const UpdatePaymentModal = ({ record }: { record: IPayment }) => {
       });
     }
   }, [data, isSuccess, isError, form, error]);
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     form.resetFields();
   };
@@ -53,7 +53,7 @@ const UpdatePaymentModal = ({ record }: { record: IPayment }) => {
         title="Update Payment"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <div className="my-5">

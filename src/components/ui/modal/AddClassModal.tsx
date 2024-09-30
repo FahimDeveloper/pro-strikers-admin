@@ -37,7 +37,7 @@ const AddClassesModal = () => {
   const onSubmit = (values: any) => {
     create(values);
   };
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     setCurrent(0);
     form.resetFields();
@@ -53,7 +53,7 @@ const AddClassesModal = () => {
         title="Create New Class"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <ClassSteps

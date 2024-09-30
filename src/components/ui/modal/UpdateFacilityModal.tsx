@@ -38,7 +38,7 @@ const UpdateFacilityModal = ({ record }: any) => {
   const onSubmit = (values: any) => {
     update({ id: record?._id, body: values });
   };
-  const onCancle = () => {
+  const onCancel = () => {
     setModalOpen(false);
     setCurrent(0);
   };
@@ -58,7 +58,7 @@ const UpdateFacilityModal = ({ record }: any) => {
         title="Update Facility"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
       >
         <FacilitySteps
           current={current}

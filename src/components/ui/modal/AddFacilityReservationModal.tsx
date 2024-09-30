@@ -106,7 +106,7 @@ const AddFacilityReservationModal = () => {
     }
   }, [isError, createSuccess, queryError, querySuccess]);
 
-  const onCancle = () => {
+  const onCancel = () => {
     form.resetFields();
     checkForm.resetFields();
     setSelectSlots([]);
@@ -124,7 +124,7 @@ const AddFacilityReservationModal = () => {
         title="Create New Facility Reservation"
         centered
         open={open}
-        onCancel={onCancle}
+        onCancel={onCancel}
         maskClosable={false}
       >
         <div className="my-5">
