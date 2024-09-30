@@ -36,7 +36,7 @@ const BookingPart = ({
   slotsCartQuery: any;
   slotsBookedQuery: any;
   lane?: string;
-  setLane: any;
+  setLane?: any;
   addons?: any;
   setAddons?: any;
   addonsData?: any;
