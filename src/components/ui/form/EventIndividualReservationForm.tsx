@@ -21,18 +21,20 @@ const EventIndividualReservationForm = ({
   eventData?: any;
 }) => {
   useEffect(() => {
-    form.setFieldsValue({
-      first_name: record?.first_name,
-      last_name: record?.last_name,
-      email: record?.email,
-      phone: record?.phone,
-      age: record?.age,
-      state: record?.state,
-      city: record?.city,
-      sport: record?.sport,
-      street_address: record?.street_address,
-      zip_code: record?.zip_code,
-    });
+    if (record) {
+      form.setFieldsValue({
+        first_name: record?.first_name,
+        last_name: record?.last_name,
+        email: record?.email,
+        phone: record?.phone,
+        age: record?.age,
+        state: record?.state,
+        city: record?.city,
+        sport: record?.sport,
+        street_address: record?.street_address,
+        zip_code: record?.zip_code,
+      });
+    }
   }, [record, form]);
   return (
     <>

@@ -37,12 +37,12 @@ const AddEventGroupReservationModal = () => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      setModalOpen(false);
       form.resetFields();
       checkForm.resetFields();
       setCurrent(0);
       setEventId("");
       setEventData({});
+      setModalOpen(false);
     }
     if (isError) {
       Swal.fire({
@@ -52,10 +52,12 @@ const AddEventGroupReservationModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
+  }, [isSuccess, isError, form, error]);
+  useEffect(() => {
     if (checkSuccess) {
       setEventData(event?.results);
       form.setFieldsValue({
-        sport: event.results.sport,
+        sport: event?.results?.sport,
       });
     }
     if (isCheckError) {
@@ -67,16 +69,7 @@ const AddEventGroupReservationModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [
-    data,
-    isSuccess,
-    isError,
-    form,
-    error,
-    isCheckError,
-    checkSuccess,
-    checkError,
-  ]);
+  }, [isCheckError, checkSuccess, checkError]);
   const onSubmit = (values: any) => {
     values.event = eventId;
     create(values);

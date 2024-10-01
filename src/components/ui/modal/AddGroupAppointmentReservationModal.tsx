@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 
 const AddGroupAppointmentReservationModal = () => {
   const [open, setModalOpen] = useState(false);
-  const [appointmentDate, setAppointmentDate] = useState();
+  const [appointmentDate, setAppointmentDate] = useState(null);
   const [appointmentData, setAppointmentData] = useState({});
   const [form] = useForm();
   const [checkForm] = useForm();
@@ -52,6 +52,9 @@ const AddGroupAppointmentReservationModal = () => {
       });
       setModalOpen(false);
       form.resetFields();
+      checkForm.resetFields();
+      setAppointmentDate(null);
+      setAppointmentData({});
     }
     if (isError) {
       Swal.fire({
@@ -61,6 +64,8 @@ const AddGroupAppointmentReservationModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
+  }, [isSuccess, isError, form, error]);
+  useEffect(() => {
     if (checkSuccess) {
       setAppointmentData(checkData?.results);
       form.setFieldsValue({
@@ -75,12 +80,13 @@ const AddGroupAppointmentReservationModal = () => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [isSuccess, isError, form, error, checkError, checkSuccess]);
+  }, [checkError, checkSuccess]);
   const onCancel = () => {
     setAppointmentData({});
-    setModalOpen(false);
     form.resetFields();
     checkForm.resetFields();
+    setAppointmentDate(null);
+    setModalOpen(false);
   };
   return (
     <>

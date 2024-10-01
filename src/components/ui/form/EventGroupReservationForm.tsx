@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { IEventGroupReservation } from "../../../types/event.types";
@@ -11,19 +12,21 @@ const EventGroupReservationForm = ({
   record?: IEventGroupReservation;
 }) => {
   useEffect(() => {
-    form.setFieldsValue({
-      first_name: record?.first_name,
-      last_name: record?.last_name,
-      email: record?.email,
-      phone: record?.phone,
-      age: record?.age,
-      state: record?.state,
-      city: record?.city,
-      sport: record?.sport,
-      street_address: record?.street_address,
-      zip_code: record?.zip_code,
-    });
-  }, [record, form]);
+    if (record) {
+      form.setFieldsValue({
+        first_name: record?.first_name,
+        last_name: record?.last_name,
+        email: record?.email,
+        phone: record?.phone,
+        age: record?.age,
+        state: record?.state,
+        city: record?.city,
+        sport: record?.sport,
+        street_address: record?.street_address,
+        zip_code: record?.zip_code,
+      });
+    }
+  }, [record]);
   return (
     <Form form={form} layout="vertical">
       <div className="grid grid-cols-2 gap-4">

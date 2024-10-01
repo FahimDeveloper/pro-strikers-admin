@@ -89,6 +89,9 @@ const BookingPart = ({
                 return slots;
               })
               .filter(Boolean);
+            if (updatedSlots.length == 0) {
+              setAddons([]);
+            }
             setSelectSlots(updatedSlots);
           })
           .catch((error: any) => toast.error(`${error.data.message}`));

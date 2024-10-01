@@ -13,18 +13,20 @@ const EventGroupReservationDetailsForm = ({
   formData: any;
 }) => {
   useEffect(() => {
-    form.setFieldsValue({
-      team_name: record?.team_name,
-      team: record?.team || [
-        {
-          first_name: formData.first_name,
-          last_name: formData.last_name,
-          age: formData.age,
-          email: formData.email,
-          contact: formData.phone,
-        },
-      ],
-    });
+    if (record || formData) {
+      form.setFieldsValue({
+        team_name: record?.team_name,
+        team: record?.team || [
+          {
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            age: formData.age,
+            email: formData.email,
+            contact: formData.phone,
+          },
+        ],
+      });
+    }
   }, [record, form, formData]);
   return (
     <Form form={form} layout="vertical">

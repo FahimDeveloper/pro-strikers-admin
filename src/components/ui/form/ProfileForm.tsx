@@ -68,27 +68,31 @@ const ProfileForm = ({ form, record, onFinish, loading }: TProp) => {
   dayjs.extend(weekday);
   dayjs.extend(localeData);
   useEffect(() => {
-    form.setFieldsValue({
-      first_name: record?.first_name,
-      last_name: record?.last_name,
-      email: record?.email,
-      gender: record?.gender,
-      phone: record?.phone,
-      nationality: record?.nationality,
-      country: record?.country,
-      state: record?.state,
-      city: record?.city,
-      street_address: record?.street_address,
-      image: record?.image && [
-        {
-          uid: "-1",
-          name: record?.image,
-          status: "done",
-          url: record?.image,
-        },
-      ],
-      date_of_birth: record?.date_of_birth ? dayjs(record?.date_of_birth) : "",
-    });
+    if (record) {
+      form.setFieldsValue({
+        first_name: record?.first_name,
+        last_name: record?.last_name,
+        email: record?.email,
+        gender: record?.gender,
+        phone: record?.phone,
+        nationality: record?.nationality,
+        country: record?.country,
+        state: record?.state,
+        city: record?.city,
+        street_address: record?.street_address,
+        image: record?.image && [
+          {
+            uid: "-1",
+            name: record?.image,
+            status: "done",
+            url: record?.image,
+          },
+        ],
+        date_of_birth: record?.date_of_birth
+          ? dayjs(record?.date_of_birth)
+          : "",
+      });
+    }
   }, [record, form]);
 
   return (

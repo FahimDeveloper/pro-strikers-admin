@@ -77,6 +77,7 @@ const AddFacilityReservationModal = () => {
         iconColor: "#0ABAC3",
       });
       setSelectSlots([]);
+      setAddons([]);
       setData(null);
       form.resetFields();
       checkForm.resetFields();
@@ -110,6 +111,7 @@ const AddFacilityReservationModal = () => {
     form.resetFields();
     checkForm.resetFields();
     setSelectSlots([]);
+    setAddons([]);
     setData(null);
     setModalOpen(false);
   };

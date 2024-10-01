@@ -41,25 +41,27 @@ const AppointmentGroupReservationForm = ({
         <Form
           onFinish={onCheckFinish}
           form={checkForm}
-          className="col-span-2 flex gap-4 items-end mb-4"
+          className="flex gap-4 items-end mb-4"
           layout="vertical"
         >
-          <Form.Item
-            label="Appointment Id"
-            name="id"
-            className="m-0 w-full"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Type here..." />
-          </Form.Item>
-          <Form.Item
-            label="Appointment Date"
-            name="date"
-            className="m-0 w-full"
-            rules={[{ required: true }]}
-          >
-            <DatePicker className="w-full" placeholder="select date" />
-          </Form.Item>
+          <div className="grid grid-cols-3 gap-4 w-full">
+            <Form.Item
+              label="Appointment Id"
+              name="id"
+              className="m-0 w-full col-span-2"
+              rules={[{ required: true }]}
+            >
+              <Input placeholder="Type here..." />
+            </Form.Item>
+            <Form.Item
+              label="Appointment Date"
+              name="date"
+              className="m-0 w-full"
+              rules={[{ required: true }]}
+            >
+              <DatePicker className="w-full" placeholder="select date" />
+            </Form.Item>
+          </div>
           <Form.Item className="m-0">
             <Button loading={loading} htmlType="submit" type="primary">
               Check

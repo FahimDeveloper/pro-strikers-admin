@@ -12,13 +12,15 @@ type TProp = {
 
 const PaymentForm = ({ record, onFinish, loading, form }: TProp) => {
   useEffect(() => {
-    form.setFieldsValue({
-      transection_id: record?.transection_id,
-      email: record?.email,
-      user: record?.user._id,
-      amount: record?.amount,
-      service: record?.service,
-    });
+    if (record) {
+      form.setFieldsValue({
+        transection_id: record?.transection_id,
+        email: record?.email,
+        user: record?.user._id,
+        amount: record?.amount,
+        service: record?.service,
+      });
+    }
   }, [record, form]);
   return (
     <Form layout="vertical" form={form} onFinish={onFinish}>
