@@ -11,6 +11,7 @@ import DeleteEventGroupReservationPopup from "../../../components/ui/popup/Delet
 import { useEventGroupReservationsQuery } from "../../../redux/features/reservation/eventGroupReservation";
 import { collectDateStatus } from "../../../utils/collectDateStatus";
 import DetailsGroupEventReservation from "../../../components/ui/modal/DetailsGroupEventReservation";
+import moment from "moment";
 
 const EventsGroupReservation = () => {
   const [sport, setSport] = useState<string | undefined>(undefined);
@@ -148,6 +149,18 @@ const EventsGroupReservation = () => {
           </p>
         );
       },
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Issue Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("MMMM Do YYYY")}
+        </p>
+      ),
     },
     {
       width: 160,

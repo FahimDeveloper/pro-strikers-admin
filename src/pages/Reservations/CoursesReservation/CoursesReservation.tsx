@@ -13,9 +13,11 @@ import UpdateCourseReservationModal from "../../../components/ui/modal/UpdateCou
 import { ICourseReservation } from "../../../types/couse.types";
 import { collectDateStatus } from "../../../utils/collectDateStatus";
 import DetailsCourseReservationModal from "../../../components/ui/modal/DetailsCourseReservationModal";
+import moment from "moment";
+import { useTrainersQuery } from "../../../redux/features/admin/adminApi";
 
 const CoursesReservation = () => {
-  // const { data: trainerData } = useTrainersQuery(undefined);
+  const { data: trainerData } = useTrainersQuery(undefined);
   const [trainer, setTrainer] = useState<string | undefined>(undefined);
   const [sport, setSport] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
@@ -29,22 +31,22 @@ const CoursesReservation = () => {
     limit,
   });
 
-  // const options = trainerData?.results?.map((trainer: any) => {
-  //   return {
-  //     value: `${trainer.first_name} ${trainer.last_name}`,
-  //     label: `${trainer.first_name} ${trainer.last_name}`,
-  //   };
-  // });
-  // let trainerOptions;
-  // if (options) {
-  //   trainerOptions = [
-  //     {
-  //       label: "All Trainer",
-  //       value: "all",
-  //     },
-  //     ...options,
-  //   ];
-  // }
+  const options = trainerData?.results?.map((trainer: any) => {
+    return {
+      value: `${trainer.first_name} ${trainer.last_name}`,
+      label: `${trainer.first_name} ${trainer.last_name}`,
+    };
+  });
+  let trainerOptions;
+  if (options) {
+    trainerOptions = [
+      {
+        label: "All Trainer",
+        value: "all",
+      },
+      ...options,
+    ];
+  }
 
   const onChange = (value: string, filter: string) => {
     if (filter === "sport") {
@@ -180,20 +182,30 @@ const CoursesReservation = () => {
         );
       },
     },
-    // {
-    //   width: 140,
-    //   align: "center",
-    //   title: "Trainer",
-    //   dataIndex: "trainer",
-    //   key: "trainer",
-    //   render: (text) => (
-    //     <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-    //       {text}
-    //     </p>
-    //   ),
-    //   sorter: (a, b) => a.trainer.localeCompare(b.trainer),
-    // },
-
+    {
+      width: 140,
+      align: "center",
+      title: "Trainer",
+      dataIndex: "trainer",
+      key: "trainer",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
+          {text?.first_name} {text?.last_name}
+        </p>
+      ),
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Issue Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("MMMM Do YYYY")}
+        </p>
+      ),
+    },
     {
       width: 160,
       align: "center",
@@ -315,7 +327,7 @@ const CoursesReservation = () => {
             },
           ]}
         />
-        {/* <Select
+        <Select
           className="w-full"
           showSearch
           defaultValue={"all"}
@@ -323,7 +335,7 @@ const CoursesReservation = () => {
           onChange={(value) => onChange(value, "trainer")}
           filterOption={filterOption}
           options={trainerOptions}
-        /> */}
+        />
       </div>
       <DataTable
         columns={columns}

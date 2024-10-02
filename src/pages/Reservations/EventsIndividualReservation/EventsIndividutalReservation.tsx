@@ -11,6 +11,7 @@ import UpdateEventIndividualReservationModal from "../../../components/ui/modal/
 import DeleteEventIndividualReservationPopup from "../../../components/ui/popup/DeleteEventIndividualReservationPopup";
 import { collectDateStatus } from "../../../utils/collectDateStatus";
 import DetailsIndividualEventReservationModal from "../../../components/ui/modal/DetailsIndividualEventReservationModal";
+import moment from "moment";
 
 const EventsIndividutalReservation = () => {
   const [sport, setSport] = useState<string | undefined>(undefined);
@@ -137,6 +138,18 @@ const EventsIndividutalReservation = () => {
           </p>
         );
       },
+    },
+    {
+      width: 160,
+      align: "center",
+      title: "Issue Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {moment(text).format("MMMM Do YYYY")}
+        </p>
+      ),
     },
     {
       width: 160,
