@@ -1,7 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
-import Profile from "../pages/Profile/Profile";
+const Profile = LazyLoad(lazy(() => import("../pages/Profile/Profile")));
+const Brands = LazyLoad(
+  lazy(() => import("../pages/StoreManage/Brands/Brands"))
+);
+const Stores = LazyLoad(
+  lazy(() => import("../pages/StoreManage/Stores/Stores"))
+);
 const AddonManage = LazyLoad(
   lazy(() => import("../pages/AddonManage/AddonManage"))
 );
@@ -39,7 +45,6 @@ const AppointmentGroupScheduling = LazyLoad(
       )
   )
 );
-const Store = LazyLoad(lazy(() => import("../pages/Store/Store")));
 const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
 const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
@@ -240,9 +245,19 @@ export const superAdminPaths = [
     element: <AddonManage />,
   },
   {
-    name: "Store",
-    path: "store",
-    element: <Store />,
+    name: "Shop Manage",
+    children: [
+      {
+        name: "Brands",
+        path: "brands",
+        element: <Brands />,
+      },
+      {
+        name: "Stores",
+        path: "stores",
+        element: <Stores />,
+      },
+    ],
   },
   {
     name: "Orders",

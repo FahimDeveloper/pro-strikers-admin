@@ -37,7 +37,7 @@ const DeleteClientPopup = ({ id }: { id: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="You want to delete this user?"
+      description="Do you want to delete this user?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

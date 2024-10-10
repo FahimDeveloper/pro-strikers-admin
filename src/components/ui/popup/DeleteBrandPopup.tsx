@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Popconfirm } from "antd";
-import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { useDeleteCourseReservationMutation } from "../../../redux/features/reservation/coursesReservation";
+import Swal from "sweetalert2";
+import { useDeleteBrandMutation } from "../../../redux/features/brand/brandApi";
 
-const DeleteCourseReservationPopup = ({ id }: { id: string }) => {
+const DeleteBrandPopup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [deleteIt, { data, isLoading, isSuccess, isError, error }] =
-    useDeleteCourseReservationMutation();
+    useDeleteBrandMutation();
   const confirm = () => {
     deleteIt(id);
   };
@@ -37,7 +37,7 @@ const DeleteCourseReservationPopup = ({ id }: { id: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="Do you want to delete this reservation?"
+      description="Do you want to delete this brand?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}
@@ -56,4 +56,4 @@ const DeleteCourseReservationPopup = ({ id }: { id: string }) => {
   );
 };
 
-export default DeleteCourseReservationPopup;
+export default DeleteBrandPopup;

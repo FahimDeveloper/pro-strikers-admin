@@ -37,7 +37,7 @@ const DeleteClassReservationPopup = ({ id }: { id: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="You want to delete this reservation?"
+      description="Do you want to delete this reservation?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

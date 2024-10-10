@@ -37,7 +37,7 @@ const DeletePaymentPopup = ({ id }: { id: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="You want to delete this payment"
+      description="Do you want to delete this payment"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

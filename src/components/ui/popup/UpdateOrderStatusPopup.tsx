@@ -41,7 +41,7 @@ const UpdateOrderStatus = ({ id, status }: { id: string; status: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="You want to change the order status?"
+      description="Do you want to change the order status?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}

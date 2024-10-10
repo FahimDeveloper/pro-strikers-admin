@@ -37,7 +37,7 @@ const DeleteOneOnOneAppointmentPopup = ({ id }: { id: string }) => {
     <Popconfirm
       open={open}
       title="Are you sure?"
-      description="You want to delete this appointment?"
+      description="Do you want to delete this appointment?"
       okText="Yes"
       onConfirm={confirm}
       okButtonProps={{ loading: isLoading }}
