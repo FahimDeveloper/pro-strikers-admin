@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IncomingQueryType } from "../../../types/index.types";
-import { storeApiSlice } from "../../api/httpsSlice";
+import { productApiSlice } from "../../api/httpsSlice";
 
-const storeApi = storeApiSlice.injectEndpoints({
+const productApi = productApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     products: builder.query<IncomingQueryType<any>, any>({
       query: (params) => ({
@@ -51,4 +51,4 @@ export const {
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
-} = storeApi;
+} = productApi;

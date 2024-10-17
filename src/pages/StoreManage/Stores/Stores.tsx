@@ -7,7 +7,7 @@ import DataPagination from "../../../components/common/DataPagination";
 import { BsThreeDots } from "react-icons/bs";
 import moment from "moment";
 import AddProductModal from "../../../components/ui/modal/AddProductModal";
-import { useProductsQuery } from "../../../redux/features/store/storeApi";
+import { useProductsQuery } from "../../../redux/features/product/productApi";
 import UpdateProductModal from "../../../components/ui/modal/UpdateProductModal";
 import DeleteProductPopup from "../../../components/ui/popup/DeleteProductPopup";
 

@@ -287,7 +287,7 @@ const CoursesReservation = () => {
         </div>
         <AddCourseReservationModal />
       </div>
-      <div className="grid grid-cols-4 gap-2 items-center">
+      <div className="grid grid-cols-5 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
           placeholder="Search by player name or email"

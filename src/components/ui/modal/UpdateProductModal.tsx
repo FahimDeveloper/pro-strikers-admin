@@ -3,7 +3,7 @@ import { Button, Form, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import ProductForm from "../form/ProductForm";
-import { useUpdateProductMutation } from "../../../redux/features/store/storeApi";
+import { useUpdateProductMutation } from "../../../redux/features/product/productApi";
 import { CiEdit } from "react-icons/ci";
 
 const UpdateProductModal = ({ record }: any) => {

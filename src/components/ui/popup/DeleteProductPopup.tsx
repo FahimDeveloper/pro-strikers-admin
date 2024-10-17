@@ -3,7 +3,7 @@ import { Button, Popconfirm } from "antd";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { useDeleteProductMutation } from "../../../redux/features/store/storeApi";
+import { useDeleteProductMutation } from "../../../redux/features/product/productApi";
 
 const DeleteProductPopup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);

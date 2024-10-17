@@ -3,7 +3,7 @@ import { Form, Modal, UploadFile } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import ProductForm from "../form/ProductForm";
-import { useCreateProductMutation } from "../../../redux/features/store/storeApi";
+import { useCreateProductMutation } from "../../../redux/features/product/productApi";
 
 const AddProductModal = () => {
   const [form] = Form.useForm();

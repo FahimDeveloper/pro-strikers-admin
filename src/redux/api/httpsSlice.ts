@@ -76,8 +76,8 @@ export const voucherApiSlice = createApi({
   endpoints: () => ({}),
 });
 
-export const storeApiSlice = createApi({
-  reducerPath: "storeApi",
+export const productApiSlice = createApi({
+  reducerPath: "productApi",
   baseQuery: baseQueryWithRefreshToken,
   tagTypes: ["products", "product"],
   endpoints: () => ({}),

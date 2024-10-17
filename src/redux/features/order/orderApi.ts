@@ -42,6 +42,13 @@ const orderApi = orderApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["orders"],
     }),
+    cancelOrder: builder.mutation<any, any>({
+      query: (id) => ({
+        url: `/orders/${id}/cancel`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["orders", "order"],
+    }),
   }),
 });
 
