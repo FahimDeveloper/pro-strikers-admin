@@ -18,7 +18,7 @@ const VerifyCode = LazyLoad(
 const ResetPassword = LazyLoad(
   lazy(() => import("../pages/ResetPassword/ResetPassword"))
 );
-import { trainerPaths } from "./trainer.routes";
+// import { trainerPaths } from "./trainer.routes";
 
 const router = createBrowserRouter([
   {
@@ -71,15 +71,15 @@ const router = createBrowserRouter([
     ),
     children: routesGenerator(adminPaths),
   },
-  {
-    path: "/trainer",
-    element: (
-      <PrivetRoute>
-        <App />
-      </PrivetRoute>
-    ),
-    children: routesGenerator(trainerPaths),
-  },
+  // {
+  //   path: "/trainer",
+  //   element: (
+  //     <PrivetRoute>
+  //       <App />
+  //     </PrivetRoute>
+  //   ),
+  //   children: routesGenerator(trainerPaths),
+  // },
 ]);
 
 export default router;

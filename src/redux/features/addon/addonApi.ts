@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IncomingQueryType } from "../../../types/index.types";
-import { addonApislice } from "../../api/httpsSlice";
+import { addonApiSlice } from "../../api/httpsSlice";
 
-const addonApi = addonApislice.injectEndpoints({
+const addonApi = addonApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addons: builder.query<IncomingQueryType<any>, any>({
       query: (params) => ({

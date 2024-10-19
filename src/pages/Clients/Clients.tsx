@@ -59,6 +59,18 @@ const Clients = () => {
       ),
     },
     {
+      width: 160,
+      title: "Verified",
+      align: "center",
+      dataIndex: "verified",
+      key: "verified",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">
+          {text ? "Verified" : "Un verified"}
+        </p>
+      ),
+    },
+    {
       width: 120,
       title: "Gender",
       align: "center",

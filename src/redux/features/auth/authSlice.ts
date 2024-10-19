@@ -3,8 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 interface TState {
-  user: any;
-  token: string | null;
+  user: null | {
+    _id: string;
+    first_name: string;
+    last_name: string;
+    image: string;
+    email: string;
+    password: string;
+    role: string;
+    phone: string;
+    verified: boolean;
+    provider: string;
+  };
+  token: null | string;
 }
 
 const initialState: TState = {
@@ -24,10 +35,14 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
     },
+    updateUserInfo: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { loggedInUser, loggedOutUser } = authSlice.actions;
+export const { loggedInUser, loggedOutUser, updateUserInfo } =
+  authSlice.actions;
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 export const selectCurrentToken = (state: RootState) => state.auth.token;
 export default authSlice.reducer;

@@ -5,7 +5,7 @@ import { navigationGenerator } from "../../utils/navigationGenerator";
 import { Menu } from "antd";
 import logo from "../../assets/icon/logo.svg";
 import { useAppSelector } from "../../hooks/useAppHooks";
-import { trainerPaths } from "../../router/trainer.routes";
+// import { trainerPaths } from "../../router/trainer.routes";
 import { userRole } from "../../utils/role";
 
 const Sidebar = ({ locationKey }: { locationKey: string }) => {
@@ -18,9 +18,9 @@ const Sidebar = ({ locationKey }: { locationKey: string }) => {
     case userRole.ADMIN:
       sidebarItems = navigationGenerator(adminPaths, userRole.ADMIN);
       break;
-    case userRole.TRAINER:
-      sidebarItems = navigationGenerator(trainerPaths, userRole.TRAINER);
-      break;
+    // case userRole.TRAINER:
+    //   sidebarItems = navigationGenerator(trainerPaths, userRole.TRAINER);
+    //   break;
     default:
       break;
   }

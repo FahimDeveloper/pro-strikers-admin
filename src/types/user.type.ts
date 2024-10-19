@@ -13,6 +13,7 @@ export type IUser = {
   status: boolean;
   issue_date?: string;
   expiry_date?: string;
+  verified: boolean;
   package_name: string;
   plan: string;
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Modal } from "antd";
 import { CiEdit } from "react-icons/ci";
@@ -7,9 +8,12 @@ import { useForm } from "antd/es/form/Form";
 import ProfileForm from "../form/ProfileForm";
 import { IAdmin } from "../../../types/admin.types";
 import { useUpdateAdminMutation } from "../../../redux/features/admin/adminApi";
+import { useAppDispatch } from "../../../hooks/useAppHooks";
+import { updateUserInfo } from "../../../redux/features/auth/authSlice";
 
 const UpdateProfileModal = ({ record }: { record: IAdmin }) => {
   const [open, setModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
   const [form] = useForm();
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateAdminMutation();
@@ -35,6 +39,7 @@ const UpdateProfileModal = ({ record }: { record: IAdmin }) => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
+      dispatch(updateUserInfo(data?.results));
       form.resetFields();
       setModalOpen(false);
     }
@@ -46,7 +51,7 @@ const UpdateProfileModal = ({ record }: { record: IAdmin }) => {
         confirmButtonColor: "#0ABAC3",
       });
     }
-  }, [data, isSuccess, form, isError, error]);
+  }, [data, isSuccess, isError, error]);
   const onCancel = () => {
     setModalOpen(false);
   };

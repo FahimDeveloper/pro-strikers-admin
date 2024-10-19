@@ -36,6 +36,25 @@ const EventIndividualReservationForm = ({
       });
     }
   }, [record, form]);
+
+  const validateUSPhoneNumber = (_: any, value: string) => {
+    const phoneNumberRegex =
+      /^(?:\+1\s*?)?(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    const hasCountryCode = /^\+1/.test(value);
+    if (!hasCountryCode) {
+      return Promise.reject(
+        new Error("Please Enter number with the country code (+1)")
+      );
+    }
+    if (value && !phoneNumberRegex.test(value)) {
+      return Promise.reject(
+        new Error("Please enter a valid USA phone number.")
+      );
+    }
+
+    return Promise.resolve();
+  };
+
   return (
     <>
       {!record && (
@@ -96,12 +115,15 @@ const EventIndividualReservationForm = ({
               <Input placeholder="Type here.." readOnly />
             </Form.Item>
             <Form.Item
-              label="Phone"
               className="m-0"
               name="phone"
-              rules={[{ required: true }]}
+              label="Phone"
+              rules={[
+                { required: true, message: "" },
+                { validator: validateUSPhoneNumber },
+              ]}
             >
-              <Input placeholder="Type here.." />
+              <Input prefix={"USA"} placeholder="Type here.." />
             </Form.Item>
             <Form.Item
               label="Age"

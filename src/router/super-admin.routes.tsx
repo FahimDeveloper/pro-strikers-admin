@@ -2,12 +2,12 @@
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
 const Profile = LazyLoad(lazy(() => import("../pages/Profile/Profile")));
-const Brands = LazyLoad(
-  lazy(() => import("../pages/StoreManage/Brands/Brands"))
-);
-const Stores = LazyLoad(
-  lazy(() => import("../pages/StoreManage/Stores/Stores"))
-);
+// const Brands = LazyLoad(
+//   lazy(() => import("../pages/StoreManage/Brands/Brands"))
+// );
+// const Stores = LazyLoad(
+//   lazy(() => import("../pages/StoreManage/Stores/Stores"))
+// );
 const AddonManage = LazyLoad(
   lazy(() => import("../pages/AddonManage/AddonManage"))
 );
@@ -45,7 +45,7 @@ const AppointmentGroupScheduling = LazyLoad(
       )
   )
 );
-const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
+// const Orders = LazyLoad(lazy(() => import("../pages/Orders/Orders")));
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
 const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
 const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
@@ -244,26 +244,26 @@ export const superAdminPaths = [
     path: "addon-manage",
     element: <AddonManage />,
   },
-  {
-    name: "Shop Manage",
-    children: [
-      {
-        name: "Brands",
-        path: "brands",
-        element: <Brands />,
-      },
-      {
-        name: "Stores",
-        path: "stores",
-        element: <Stores />,
-      },
-    ],
-  },
-  {
-    name: "Orders",
-    path: "orders",
-    element: <Orders />,
-  },
+  // {
+  //   name: "Shop Manage",
+  //   children: [
+  //     {
+  //       name: "Brands",
+  //       path: "brands",
+  //       element: <Brands />,
+  //     },
+  //     {
+  //       name: "Stores",
+  //       path: "stores",
+  //       element: <Stores />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "Orders",
+  //   path: "orders",
+  //   element: <Orders />,
+  // },
   {
     name: "Voucher",
     path: "voucher",
