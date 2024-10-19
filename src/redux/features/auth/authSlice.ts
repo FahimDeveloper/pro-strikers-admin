@@ -9,10 +9,8 @@ interface TState {
     last_name: string;
     image: string;
     email: string;
-    password: string;
     role: string;
     phone: string;
-    provider: string;
   };
   token: null | string;
 }
