@@ -12,7 +12,6 @@ interface TState {
     password: string;
     role: string;
     phone: string;
-    verified: boolean;
     provider: string;
   };
   token: null | string;
