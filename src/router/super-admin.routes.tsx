@@ -1,6 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
+const MembershipCancellation = LazyLoad(
+  lazy(() => import("../pages/MembershipCancellation/MembershipCancellation"))
+);
 const Profile = LazyLoad(lazy(() => import("../pages/Profile/Profile")));
 // const Brands = LazyLoad(
 //   lazy(() => import("../pages/StoreManage/Brands/Brands"))
@@ -243,6 +246,11 @@ export const superAdminPaths = [
     name: "Addon Manage",
     path: "addon-manage",
     element: <AddonManage />,
+  },
+  {
+    name: "Membership Cancellation",
+    path: "membership-cancellation",
+    element: <MembershipCancellation />,
   },
   // {
   //   name: "Shop Manage",

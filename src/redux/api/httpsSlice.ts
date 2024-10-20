@@ -14,6 +14,13 @@ export const adminApiSlice = createApi({
   endpoints: () => ({}),
 });
 
+export const cancellationApiSlice = createApi({
+  reducerPath: "cancellationApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["memberships"],
+  endpoints: () => ({}),
+});
+
 export const userApiSlice = createApi({
   reducerPath: "userApi",
   baseQuery: baseQueryWithRefreshToken,
