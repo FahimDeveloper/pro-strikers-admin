@@ -3,9 +3,10 @@ import { useForm } from "antd/es/form/Form";
 import { useEffect, useState } from "react";
 import { useUpdatePaymentMutation } from "../../../redux/features/payment/paymentApi";
 import Swal from "sweetalert2";
-import { Modal } from "antd";
+import { Button, Modal } from "antd";
 import PaymentForm from "../form/PaymentForm";
 import { IPayment } from "../../../types/payment";
+import { CiEdit } from "react-icons/ci";
 
 const UpdatePaymentModal = ({ record }: { record: IPayment }) => {
   const [open, setModalOpen] = useState(false);
@@ -13,7 +14,7 @@ const UpdatePaymentModal = ({ record }: { record: IPayment }) => {
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdatePaymentMutation();
   const onFinish = (values: any) => {
-    update(values);
+    update({ id: record?._id, payload: values });
   };
 
   useEffect(() => {
@@ -44,9 +45,13 @@ const UpdatePaymentModal = ({ record }: { record: IPayment }) => {
   };
   return (
     <>
-      <button onClick={() => setModalOpen(true)} className="btn primary-btn">
-        Add Payment
-      </button>
+      <Button
+        type="primary"
+        onClick={() => setModalOpen(true)}
+        className="w-full flex gap-1 justify-center items-center"
+      >
+        <CiEdit className="size-5 text-white" /> Update
+      </Button>
       <Modal
         width={800}
         footer={null}

@@ -2,6 +2,7 @@
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import { useEffect } from "react";
 import { IPayment } from "../../../types/payment";
+import { generateCustomTransectionId } from "../../../utils/generateCustomTransectionId";
 
 type TProp = {
   record?: IPayment;
@@ -14,7 +15,7 @@ const PaymentForm = ({ record, onFinish, loading, form }: TProp) => {
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
-        transection_id: record?.transection_id,
+        transaction_id: record?.transaction_id,
         email: record?.email,
         user: record?.user._id,
         amount: record?.amount,
@@ -22,19 +23,36 @@ const PaymentForm = ({ record, onFinish, loading, form }: TProp) => {
       });
     }
   }, [record, form]);
+  const generateId = () => {
+    const id = generateCustomTransectionId();
+    form.setFieldsValue({
+      transaction_id: id,
+    });
+  };
   return (
     <Form layout="vertical" form={form} onFinish={onFinish}>
-      <div className="mb-4">
-        <Form.Item label="Transection ID" name="transection_id">
-          <Input readOnly={record ? true : false} placeholder="Type here" />
+      <div className="flex items-end gap-4">
+        <Form.Item
+          label="Transaction ID"
+          className="w-full"
+          name="transaction_id"
+        >
+          <Input readOnly={true} className="w-full" placeholder="Type here" />
         </Form.Item>
+        {!record && (
+          <Form.Item>
+            <Button type="primary" onClick={generateId}>
+              Generate ID
+            </Button>
+          </Form.Item>
+        )}
       </div>
       <div className="grid grid-cols-2 gap-4">
         <Form.Item label="Email" name="email" className="m-0">
-          <Input placeholder="Type here" />
+          <Input readOnly={record ? true : false} placeholder="Type here" />
         </Form.Item>
         <Form.Item label="User ID" name="user" className="m-0">
-          <Input placeholder="Type here" />
+          <Input readOnly={record ? true : false} placeholder="Type here" />
         </Form.Item>
         <Form.Item label="Amount" name="amount" className="m-0">
           <InputNumber className="w-full" placeholder="Type here" />

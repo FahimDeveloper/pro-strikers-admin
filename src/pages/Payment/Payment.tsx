@@ -56,15 +56,13 @@ const Payment = () => {
       ),
     },
     {
-      width: 260,
+      width: 280,
       align: "center",
       title: "User Email",
       dataIndex: "email",
       key: "email",
       render: (text) => (
-        <p className="font-medium text-sm leading-5 text-[#151515] capitalize">
-          {text}
-        </p>
+        <p className="font-medium text-sm leading-5 text-[#151515]">{text}</p>
       ),
     },
     {
@@ -167,7 +165,7 @@ const Payment = () => {
       <div className="grid grid-cols-4 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
-          placeholder="Search voucher"
+          placeholder="Search by user email or transaction id"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
         <Select

@@ -2,7 +2,7 @@ import { IUser } from "./user.type";
 
 export interface IPayment {
   _id: string;
-  transection_id: string;
+  transaction_id: string;
   amount: number;
   user: IUser;
   email: string;

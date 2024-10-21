@@ -6,10 +6,12 @@ import { paymentApiSlice } from "../../api/httpsSlice";
 const paymentApi = paymentApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     payments: builder.query<IncomingQueryType<IPayment>, IPaymentParams>({
-      query: () => ({
+      query: (params) => ({
         url: "/payments",
         method: "GET",
+        params,
       }),
+      providesTags: ["payments"],
     }),
     createPayment: builder.mutation<any, IPayment>({
       query: (payload) => ({
@@ -17,6 +19,7 @@ const paymentApi = paymentApiSlice.injectEndpoints({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["payments"],
     }),
     updatePayment: builder.mutation<
       any,
@@ -27,12 +30,14 @@ const paymentApi = paymentApiSlice.injectEndpoints({
         method: "PATCH",
         body: payload,
       }),
+      invalidatesTags: ["payments"],
     }),
     deletePayment: builder.mutation({
       query: (id) => ({
         url: `/payments/delete/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["payments"],
     }),
   }),
 });

@@ -10,6 +10,7 @@ import UpdateClientModal from "../../components/ui/modal/UpdateClientModal";
 import DeleteClientPopup from "../../components/ui/popup/DeleteClientPopup";
 import { BsThreeDots } from "react-icons/bs";
 import { IUser } from "../../types/user.type";
+import Paragraph from "antd/es/typography/Paragraph";
 
 const Clients = () => {
   const [membership, setMembership] = useState<boolean | undefined>(undefined);
@@ -46,6 +47,27 @@ const Clients = () => {
             {record?.first_name} {record?.last_name}
           </p>
         </div>
+      ),
+    },
+    {
+      width: 240,
+      title: "User ID",
+      align: "center",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text) => (
+        <Paragraph
+          copyable={{
+            text: async () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(text);
+                }, 500);
+              }),
+          }}
+        >
+          {text}
+        </Paragraph>
       ),
     },
     {
