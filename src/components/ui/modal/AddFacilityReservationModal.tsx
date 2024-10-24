@@ -54,6 +54,7 @@ const AddFacilityReservationModal = () => {
         bookings.push({
           date: dateSlots.date.toISOString().split("T")[0],
           time_slot: slot,
+          lane: dateSlots.lane,
           training: facilityId,
         })
       )

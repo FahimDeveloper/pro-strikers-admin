@@ -134,6 +134,7 @@ const ProfileForm = ({ form, record, onFinish, loading }: TProp) => {
               className="justify-center"
               onPreview={handlePreview}
               beforeUpload={beforeUpload}
+              maxCount={1}
             >
               {"+ Upload"}
             </Upload>

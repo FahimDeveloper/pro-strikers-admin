@@ -132,6 +132,7 @@ const AdminForm = ({ record, onFinish, loading, form }: TProp) => {
               style={{ justifyContent: "center" }}
               onPreview={handlePreview}
               beforeUpload={beforeUpload}
+              maxCount={1}
             >
               {"+ Upload"}
             </Upload>
