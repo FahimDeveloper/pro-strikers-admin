@@ -21,7 +21,6 @@ const UpdateAddonModal = ({ record }: any) => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      form.resetFields();
       setModalOpen(false);
     }
     if (isError) {

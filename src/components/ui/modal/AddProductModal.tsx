@@ -60,7 +60,7 @@ const AddProductModal = () => {
         Add Product
       </button>
       <Modal
-        width={800}
+        width={900}
         footer={null}
         title="Create New Product"
         centered

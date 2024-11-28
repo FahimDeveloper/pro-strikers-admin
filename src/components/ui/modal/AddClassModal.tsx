@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ClassSteps from "../step/ClassSteps";
 import { useCreateClassMutation } from "../../../redux/features/schedule/classScheduleApi";
 import Swal from "sweetalert2";
+import { californiaTime } from "../../../utils/timeZone";
 
 const AddClassesModal = () => {
   const [current, setCurrent] = useState(0);
@@ -35,6 +36,13 @@ const AddClassesModal = () => {
     }
   }, [data, isSuccess, isError, form, error, setModalOpen]);
   const onSubmit = (values: any) => {
+    values.schedules = values.schedules.map((schedule: any) => {
+      return {
+        ...schedule,
+        start_time: californiaTime(schedule.start_time.toISOString()),
+        end_time: californiaTime(schedule.end_time.toISOString()),
+      };
+    });
     create(values);
   };
   const onCancel = () => {

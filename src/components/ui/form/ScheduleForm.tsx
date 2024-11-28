@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, TimePicker, Switch, Input } from "antd";
+import { Form, Input, Switch, TimePicker } from "antd";
 import dayjs from "dayjs";
+import weekday from "dayjs/plugin/weekday";
+import localeData from "dayjs/plugin/localeData";
 
 const ScheduleForm = ({ record, form }: any) => {
   const schedules = [
@@ -12,19 +14,15 @@ const ScheduleForm = ({ record, form }: any) => {
     { day: "Saturday", active: false, start_time: "", end_time: "" },
     { day: "Sunday", active: false, start_time: "", end_time: "" },
   ];
+  dayjs.extend(weekday);
+  dayjs.extend(localeData);
 
   const initialValues = {
     schedules:
       record?.schedules.map((schedule: any) => ({
         ...schedule,
-        start_time:
-          schedule?.start_time?.length > 1
-            ? dayjs(schedule.start_time, "HH:mm A")
-            : "",
-        end_time:
-          schedule?.end_time?.length > 1
-            ? dayjs(schedule.end_time, "HH:mm A")
-            : "",
+        start_time: schedule?.start_time ? dayjs(schedule.start_time) : "",
+        end_time: schedule?.end_time ? dayjs(schedule.end_time) : "",
       })) || schedules,
   };
 

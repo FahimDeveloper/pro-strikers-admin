@@ -5,6 +5,7 @@ import FacilitySteps from "../step/FacilitySteps";
 import { useUpdateFacilityMutation } from "../../../redux/features/schedule/facilityScheduleApi";
 import Swal from "sweetalert2";
 import { CiEdit } from "react-icons/ci";
+import { californiaTime } from "../../../utils/timeZone";
 
 const UpdateFacilityModal = ({ record }: any) => {
   const [current, setCurrent] = useState(0);
@@ -22,7 +23,6 @@ const UpdateFacilityModal = ({ record }: any) => {
         timer: 1500,
         iconColor: "#0ABAC3",
       });
-      form.resetFields();
       setModalOpen(false);
       setCurrent(0);
     }
@@ -36,6 +36,13 @@ const UpdateFacilityModal = ({ record }: any) => {
     }
   }, [data, isSuccess, isError, form, error]);
   const onSubmit = (values: any) => {
+    values.schedules = values.schedules.map((schedule: any) => {
+      return {
+        ...schedule,
+        start_time: californiaTime(schedule.start_time.toISOString()),
+        end_time: californiaTime(schedule.end_time.toISOString()),
+      };
+    });
     update({ id: record?._id, body: values });
   };
   const onCancel = () => {

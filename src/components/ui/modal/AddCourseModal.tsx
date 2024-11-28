@@ -6,6 +6,7 @@ import { useCreateCourseMutation } from "../../../redux/features/schedule/course
 import { useForm } from "antd/es/form/Form";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { californiaTime } from "../../../utils/timeZone";
 
 const AddCourseModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -15,6 +16,8 @@ const AddCourseModal = () => {
   const onFinish = (values: any) => {
     values.start_date = dayjs(values.start_date).format();
     values.end_date = dayjs(values.end_date).format();
+    values.start_time = californiaTime(values.start_date);
+    values.end_time = californiaTime(values.end_date);
     create(values);
   };
   useEffect(() => {

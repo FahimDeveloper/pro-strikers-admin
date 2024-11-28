@@ -49,7 +49,7 @@ const AddPostModal = () => {
         Create Post
       </button>
       <Modal
-        width={1000}
+        width={900}
         footer={null}
         title="Create New Post"
         centered

@@ -40,7 +40,6 @@ const UpdateProfileModal = ({ record }: { record: IAdmin }) => {
         iconColor: "#0ABAC3",
       });
       dispatch(updateUserInfo(data?.results));
-      form.resetFields();
       setModalOpen(false);
     }
     if (isError) {

@@ -16,7 +16,7 @@ const AppointmentGroupForm = ({ record, form }: any) => {
       form.setFieldsValue({
         appointment_name: record?.appointment_name,
         sport: record?.sport,
-        trainer: record?.trainer._id,
+        trainer: record?.trainer?._id,
         capacity: record?.capacity,
         description: record?.description,
         price: record?.price,

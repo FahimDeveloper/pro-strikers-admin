@@ -17,7 +17,7 @@ const AppointmentOneOnOneForm = ({ record, form }: any) => {
         appointment_name: record?.appointment_name,
         duration: record?.duration,
         sport: record?.sport,
-        trainer: record?.trainer._id,
+        trainer: record?.trainer?._id,
         description: record?.description,
         price: record?.price,
       });

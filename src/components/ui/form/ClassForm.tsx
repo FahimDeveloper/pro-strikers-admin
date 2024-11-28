@@ -27,7 +27,7 @@ const ClassForm = ({ record, form }: any) => {
         //   : "",
         // end_date: record?.end_date ? dayjs(record?.end_date, "DD/MM/YYYY") : "",
         facility: record?.facility,
-        trainer: record?.trainer._id,
+        trainer: record?.trainer?._id,
         capacity: record?.capacity,
         level: record?.level,
         price: record?.price,

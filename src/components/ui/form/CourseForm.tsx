@@ -36,7 +36,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
       form.setFieldsValue({
         course_name: record?.course_name,
         sport: record?.sport,
-        trainer: record?.trainer._id,
+        trainer: record?.trainer?._id,
         capacity: record?.capacity,
         start_date: record?.start_date
           ? dayjs(record?.start_date, "DD-MM-YYYY")

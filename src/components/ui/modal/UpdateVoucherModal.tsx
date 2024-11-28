@@ -27,7 +27,6 @@ const UpdateVoucherModal = ({ record }: any) => {
         iconColor: "#0ABAC3",
       });
       setModalOpen(false);
-      form.resetFields();
     }
     if (isError) {
       Swal.fire({

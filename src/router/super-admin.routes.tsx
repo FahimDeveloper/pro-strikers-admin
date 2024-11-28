@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
+// import TrainerReservations from "../pages/TrainerReservations/TrainerReservations";
 const MembershipCancellation = LazyLoad(
   lazy(() => import("../pages/MembershipCancellation/MembershipCancellation"))
 );
@@ -326,4 +327,8 @@ export const superAdminPaths = [
     path: "profile",
     element: <Profile />,
   },
+  // {
+  //   path: "calander",
+  //   element: <TrainerReservations />,
+  // },
 ];

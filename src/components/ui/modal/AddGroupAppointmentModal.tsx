@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useCreateGroupAppointmentMutation } from "../../../redux/features/schedule/groupAppointmentScheduleApi";
 import GroupAppointmentSteps from "../step/GroupAppointmentSteps";
+import { californiaTime } from "../../../utils/timeZone";
 
 const AddGroupAppointmentModal = () => {
   const [form] = Form.useForm();
@@ -40,6 +41,13 @@ const AddGroupAppointmentModal = () => {
     form.resetFields();
   };
   const onSubmit = (values: any) => {
+    values.schedules = values.schedules.map((schedule: any) => {
+      return {
+        ...schedule,
+        start_time: californiaTime(schedule.start_time.toISOString()),
+        end_time: californiaTime(schedule.end_time.toISOString()),
+      };
+    });
     create(values);
   };
   return (

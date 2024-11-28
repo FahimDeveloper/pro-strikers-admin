@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import { useUpdateCourseMutation } from "../../../redux/features/schedule/courseScheduleApi";
 import { CiEdit } from "react-icons/ci";
+import { californiaTime } from "../../../utils/timeZone";
+import dayjs from "dayjs";
 
 const UpdateCourseModal = ({ record }: any) => {
   const [open, setModalOpen] = useState(false);
@@ -13,6 +15,10 @@ const UpdateCourseModal = ({ record }: any) => {
   const [update, { data, isLoading, isSuccess, isError, error }] =
     useUpdateCourseMutation();
   const onFinish = (values: any) => {
+    values.start_date = dayjs(values.start_date).format();
+    values.end_date = dayjs(values.end_date).format();
+    values.start_time = californiaTime(values.start_date);
+    values.end_time = californiaTime(values.end_date);
     update({ id: record?._id, body: values });
   };
   useEffect(() => {
@@ -26,7 +32,6 @@ const UpdateCourseModal = ({ record }: any) => {
         iconColor: "#0ABAC3",
       });
       setModalOpen(false);
-      form.resetFields();
     }
     if (isError) {
       Swal.fire({

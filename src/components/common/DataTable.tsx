@@ -17,7 +17,6 @@ const DataTable = memo(({ columns, data, loading }: TProps) => {
     pagination: false,
     showHeader: true,
     size: "middle",
-    // scroll: { x: 1440, y: 768 },
   };
   return (
     <>

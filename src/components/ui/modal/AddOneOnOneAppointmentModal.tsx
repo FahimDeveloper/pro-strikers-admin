@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import OneOnOneAppointmentSteps from "../step/OneOnOneAppointmentSteps";
 import { useCreateOneAppointmentMutation } from "../../../redux/features/schedule/oneAppointmentScheduleApi";
+import { californiaTime } from "../../../utils/timeZone";
 
 const AddOneOnOneAppointmentModal = () => {
   const [form] = Form.useForm();
@@ -40,6 +41,13 @@ const AddOneOnOneAppointmentModal = () => {
     form.resetFields();
   };
   const onSubmit = (values: any) => {
+    values.schedules = values.schedules.map((schedule: any) => {
+      return {
+        ...schedule,
+        start_time: californiaTime(schedule.start_time.toISOString()),
+        end_time: californiaTime(schedule.end_time.toISOString()),
+      };
+    });
     create(values);
   };
   return (

@@ -10,9 +10,10 @@ import {
   UploadFile,
   UploadProps,
 } from "antd";
-import JoditEditor from "jodit-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
+import { modules } from "../../../utils/textEditorModule";
 
 type TProp = {
   record?: any;
@@ -30,18 +31,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 const PostForm = ({ record, onFinish, form, loading }: TProp) => {
-  const editor = useRef(null);
   const [content, setContent] = useState<string | undefined>(undefined);
-  const config = useMemo(
-    () => ({
-      readonly: false,
-      uploader: {
-        insertImageAsBase64URI: true,
-      },
-      height: 400,
-    }),
-    []
-  );
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
 
@@ -168,7 +158,7 @@ const PostForm = ({ record, onFinish, form, loading }: TProp) => {
           </Form.Item>
         </div>
         <Form.Item
-          label="Post Description"
+          label="Post Short Description"
           name="description"
           className="m-0"
           rules={[{ required: true }]}
@@ -181,11 +171,12 @@ const PostForm = ({ record, onFinish, form, loading }: TProp) => {
           className="m-0"
           rules={[{ required: true }]}
         >
-          <JoditEditor
-            ref={editor}
-            value={content as string}
-            config={config}
-            onChange={(value) => setContent(value)}
+          <ReactQuill
+            theme="snow"
+            className="h-56 pb-12"
+            value={content}
+            onChange={setContent}
+            modules={modules}
           />
         </Form.Item>
         <Form.Item className="flex justify-end">

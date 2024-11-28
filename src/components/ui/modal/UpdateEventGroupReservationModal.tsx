@@ -25,7 +25,6 @@ const UpdateEventGroupReservationModal = ({ record }: any) => {
       });
       setModalOpen(false);
       setCurrent(0);
-      form.resetFields();
     }
     if (isError) {
       Swal.fire({
