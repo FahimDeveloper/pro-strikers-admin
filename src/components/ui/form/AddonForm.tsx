@@ -97,8 +97,8 @@ const AddonForm = ({ form, loading, onFinish, record }: TProp) => {
                   value: "cricket cage",
                 },
                 {
-                  label: "Soccer Cage",
-                  value: "soccer cage",
+                  label: "Soccer",
+                  value: "soccer",
                 },
                 {
                   label: "Baseball Cage",
@@ -109,8 +109,8 @@ const AddonForm = ({ form, loading, onFinish, record }: TProp) => {
                   value: "softball cage",
                 },
                 {
-                  label: "Hockey Cage",
-                  value: "hockey cage",
+                  label: "Hockey",
+                  value: "hockey",
                 },
               ]}
             />
@@ -186,36 +186,54 @@ const AddonForm = ({ form, loading, onFinish, record }: TProp) => {
                     </Form.Item>
                     <p className="text-[#3A394B] text-sm">Upload Addon Image</p>
                   </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <Form.Item
-                      className="m-0 col-span-2"
-                      {...restField}
-                      label="Addon Name"
-                      name={[name, "addon_title"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Missing addon name",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Enter your addon" />
-                    </Form.Item>
+                  <Form.Item
+                    className="m-0 col-span-2"
+                    {...restField}
+                    label="Addon Name"
+                    name={[name, "addon_title"]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Missing addon name",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Enter your addon" />
+                  </Form.Item>
+                  <div className="grid grid-cols-2 gap-4">
                     <Form.Item
                       className="m-0"
-                      label="Addon Price / 1hr"
+                      label="Addon Inital Price / 1hr"
                       {...restField}
-                      name={[name, "addon_price"]}
+                      name={[name, "addon_ini_price"]}
                       rules={[
                         {
                           required: true,
-                          message: "Missing addon price",
+                          message: "Missing inital price",
                         },
                       ]}
                     >
                       <InputNumber
                         className="w-full"
-                        placeholder="Enter addon price"
+                        placeholder="Enter inital price"
+                        min={0}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      className="m-0"
+                      label="Addon Base Price / 1hr"
+                      {...restField}
+                      name={[name, "addon_price"]}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Missing base price",
+                        },
+                      ]}
+                    >
+                      <InputNumber
+                        className="w-full"
+                        placeholder="Enter base price"
                         min={0}
                       />
                     </Form.Item>

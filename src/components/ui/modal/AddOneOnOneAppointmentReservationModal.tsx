@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
 import OneOnOneApppointmentReservationForm from "../form/OneOnOneApppointmentReservationForm";
 import { useGetOneAppointmentMutation } from "../../../redux/features/schedule/oneAppointmentScheduleApi";
+import { useDeleteBookingSlotsMutation } from "../../../redux/features/slotBooking/slotBookingApi";
 
 const AddOneOnOneAppointmentReservationModal = () => {
   const [open, setModalOpen] = useState(false);
@@ -18,6 +19,7 @@ const AddOneOnOneAppointmentReservationModal = () => {
   const [checkForm] = useForm();
   const [selectSlots, setSelectSlots] = useState<any>([]);
   const [data, setData] = useState(null);
+  const [deleteIt] = useDeleteBookingSlotsMutation();
   const [
     getData,
     {
@@ -95,11 +97,32 @@ const AddOneOnOneAppointmentReservationModal = () => {
   };
 
   const onCancel = () => {
-    form.resetFields();
-    checkForm.resetFields();
-    setData(null);
-    setSelectSlots([]);
-    setModalOpen(false);
+    if (selectSlots.length > 0) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Your processing will be lost if you leave. Are you sure you want to leave?",
+        icon: "warning",
+        confirmButtonText: "Leave",
+        showCancelButton: true,
+        confirmButtonColor: "#0ABAC3",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteIt(user?._id);
+          form.resetFields();
+          checkForm.resetFields();
+          setSelectSlots([]);
+          setData(null);
+          setModalOpen(false);
+        }
+      });
+    } else {
+      form.resetFields();
+      checkForm.resetFields();
+      setSelectSlots([]);
+      setData(null);
+      setModalOpen(false);
+    }
   };
   return (
     <>

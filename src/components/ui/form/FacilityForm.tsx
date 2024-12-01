@@ -21,6 +21,7 @@ const FacilityForm = ({ record, form }: any) => {
         duration: record?.duration,
         description: record?.description,
         price: record?.price,
+        ini_price: record?.ini_price,
       });
     }
   }, [record, form]);
@@ -82,8 +83,8 @@ const FacilityForm = ({ record, form }: any) => {
                   value: "cricket cage",
                 },
                 {
-                  label: "Soccer Cage",
-                  value: "soccer cage",
+                  label: "Soccer",
+                  value: "soccer",
                 },
                 {
                   label: "Baseball Cage",
@@ -94,8 +95,8 @@ const FacilityForm = ({ record, form }: any) => {
                   value: "softball cage",
                 },
                 {
-                  label: "Hockey Cage",
-                  value: "hockey cage",
+                  label: "Hockey",
+                  value: "hockey",
                 },
               ]}
             />
@@ -105,7 +106,7 @@ const FacilityForm = ({ record, form }: any) => {
           <Form.Item
             name="lanes"
             className="w-full m-0"
-            label="Lane"
+            label="Area"
             rules={[{ required: true, message: "Please select Lane" }]}
           >
             <Select
@@ -143,18 +144,32 @@ const FacilityForm = ({ record, form }: any) => {
         >
           <Input.TextArea placeholder="Enter class description" rows={4} />
         </Form.Item>
-        <Form.Item
-          rules={[{ required: true }]}
-          name="price"
-          className=" m-0"
-          label="Facility Fee"
-        >
-          <InputNumber
-            min={0}
-            className="w-48"
-            placeholder="Enter class price"
-          />
-        </Form.Item>
+        <div className="flex gap-5">
+          <Form.Item
+            rules={[{ required: true }]}
+            name="ini_price"
+            className=" m-0"
+            label="Facility Initial Fee"
+          >
+            <InputNumber
+              min={0}
+              className="w-48"
+              placeholder="Enter initial price"
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true }]}
+            name="price"
+            className=" m-0"
+            label="Facility Base Fee"
+          >
+            <InputNumber
+              min={0}
+              className="w-48"
+              placeholder="Enter base price"
+            />
+          </Form.Item>
+        </div>
       </Form>
     </>
   );

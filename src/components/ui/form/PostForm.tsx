@@ -11,9 +11,10 @@ import {
   UploadProps,
 } from "antd";
 import { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
 import { modules } from "../../../utils/textEditorModule";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 type TProp = {
   record?: any;
@@ -30,6 +31,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = (error) => reject(error);
   });
+
 const PostForm = ({ record, onFinish, form, loading }: TProp) => {
   const [content, setContent] = useState<string | undefined>(undefined);
   const [previewImage, setPreviewImage] = useState("");
@@ -47,7 +49,6 @@ const PostForm = ({ record, onFinish, form, loading }: TProp) => {
     }
     return false;
   };
-
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType);

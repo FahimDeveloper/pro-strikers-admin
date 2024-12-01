@@ -82,16 +82,13 @@ const EventForm = ({ record, form, onFinish, loading }: TProp) => {
             url: record?.image,
           },
         ],
-        start_date:
-          record?.start_date && dayjs(record?.start_date, "DD/MM/YYYY"),
-        end_date: record?.end_date && dayjs(record?.end_date, "DD/MM/YYYY"),
+        start_date: record?.start_date && dayjs(record?.start_date),
+        end_date: record?.end_date && dayjs(record?.end_date),
         location: record?.location,
         registration_start:
-          record?.registration_start &&
-          dayjs(record?.registration_start, "DD/MM/YYYY"),
+          record?.registration_start && dayjs(record?.registration_start),
         registration_end:
-          record?.registration_end &&
-          dayjs(record?.registration_end, "DD/MM/YYYY"),
+          record?.registration_end && dayjs(record?.registration_end),
         allowed_registrations: record?.allowed_registrations,
         description: record?.description,
         price: record?.price,

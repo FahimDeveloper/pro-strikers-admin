@@ -50,7 +50,7 @@ const DetailsGroupAppointmentReservationModal = ({
           </Descriptions.Item>
           <Descriptions.Item label="Sport">{record.sport}</Descriptions.Item>
           <Descriptions.Item label="Trainer">
-            {record.trainer.first_name} {record.trainer.last_name}
+            {record?.trainer?.first_name} {record?.trainer?.last_name}
           </Descriptions.Item>
           <Descriptions.Item label="Duration">{duration}</Descriptions.Item>
           <Descriptions.Item label="Description" span={2}>

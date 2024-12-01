@@ -11,7 +11,7 @@ import DeleteLanePopup from "../../components/ui/popup/DeleteLanePopup";
 import AddLaneModal from "../../components/ui/modal/AddLaneModal";
 import { useLanesQuery } from "../../redux/features/Lane/laneApi";
 
-const LaneManage = () => {
+const AreaManage = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const { data, isLoading, isFetching } = useLanesQuery({
@@ -31,7 +31,7 @@ const LaneManage = () => {
     },
     {
       align: "center",
-      title: "Lane Title",
+      title: "Area Title",
       dataIndex: "lane_title",
       key: "lane_title",
       render: (text) => (
@@ -100,10 +100,10 @@ const LaneManage = () => {
       <div className="flex justify-between items-end">
         <div className="space-y-1">
           <h2 className="font-bold text-[28px] leading-9 text-[#111827]">
-            Lane Information
+            Area Information
           </h2>
           <p className="text-[#838383] font-semibold text-lg">
-            {data?.count || 0} Lane available
+            {data?.count || 0} Area available
           </p>
         </div>
         <AddLaneModal />
@@ -123,4 +123,4 @@ const LaneManage = () => {
   );
 };
 
-export default LaneManage;
+export default AreaManage;

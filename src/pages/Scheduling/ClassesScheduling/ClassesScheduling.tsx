@@ -265,8 +265,8 @@ const ClassesScheduling = () => {
                   value: "cricket cage",
                 },
                 {
-                  label: "Soccer Cage",
-                  value: "soccer cage",
+                  label: "Soccer",
+                  value: "soccer",
                 },
                 {
                   label: "Baseball Cage",
@@ -277,8 +277,8 @@ const ClassesScheduling = () => {
                   value: "softball cage",
                 },
                 {
-                  label: "Hockey Cage",
-                  value: "hockey cage",
+                  label: "Hockey",
+                  value: "hockey",
                 },
               ]}
             />

@@ -42,11 +42,14 @@ const AddGroupAppointmentModal = () => {
   };
   const onSubmit = (values: any) => {
     values.schedules = values.schedules.map((schedule: any) => {
-      return {
-        ...schedule,
-        start_time: californiaTime(schedule.start_time.toISOString()),
-        end_time: californiaTime(schedule.end_time.toISOString()),
-      };
+      if (schedule?.start_time && schedule?.end_time) {
+        return {
+          ...schedule,
+          start_time: californiaTime(schedule?.start_time?.toISOString()),
+          end_time: californiaTime(schedule?.end_time?.toISOString()),
+        };
+      }
+      return schedule;
     });
     create(values);
   };

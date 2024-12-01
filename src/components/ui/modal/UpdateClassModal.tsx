@@ -38,11 +38,14 @@ const UpdateClassModal = ({ record }: any) => {
   }, [data, isSuccess, isError, form, error]);
   const onSubmit = (values: any) => {
     values.schedules = values.schedules.map((schedule: any) => {
-      return {
-        ...schedule,
-        start_time: californiaTime(schedule.start_time.toISOString()),
-        end_time: californiaTime(schedule.end_time.toISOString()),
-      };
+      if (schedule?.start_time && schedule?.end_time) {
+        return {
+          ...schedule,
+          start_time: californiaTime(schedule?.start_time?.toISOString()),
+          end_time: californiaTime(schedule?.end_time?.toISOString()),
+        };
+      }
+      return schedule;
     });
     update({ id: record?._id, body: values });
   };

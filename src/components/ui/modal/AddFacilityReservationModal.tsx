@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
 import { useGetfacilityMutation } from "../../../redux/features/schedule/facilityScheduleApi";
 import { useGetSportAddonsQuery } from "../../../redux/features/addon/addonApi";
+import { useDeleteBookingSlotsMutation } from "../../../redux/features/slotBooking/slotBookingApi";
 
 const AddFacilityReservationModal = () => {
   const user = useSelector(selectCurrentUser);
@@ -21,6 +22,7 @@ const AddFacilityReservationModal = () => {
   const [checkForm] = useForm();
   const [lane, setLane] = useState<string | undefined>(undefined);
   const [addons, setAddons] = useState([]);
+  const [deleteIt] = useDeleteBookingSlotsMutation();
   const [
     getData,
     {
@@ -109,12 +111,34 @@ const AddFacilityReservationModal = () => {
   }, [isError, createSuccess, queryError, querySuccess]);
 
   const onCancel = () => {
-    form.resetFields();
-    checkForm.resetFields();
-    setSelectSlots([]);
-    setAddons([]);
-    setData(null);
-    setModalOpen(false);
+    if (selectSlots.length > 0) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Your processing will be lost if you leave. Are you sure you want to leave?",
+        icon: "warning",
+        confirmButtonText: "Leave",
+        showCancelButton: true,
+        confirmButtonColor: "#0ABAC3",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteIt(user?._id);
+          form.resetFields();
+          checkForm.resetFields();
+          setSelectSlots([]);
+          setAddons([]);
+          setData(null);
+          setModalOpen(false);
+        }
+      });
+    } else {
+      form.resetFields();
+      checkForm.resetFields();
+      setSelectSlots([]);
+      setAddons([]);
+      setData(null);
+      setModalOpen(false);
+    }
   };
   return (
     <>

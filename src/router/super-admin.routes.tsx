@@ -53,8 +53,8 @@ const AppointmentGroupScheduling = LazyLoad(
 const Dashboard = LazyLoad(lazy(() => import("../pages/Dashboard/Dashboard")));
 const Events = LazyLoad(lazy(() => import("../pages/Events/Events")));
 const Post = LazyLoad(lazy(() => import("../pages/Post/Post")));
-const LaneManage = LazyLoad(
-  lazy(() => import("../pages/LaneManage/LaneManage"))
+const AreaManage = LazyLoad(
+  lazy(() => import("../pages/AreaManage/AreaManage"))
 );
 const ClassesReservation = LazyLoad(
   lazy(
@@ -239,9 +239,9 @@ export const superAdminPaths = [
     element: <Membership />,
   },
   {
-    name: "Lane Manage",
-    path: "lane-manage",
-    element: <LaneManage />,
+    name: "Area Manage",
+    path: "area-manage",
+    element: <AreaManage />,
   },
   {
     name: "Addon Manage",

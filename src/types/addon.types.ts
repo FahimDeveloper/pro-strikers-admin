@@ -6,6 +6,7 @@ export interface IAddon {
     addon_title: string;
     addon_description: string;
     addon_price: number;
+    addon_ini_price: number;
     addon_image: string;
   }>;
   createdAt: string;

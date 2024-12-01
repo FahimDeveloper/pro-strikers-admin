@@ -32,6 +32,13 @@ const slotBookingApi = slotBookingApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["carts"],
     }),
+    deleteBookingSlots: builder.mutation({
+      query: (id) => ({
+        url: `/reservations/slot-bookings/delete/user/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["carts"],
+    }),
     groupTrainingBookedSlots: builder.query<
       IncomingQueryType<{
         date: string;
@@ -87,4 +94,5 @@ export const {
   useGroupTrainingBookedSlotsQuery,
   useFacilityBookedSlotsQuery,
   useOneTrainingBookedSlotsQuery,
+  useDeleteBookingSlotsMutation,
 } = slotBookingApi;

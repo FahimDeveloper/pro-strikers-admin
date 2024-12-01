@@ -108,8 +108,20 @@ const FacilityScheduling = () => {
       sorter: (a, b) => a.duration - b.duration,
     },
     {
-      width: 80,
-      title: "Fee",
+      width: 120,
+      title: "Inital Fee",
+      align: "center",
+      dataIndex: "ini_price",
+      key: "ini_price",
+      render: (text) => (
+        <p className="font-medium text-sm leading-5 text-[#151515]">$ {text}</p>
+      ),
+      sorter: (a: { ini_price: number }, b: { ini_price: number }) =>
+        a.ini_price - b.ini_price,
+    },
+    {
+      width: 120,
+      title: "Base Fee",
       align: "center",
       dataIndex: "price",
       key: "price",
@@ -216,8 +228,8 @@ const FacilityScheduling = () => {
                   value: "cricket cage",
                 },
                 {
-                  label: "Soccer Cage",
-                  value: "soccer cage",
+                  label: "Soccer",
+                  value: "soccer",
                 },
                 {
                   label: "Baseball Cage",
@@ -228,8 +240,8 @@ const FacilityScheduling = () => {
                   value: "softball cage",
                 },
                 {
-                  label: "Hockey Cage",
-                  value: "hockey cage",
+                  label: "Hockey",
+                  value: "hockey",
                 },
               ]}
             />

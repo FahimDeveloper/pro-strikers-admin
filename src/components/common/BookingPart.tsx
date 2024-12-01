@@ -89,12 +89,9 @@ const BookingPart = ({
                 return slots;
               })
               .filter(Boolean);
-            if (updatedSlots.length == 0) {
-              setAddons([]);
-            }
             setSelectSlots(updatedSlots);
           })
-          .catch((error: any) => toast.error(`${error.data.message}`));
+          .catch((error) => toast.error(`${error.data.message}`));
       }
     });
   };
@@ -106,6 +103,7 @@ const BookingPart = ({
         id: addons?.length,
         image: values.addon_image,
         name: values.addon_title,
+        ini_price: values.addon_ini_price,
         price: values.addon_price,
         hours: 1,
       },
@@ -125,18 +123,30 @@ const BookingPart = ({
   };
 
   const addonsPrice = addons?.reduce((total: number, addon: any) => {
-    return total + addon.price * addon.hours;
+    const firstHourPrice = addon?.ini_price;
+    const remainingHoursPrice = (addon?.hours - 1) * addon?.price;
+    return total + firstHourPrice + remainingHoursPrice;
   }, 0);
 
-  const slotsPrice = selectSlots.reduce((total: number, appointment: any) => {
-    return total + appointment.slots.length * data?.results.price;
+  const slotsPrice = selectSlots?.reduce((total: number, appointment: any) => {
+    if (lane) {
+      if (appointment.slots.length > 2) {
+        const baseSlotPrice = data?.results?.ini_price;
+        const additionalSlotPrice =
+          (appointment.slots.length - 2) * data?.results.price;
+        return total + baseSlotPrice * 2 + additionalSlotPrice;
+      } else {
+        return total + appointment.slots.length * data?.results?.ini_price;
+      }
+    } else {
+      return total + appointment.slots.length * data?.results?.price;
+    }
   }, 0);
-
   return (
-    <div className="bg-[#F9FAFB] py-5 rounded-2xl space-y-6 px-5">
+    <div className="bg-[#F9FAFB] py-5 rounded-2xl space-y-4 px-5">
       {lane && (
         <>
-          <h3 className="text-xl font-semibold text-[#07133D]">Select Lane</h3>
+          <h3 className="text-xl font-semibold text-[#07133D]">Select Area</h3>
           <div className="flex gap-5">
             <Radio.Group
               onChange={(e) => setLane(e.target.value)}
@@ -157,6 +167,19 @@ const BookingPart = ({
               </div>
             </Radio.Group>
           </div>
+          <p className="text-base font-medium">
+            Information - {data?.results?.description}
+          </p>
+          <div className="flex gap-5">
+            <div className="flex gap-1">
+              Base slot fee:
+              <span className="font-medium">${data.results.ini_price}</span>
+            </div>
+            <div className="flex gap-1">
+              Additional slot fee:
+              <span className="font-medium">${data.results.price}</span>
+            </div>
+          </div>
         </>
       )}
       <div className="space-y-2">
@@ -166,16 +189,18 @@ const BookingPart = ({
         <DateSlider activeDate={activeDate} setActiveDate={setActiveDate} />
       </div>
       {data?.results && lane ? (
-        <FacilityBookingTimeSlots
-          activeDate={activeDate}
-          training={data?.results}
-          slotsCartQuery={slotsCartQuery}
-          slotsBookedQuery={slotsBookedQuery}
-          addToCart={createCartBooking}
-          selectSlots={selectSlots}
-          setSelectSlots={setSelectSlots}
-          lane={lane}
-        />
+        <>
+          <FacilityBookingTimeSlots
+            activeDate={activeDate}
+            training={data?.results}
+            slotsCartQuery={slotsCartQuery}
+            slotsBookedQuery={slotsBookedQuery}
+            addToCart={createCartBooking}
+            selectSlots={selectSlots}
+            setSelectSlots={setSelectSlots}
+            lane={lane}
+          />
+        </>
       ) : (
         <OneTrainingBookingTimeSlots
           activeDate={activeDate}
@@ -194,7 +219,7 @@ const BookingPart = ({
               Booking Details
             </h3>
             <p className="text-base">
-              Total Price: ${addonsPrice + slotsPrice}
+              Total Price: ${lane ? addonsPrice + slotsPrice : slotsPrice}
             </p>
           </div>
           {(addonsData?.results as IAddon)?.addons?.map((addon, index) => (
@@ -210,7 +235,10 @@ const BookingPart = ({
                     {addon.addon_title}
                   </h4>
                   <p className="text-sm text-primary font-semibold">
-                    +${addon.addon_price}/hours
+                    First hour ${addon.addon_ini_price}
+                  </p>
+                  <p className="text-sm text-primary font-semibold">
+                    Additional +${addon.addon_price}/hours
                   </p>
                 </div>
               </div>
@@ -262,29 +290,38 @@ const BookingPart = ({
                 ))}
               </div>
             ))}
-            {addons?.map((addon: any) => (
-              <div className="flex justify-between items-center px-2">
-                <img
-                  src={addon.image}
-                  alt={addon.name}
-                  className="size-16 rounded-xl"
-                />
-                <p>
-                  Hours:{" "}
-                  <InputNumber
-                    value={addon.hours}
-                    min={1}
-                    onChange={(value) => onHourChange(value, addon.id)}
-                    className="w-16"
+            {addons?.map((addon: any) => {
+              const totalAddonPrice =
+                addon.hours > 1
+                  ? addon.ini_price + (addon.hours - 1) * addon.price
+                  : addon.ini_price;
+              return (
+                <div
+                  className="flex justify-between items-center px-2"
+                  key={addon.id}
+                >
+                  <img
+                    src={addon.image}
+                    alt={addon.name}
+                    className="size-16 rounded-xl"
                   />
-                </p>
-                <p>${addon.hours * addon.price}</p>
-                <MdDeleteOutline
-                  onClick={() => onAddonDelete(addon.id)}
-                  className="size-5 cursor-pointer"
-                />
-              </div>
-            ))}
+                  <p>
+                    Hours:
+                    <InputNumber
+                      value={addon.hours}
+                      min={1}
+                      onChange={(value) => onHourChange(value, addon.id)}
+                      className="w-16"
+                    />
+                  </p>
+                  <p>${totalAddonPrice}</p>
+                  <MdDeleteOutline
+                    onClick={() => onAddonDelete(addon.id)}
+                    className="size-5 cursor-pointer"
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

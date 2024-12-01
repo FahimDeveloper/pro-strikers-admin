@@ -29,12 +29,12 @@ const LaneForm = ({ form, loading, onFinish, record }: TProp) => {
         className="space-y-4"
       >
         <Form.Item
-          label="Lane Name"
+          label="Area Name"
           className=" m-0"
           name="lane_title"
           rules={[{ required: true }]}
         >
-          <Input placeholder="Enter lane title" />
+          <Input placeholder="Enter area title" />
         </Form.Item>
         <Form.Item
           label="Description"
@@ -42,14 +42,14 @@ const LaneForm = ({ form, loading, onFinish, record }: TProp) => {
           name="description"
           rules={[{ required: true }]}
         >
-          <Input.TextArea rows={4} placeholder="Enter lane description" />
+          <Input.TextArea rows={4} placeholder="Enter area description" />
         </Form.Item>
         <div className="flex justify-end">
           <Form.Item>
             <Button className="primary-btn" htmlType="submit" loading={loading}>
               {record && Object.keys(record).length > 0
-                ? "Update Lane"
-                : "Create Lane"}
+                ? "Update Area"
+                : "Create Area"}
             </Button>
           </Form.Item>
         </div>

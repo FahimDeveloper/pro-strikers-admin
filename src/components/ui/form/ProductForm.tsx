@@ -103,18 +103,6 @@ const ProductForm = ({ form, loading, onFinish, record }: TProp) => {
   };
 
   const [content, setContent] = useState<string | undefined>(undefined);
-  console.log(content);
-  // const editor = useRef(null);
-  // const config = useMemo(
-  //   () => ({
-  //     readonly: false,
-  //     uploader: {
-  //       insertImageAsBase64URI: true,
-  //     },
-  //     minHeight: 400,
-  //   }),
-  //   []
-  // );
 
   useEffect(() => {
     if (record) {

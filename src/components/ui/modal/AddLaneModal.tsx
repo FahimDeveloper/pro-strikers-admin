@@ -43,12 +43,12 @@ const AddLaneModal = () => {
   return (
     <>
       <button onClick={() => setModalOpen(true)} className="btn primary-btn">
-        Add Lane
+        Add area
       </button>
       <Modal
         width={800}
         footer={null}
-        title="Create New Lane"
+        title="Create New Area"
         centered
         open={open}
         onCancel={onCancel}
