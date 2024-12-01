@@ -149,24 +149,24 @@ const FacilityForm = ({ record, form }: any) => {
             rules={[{ required: true }]}
             name="ini_price"
             className=" m-0"
-            label="Facility Initial Fee"
-          >
-            <InputNumber
-              min={0}
-              className="w-48"
-              placeholder="Enter initial price"
-            />
-          </Form.Item>
-          <Form.Item
-            rules={[{ required: true }]}
-            name="price"
-            className=" m-0"
             label="Facility Base Fee"
           >
             <InputNumber
               min={0}
               className="w-48"
               placeholder="Enter base price"
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true }]}
+            name="price"
+            className=" m-0"
+            label="Facility Additional Fee"
+          >
+            <InputNumber
+              min={0}
+              className="w-48"
+              placeholder="Enter additional price"
             />
           </Form.Item>
         </div>
