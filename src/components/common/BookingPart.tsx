@@ -124,17 +124,16 @@ const BookingPart = ({
 
   const addonsPrice = addons?.reduce((total: number, addon: any) => {
     const firstHourPrice = addon?.ini_price;
-    const remainingHoursPrice = (addon?.hours - 1) * addon?.price;
-    return total + firstHourPrice + remainingHoursPrice;
+    const additionalHoursPrice = (addon?.hours - 1) * addon?.price;
+    return total + firstHourPrice + additionalHoursPrice;
   }, 0);
 
   const slotsPrice = selectSlots?.reduce((total: number, appointment: any) => {
     if (lane) {
-      if (appointment.slots.length > 2) {
-        const baseSlotPrice = data?.results?.ini_price;
-        const additionalSlotPrice =
-          (appointment.slots.length - 2) * data?.results.price;
-        return total + baseSlotPrice * 2 + additionalSlotPrice;
+      if (selectSlots.length > 1) {
+        return total + appointment?.slots?.length * data?.results?.price;
+      } else if (appointment?.slots?.length > 1) {
+        return total + appointment?.slots?.length * data?.results?.price;
       } else {
         return total + appointment.slots.length * data?.results?.ini_price;
       }
@@ -170,16 +169,6 @@ const BookingPart = ({
           <p className="text-base font-medium">
             Information - {data?.results?.description}
           </p>
-          <div className="flex gap-5">
-            <div className="flex gap-1">
-              Base slot fee:
-              <span className="font-medium">${data.results.ini_price}</span>
-            </div>
-            <div className="flex gap-1">
-              Additional slot fee:
-              <span className="font-medium">${data.results.price}</span>
-            </div>
-          </div>
         </>
       )}
       <div className="space-y-2">
@@ -238,7 +227,7 @@ const BookingPart = ({
                     First hour ${addon.addon_ini_price}
                   </p>
                   <p className="text-sm text-primary font-semibold">
-                    Additional +${addon.addon_price}/hours
+                    Additional ${addon.addon_price}/hours
                   </p>
                 </div>
               </div>
@@ -278,7 +267,12 @@ const BookingPart = ({
                       {slot}
                     </div>
                     <div className="text-sm font-medium text-[#07133D]">
-                      ${data?.results?.price}
+                      $
+                      {selectSlots.length > 1
+                        ? data?.results?.price
+                        : dateSlots?.slots?.length > 1
+                        ? data?.results?.price
+                        : data?.results?.ini_price}
                     </div>
                     <MdDeleteOutline
                       className="size-5 cursor-pointer"

@@ -128,10 +128,6 @@ const FacilityForm = ({ record, form }: any) => {
                   label: "30 minutes",
                   value: 30,
                 },
-                {
-                  label: "60 minutes",
-                  value: 60,
-                },
               ]}
             />
           </Form.Item>
