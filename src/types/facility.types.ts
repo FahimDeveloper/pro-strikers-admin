@@ -39,6 +39,7 @@ export interface IAddon {
   hours: number;
   image: string;
   price: number;
+  ini_price: number;
 }
 
 export interface IFacilityBookings {
