@@ -188,6 +188,7 @@ const ClassForm = ({ record, form }: any) => {
           label="Class Fee"
         >
           <InputNumber
+            prefix="$"
             min={0}
             className="w-full"
             placeholder="Enter class price"

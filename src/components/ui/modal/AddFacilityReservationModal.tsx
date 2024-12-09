@@ -23,6 +23,7 @@ const AddFacilityReservationModal = () => {
   const [lane, setLane] = useState<string | undefined>(undefined);
   const [addons, setAddons] = useState([]);
   const [deleteIt] = useDeleteBookingSlotsMutation();
+  const [amount, setAmount] = useState(0);
   const [
     getData,
     {
@@ -63,7 +64,10 @@ const AddFacilityReservationModal = () => {
     );
     values.bookings = bookings;
     values.addons = addons;
-    create({ id: user?._id, payload: values });
+    create({
+      id: user?._id,
+      payload: { facility_data: values, amount: amount },
+    });
   };
   const onCheckFinish = (values: any) => {
     setFacilityId(values.id);
@@ -170,6 +174,7 @@ const AddFacilityReservationModal = () => {
             addons={addons}
             setAddons={setAddons}
             addonsData={addonsData}
+            setAmount={setAmount}
           />
         </div>
       </Modal>

@@ -251,6 +251,7 @@ const EventForm = ({ record, form, onFinish, loading }: TProp) => {
             label="Event Fee"
           >
             <InputNumber
+              prefix="$"
               min={0}
               className="w-36"
               placeholder="Enter event fee"

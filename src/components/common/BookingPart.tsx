@@ -11,7 +11,7 @@ import {
 import DateSlider from "./DateSlider";
 import FacilityBookingTimeSlots from "./FacilityBookingTimeSlots";
 import OneTrainingBookingTimeSlots from "./OneTrainingBookingTimeSlots";
-import { Button, InputNumber, Radio } from "antd";
+import { Button, Radio, Select } from "antd";
 import { IAddon } from "../../types/addon.types";
 
 const BookingPart = ({
@@ -27,6 +27,7 @@ const BookingPart = ({
   addons,
   setAddons,
   addonsData,
+  setAmount,
 }: {
   data: any;
   selectSlots: any;
@@ -40,6 +41,7 @@ const BookingPart = ({
   addons?: any;
   setAddons?: any;
   addonsData?: any;
+  setAmount?: any;
 }) => {
   const createCartBooking = useAddToCartSlotMutation();
   const [deleteSlot] = useDeleteBookingSlotMutation();
@@ -105,7 +107,7 @@ const BookingPart = ({
         name: values.addon_title,
         ini_price: values.addon_ini_price,
         price: values.addon_price,
-        hours: 1,
+        hours: 0.5,
       },
     ]);
   };
@@ -122,10 +124,10 @@ const BookingPart = ({
     setAddons(addons.filter((addon: any) => addon.id !== id));
   };
 
-  const addonsPrice = addons?.reduce((total: number, addon: any) => {
-    const firstHourPrice = addon?.ini_price;
-    const additionalHoursPrice = (addon?.hours - 1) * addon?.price;
-    return total + firstHourPrice + additionalHoursPrice;
+  const addonsPrice = addons.reduce((total: number, addon: any) => {
+    const firstThirtyMinutes = addon?.ini_price;
+    const additionalThirtyMunitesPrice = (addon.hours / 0.5 - 1) * addon.price;
+    return total + firstThirtyMinutes + additionalThirtyMunitesPrice;
   }, 0);
 
   const slotsPrice = selectSlots?.reduce((total: number, appointment: any) => {
@@ -141,6 +143,11 @@ const BookingPart = ({
       return total + appointment.slots.length * data?.results?.price;
     }
   }, 0);
+
+  if (addonsPrice && slotsPrice) {
+    setAmount(addonsPrice, slotsPrice);
+  }
+
   return (
     <div className="bg-[#F9FAFB] py-5 rounded-2xl space-y-4 px-5">
       {lane && (
@@ -224,10 +231,10 @@ const BookingPart = ({
                     {addon.addon_title}
                   </h4>
                   <p className="text-sm text-primary font-semibold">
-                    First hour ${addon.addon_ini_price}
+                    First 30 minu ${addon.addon_ini_price}
                   </p>
                   <p className="text-sm text-primary font-semibold">
-                    Additional ${addon.addon_price}/hours
+                    Additional ${addon.addon_price}/(30 min)
                   </p>
                 </div>
               </div>
@@ -286,8 +293,8 @@ const BookingPart = ({
             ))}
             {addons?.map((addon: any) => {
               const totalAddonPrice =
-                addon.hours > 1
-                  ? addon.ini_price + (addon.hours - 1) * addon.price
+                addon.hours > 0.5
+                  ? addon.ini_price + (addon.hours / 0.5 - 1) * addon.price
                   : addon.ini_price;
               return (
                 <div
@@ -300,12 +307,53 @@ const BookingPart = ({
                     className="size-16 rounded-xl"
                   />
                   <p>
-                    Hours:
-                    <InputNumber
-                      value={addon.hours}
-                      min={1}
+                    Duration:{" "}
+                    <Select
                       onChange={(value) => onHourChange(value, addon.id)}
-                      className="w-16"
+                      className="2xl:w-24 sm:w-36 w-28"
+                      defaultValue={0.5}
+                      options={[
+                        {
+                          value: 0.5,
+                          label: "30 minutes",
+                        },
+                        {
+                          value: 1,
+                          label: "1 hour",
+                        },
+                        {
+                          value: 1.5,
+                          label: "1.5 hour",
+                        },
+                        {
+                          value: 2,
+                          label: "2 hours",
+                        },
+                        {
+                          value: 2.5,
+                          label: "2.5 hours",
+                        },
+                        {
+                          value: 3,
+                          label: "3 hours",
+                        },
+                        {
+                          value: 3.5,
+                          label: "3.5 hours",
+                        },
+                        {
+                          value: 4,
+                          label: "4 hours",
+                        },
+                        {
+                          value: 4.5,
+                          label: "4.5 hours",
+                        },
+                        {
+                          value: 5,
+                          label: "5 hours",
+                        },
+                      ]}
                     />
                   </p>
                   <p>${totalAddonPrice}</p>

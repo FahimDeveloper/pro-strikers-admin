@@ -44,6 +44,7 @@ const AddAddonModal = () => {
       return {
         addon_title: addon.addon_title,
         addon_price: addon.addon_price,
+        addon_ini_price: addon.addon_ini_price,
         addon_description: addon.addon_description,
       };
     });

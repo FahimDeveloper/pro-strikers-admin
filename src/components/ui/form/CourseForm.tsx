@@ -180,6 +180,7 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
           label="Bootcamp Fee"
         >
           <InputNumber
+            prefix="$"
             min={0}
             className="w-48"
             placeholder="Enter class price"

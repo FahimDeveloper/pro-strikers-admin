@@ -24,6 +24,7 @@ type TProp = {
   addons?: any;
   setAddons?: any;
   addonsData: any;
+  setAmount: any;
 };
 
 const FacilityReservationForm = ({
@@ -42,6 +43,7 @@ const FacilityReservationForm = ({
   setAddons,
   addons,
   addonsData,
+  setAmount,
 }: TProp) => {
   const [activeDate, setActiveDate] = useState(new Date());
 
@@ -99,6 +101,7 @@ const FacilityReservationForm = ({
           addons={addons}
           setAddons={setAddons}
           addonsData={addonsData}
+          setAmount={setAmount}
         />
       )}
       {selectSlots.length > 0 && (

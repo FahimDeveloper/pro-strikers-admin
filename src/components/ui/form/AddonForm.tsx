@@ -203,7 +203,7 @@ const AddonForm = ({ form, loading, onFinish, record }: TProp) => {
                   <div className="grid grid-cols-2 gap-4">
                     <Form.Item
                       className="m-0"
-                      label="Addon Base Price / 1hr"
+                      label="Addon Base Price / 30 minutes"
                       {...restField}
                       name={[name, "addon_ini_price"]}
                       rules={[
@@ -214,6 +214,7 @@ const AddonForm = ({ form, loading, onFinish, record }: TProp) => {
                       ]}
                     >
                       <InputNumber
+                        prefix="$"
                         className="w-full"
                         placeholder="Enter base price"
                         min={0}
@@ -221,7 +222,7 @@ const AddonForm = ({ form, loading, onFinish, record }: TProp) => {
                     </Form.Item>
                     <Form.Item
                       className="m-0"
-                      label="Addon Additional Price / 1hr"
+                      label="Addon Additional Price / 30 minutes"
                       {...restField}
                       name={[name, "addon_price"]}
                       rules={[
@@ -232,8 +233,9 @@ const AddonForm = ({ form, loading, onFinish, record }: TProp) => {
                       ]}
                     >
                       <InputNumber
+                        prefix="$"
                         className="w-full"
-                        placeholder="Enter base price"
+                        placeholder="Enter additional price"
                         min={0}
                       />
                     </Form.Item>

@@ -112,6 +112,7 @@ const AppointmentOneOnOneForm = ({ record, form }: any) => {
           label="Appointment Fee"
         >
           <InputNumber
+            prefix="$"
             min={0}
             className="w-48"
             placeholder="Enter class price"

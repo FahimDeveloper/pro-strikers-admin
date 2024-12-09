@@ -55,7 +55,7 @@ const PaymentForm = ({ record, onFinish, loading, form }: TProp) => {
           <Input readOnly={record ? true : false} placeholder="Type here" />
         </Form.Item>
         <Form.Item label="Amount" name="amount" className="m-0">
-          <InputNumber className="w-full" placeholder="Type here" />
+          <InputNumber prefix="$" className="w-full" placeholder="Type here" />
         </Form.Item>
         <Form.Item label="Payment Service" name="service" className="m-0">
           <Select

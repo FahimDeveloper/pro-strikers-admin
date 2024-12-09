@@ -1,16 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import moment from "moment-timezone";
+
 export function createTimeSlots(
   startTime: string,
   endTime: string,
   duration: number,
   lane?: string
 ): [{ lane: string; slots: string[] }] | Array<string> {
-  const start = new Date(startTime).getTime();
-  let end = new Date(endTime).getTime();
+  // Set California time zone (Pacific Time)
+  const californiaTimeZone = "America/Los_Angeles";
+
+  const start = moment.tz(startTime, californiaTimeZone).valueOf();
+  let end = moment.tz(endTime, californiaTimeZone).valueOf();
   const durationMillis = duration * 60 * 1000;
 
   if (end <= start) {
-    end += 24 * 60 * 60 * 1000; // Add a day if end time is earlier than start time
+    end += 24 * 60 * 60 * 1000;
   }
 
   const slots = [];
@@ -19,15 +23,11 @@ export function createTimeSlots(
     current + durationMillis <= end;
     current += durationMillis
   ) {
-    const startSlot = new Date(current);
-    const endSlot = new Date(current + durationMillis);
+    const startSlot = moment(current).tz(californiaTimeZone);
+    const endSlot = moment(current + durationMillis).tz(californiaTimeZone);
 
-    const formatTime = (date: Date) => {
-      let hours = date.getHours();
-      const minutes = date.getMinutes().toString().padStart(2, "0");
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12 || 12; // Convert 24-hour time to 12-hour time
-      return `${hours}:${minutes} ${ampm}`;
+    const formatTime = (time: moment.Moment) => {
+      return time.format("h:mm A");
     };
 
     slots.push(`${formatTime(startSlot)} - ${formatTime(endSlot)}`);

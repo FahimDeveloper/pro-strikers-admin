@@ -148,6 +148,7 @@ const FacilityForm = ({ record, form }: any) => {
             label="Facility Base Fee"
           >
             <InputNumber
+              prefix="$"
               min={0}
               className="w-48"
               placeholder="Enter base price"
@@ -160,6 +161,7 @@ const FacilityForm = ({ record, form }: any) => {
             label="Facility Additional Fee"
           >
             <InputNumber
+              prefix="$"
               min={0}
               className="w-48"
               placeholder="Enter additional price"
