@@ -9,28 +9,22 @@ export function createTimeSlots(
   // Set California time zone (Pacific Time)
   const californiaTimeZone = "America/Los_Angeles";
 
-  const start = moment.tz(startTime, californiaTimeZone).valueOf();
-  let end = moment.tz(endTime, californiaTimeZone).valueOf();
+  // Parse start and end times in California time zone
+  const start = moment.tz(startTime, californiaTimeZone);
+  const end = moment.tz(endTime, californiaTimeZone);
+
   const durationMillis = duration * 60 * 1000;
+  const slots: string[] = [];
 
-  if (end <= start) {
-    end += 24 * 60 * 60 * 1000;
-  }
+  const current = start.clone();
 
-  const slots = [];
-  for (
-    let current = start;
-    current + durationMillis <= end;
-    current += durationMillis
-  ) {
-    const startSlot = moment(current).tz(californiaTimeZone);
-    const endSlot = moment(current + durationMillis).tz(californiaTimeZone);
+  while (current.valueOf() + durationMillis <= end.valueOf()) {
+    const startSlot = current.clone();
+    const endSlot = current.clone().add(durationMillis, "milliseconds");
 
-    const formatTime = (time: moment.Moment) => {
-      return time.format("h:mm A");
-    };
+    slots.push(`${startSlot.format("h:mm A")} - ${endSlot.format("h:mm A")}`);
 
-    slots.push(`${formatTime(startSlot)} - ${formatTime(endSlot)}`);
+    current.add(durationMillis, "milliseconds");
   }
 
   if (lane) {

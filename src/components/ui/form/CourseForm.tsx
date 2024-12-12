@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import {
   Button,
   DatePicker,
@@ -31,6 +33,8 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
   });
   dayjs.extend(weekday);
   dayjs.extend(localeData);
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
   useEffect(() => {
     if (record) {
       form.setFieldsValue({
@@ -39,13 +43,17 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
         trainer: record?.trainer?._id,
         capacity: record?.capacity,
         start_date: record?.start_date
-          ? dayjs(record?.start_date, "DD-MM-YYYY")
+          ? dayjs.tz(record?.start_date, "America/Los_Angeles")
           : "",
-        end_date: record?.end_date ? dayjs(record?.end_date, "DD-MM-YYYY") : "",
+        end_date: record?.end_date
+          ? dayjs.tz(record?.end_date, "America/Los_Angeles")
+          : "",
         start_time: record?.start_time
-          ? dayjs(record?.start_time, "HH:mm A")
+          ? dayjs.tz(record?.start_time, "America/Los_Angeles")
           : "",
-        end_time: record?.end_time ? dayjs(record?.end_time, "HH:mm A") : "",
+        end_time: record?.end_time
+          ? dayjs.tz(record?.end_time, "America/Los_Angeles")
+          : "",
         description: record?.description,
         price: record?.price,
       });

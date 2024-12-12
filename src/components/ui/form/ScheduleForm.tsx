@@ -3,26 +3,36 @@ import { Form, Input, Switch, TimePicker } from "antd";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 const ScheduleForm = ({ record, form }: any) => {
   const schedules = [
-    { day: "Monday", active: false, start_time: "", end_time: "" },
-    { day: "Tuesday", active: false, start_time: "", end_time: "" },
-    { day: "Wednesday", active: false, start_time: "", end_time: "" },
-    { day: "Thursday", active: false, start_time: "", end_time: "" },
-    { day: "Friday", active: false, start_time: "", end_time: "" },
-    { day: "Saturday", active: false, start_time: "", end_time: "" },
-    { day: "Sunday", active: false, start_time: "", end_time: "" },
+    { day: "Monday", active: false, time_range: [] },
+    { day: "Tuesday", active: false, time_range: [] },
+    { day: "Wednesday", active: false, time_range: [] },
+    { day: "Thursday", active: false, time_range: [] },
+    { day: "Friday", active: false, time_range: [] },
+    { day: "Saturday", active: false, time_range: [] },
+    { day: "Sunday", active: false, time_range: [] },
   ];
+
   dayjs.extend(weekday);
   dayjs.extend(localeData);
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
 
   const initialValues = {
     schedules:
       record?.schedules.map((schedule: any) => ({
         ...schedule,
-        start_time: schedule?.start_time ? dayjs(schedule.start_time) : "",
-        end_time: schedule?.end_time ? dayjs(schedule.end_time) : "",
+        time_range:
+          schedule?.start_time && schedule?.end_time
+            ? [
+                dayjs(schedule.start_time).tz("America/Los_Angeles"),
+                dayjs(schedule.end_time).tz("America/Los_Angeles"),
+              ]
+            : [],
       })) || schedules,
   };
 
@@ -67,24 +77,23 @@ const ScheduleForm = ({ record, form }: any) => {
                       <div className="flex gap-5 items-center w-full">
                         <Form.Item
                           {...restField}
-                          name={[name, "start_time"]}
+                          name={[name, "time_range"]}
                           className="m-0 w-full"
                           rules={[
                             {
                               required: active,
-                              message: "Start time is required",
+                              message: "time is required",
                             },
                           ]}
                         >
-                          <TimePicker
+                          <TimePicker.RangePicker
                             disabled={active ? false : true}
                             format="HH:mm A"
                             use12Hours
                             className="w-full"
-                            placeholder="Select Start time"
                           />
                         </Form.Item>
-                        <p>to</p>
+                        {/* <p>to</p>
                         <Form.Item
                           {...restField}
                           name={[name, "end_time"]}
@@ -103,7 +112,7 @@ const ScheduleForm = ({ record, form }: any) => {
                             className="w-full"
                             placeholder="Select End time"
                           />
-                        </Form.Item>
+                        </Form.Item> */}
                       </div>
                     );
                   }}
