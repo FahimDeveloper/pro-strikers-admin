@@ -5,6 +5,9 @@ import LazyLoad from "../components/common/LozyLoad";
 const MembershipCancellation = LazyLoad(
   lazy(() => import("../pages/MembershipCancellation/MembershipCancellation"))
 );
+const PurchasedBundlePackages = LazyLoad(
+  lazy(() => import("../pages/PurchasedBundlePackages/PurchasedBundlePackages"))
+);
 const Profile = LazyLoad(lazy(() => import("../pages/Profile/Profile")));
 // const Brands = LazyLoad(
 //   lazy(() => import("../pages/StoreManage/Brands/Brands"))
@@ -237,6 +240,11 @@ export const superAdminPaths = [
     name: "Membership Clients",
     path: "membership-clients",
     element: <Membership />,
+  },
+  {
+    name: "Bundle Credit Pack",
+    path: "bundle-credit-pack",
+    element: <PurchasedBundlePackages />,
   },
   {
     name: "Area Manage",

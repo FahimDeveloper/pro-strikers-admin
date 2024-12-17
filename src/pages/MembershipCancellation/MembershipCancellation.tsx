@@ -158,6 +158,7 @@ const MembershipCancellation = () => {
       </div>
       <Input.Search
         onSearch={onSearch}
+        allowClear
         placeholder="Search by user email"
         className="text-sm col-span-3 font-medium text-[#5D5D5D]"
       />

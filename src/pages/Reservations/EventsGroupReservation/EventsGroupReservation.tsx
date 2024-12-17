@@ -246,6 +246,7 @@ const EventsGroupReservation = () => {
       <div className="grid grid-cols-9 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
+          allowClear
           placeholder="Search reservation by Team name or email"
           className="text-sm col-span-6 font-medium text-[#5D5D5D]"
         />

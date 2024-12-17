@@ -225,6 +225,7 @@ const CourseScheduling = () => {
         <div className="flex gap-2 items-center">
           <Input.Search
             onSearch={onSearch}
+            allowClear
             placeholder="Search Bootcamp"
             className="text-sm font-medium text-[#5D5D5D]"
           />

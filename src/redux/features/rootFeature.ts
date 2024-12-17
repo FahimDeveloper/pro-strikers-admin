@@ -27,6 +27,7 @@ import {
   userApiSlice,
   voucherApiSlice,
   cancellationApiSlice,
+  purchasedBundlePackageApiSlice,
 } from "../api/httpsSlice";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./auth/authSlice";
@@ -73,6 +74,8 @@ export const rootReducers = combineReducers({
   [addonApiSlice.reducerPath]: addonApiSlice.reducer,
   [brandApiSlice.reducerPath]: brandApiSlice.reducer,
   [cancellationApiSlice.reducerPath]: cancellationApiSlice.reducer,
+  [purchasedBundlePackageApiSlice.reducerPath]:
+    purchasedBundlePackageApiSlice.reducer,
 });
 
 export const rootMiddlewares = [
@@ -102,4 +105,5 @@ export const rootMiddlewares = [
   addonApiSlice.middleware,
   brandApiSlice.middleware,
   cancellationApiSlice.middleware,
+  purchasedBundlePackageApiSlice.middleware,
 ];

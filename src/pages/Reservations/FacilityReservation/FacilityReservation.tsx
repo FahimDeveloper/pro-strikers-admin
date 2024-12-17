@@ -217,6 +217,7 @@ const FacilityReservation = () => {
       <div className="grid grid-cols-3 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
+          allowClear
           placeholder="Search reservation by email or phone number"
           className="text-sm col-span-2 font-medium text-[#5D5D5D]"
         />

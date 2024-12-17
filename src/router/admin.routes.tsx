@@ -1,6 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 import LazyLoad from "../components/common/LozyLoad";
+const PurchasedBundlePackages = LazyLoad(
+  lazy(() => import("../pages/PurchasedBundlePackages/PurchasedBundlePackages"))
+);
 const MembershipCancellation = LazyLoad(
   lazy(() => import("../pages/MembershipCancellation/MembershipCancellation"))
 );
@@ -210,6 +213,11 @@ export const adminPaths = [
     name: "Membership Clients",
     path: "membership-clients",
     element: <Membership />,
+  },
+  {
+    name: "Bundle Credit Pack",
+    path: "bundle-credit-pack",
+    element: <PurchasedBundlePackages />,
   },
   {
     name: "Area Manage",

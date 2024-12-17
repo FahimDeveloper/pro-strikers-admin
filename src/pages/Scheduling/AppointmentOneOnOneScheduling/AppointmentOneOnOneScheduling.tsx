@@ -212,6 +212,7 @@ const AppointmentOneOnOneScheduling = () => {
         <div className="grid grid-cols-5 gap-2 items-center">
           <Input.Search
             onSearch={onSearch}
+            allowClear
             placeholder="Search Appointment"
             className="text-sm font-medium col-span-3 text-[#5D5D5D]"
           />

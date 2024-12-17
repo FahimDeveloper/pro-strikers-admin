@@ -184,3 +184,10 @@ export const brandApiSlice = createApi({
   tagTypes: ["brands", "brand"],
   endpoints: () => ({}),
 });
+
+export const purchasedBundlePackageApiSlice = createApi({
+  reducerPath: "bundlePackageApi",
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["packages"],
+  endpoints: () => ({}),
+});

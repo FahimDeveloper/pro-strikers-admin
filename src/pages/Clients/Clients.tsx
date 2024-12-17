@@ -214,6 +214,7 @@ const Clients = () => {
           <Input.Search
             placeholder="Search by user name or email"
             onSearch={onSearch}
+            allowClear
             className="text-sm col-span-3 font-medium text-[#5D5D5D]"
           />
           <Select

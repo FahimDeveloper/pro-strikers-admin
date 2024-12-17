@@ -215,6 +215,7 @@ const Events = () => {
       <div className="grid grid-cols-9 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
+          allowClear
           placeholder="Search events"
           className="text-sm col-span-6 font-medium text-[#5D5D5D]"
         />

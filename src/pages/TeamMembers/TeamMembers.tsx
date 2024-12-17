@@ -152,6 +152,7 @@ const TeamMembers = () => {
       <div className="grid grid-cols-4 gap-2 items-center">
         <Input.Search
           onSearch={onSearch}
+          allowClear
           placeholder="Search by member name or email"
           className="text-sm col-span-3 font-medium text-[#5D5D5D]"
         />
