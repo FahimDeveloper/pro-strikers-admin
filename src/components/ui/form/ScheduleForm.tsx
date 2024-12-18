@@ -8,13 +8,41 @@ import timezone from "dayjs/plugin/timezone";
 
 const ScheduleForm = ({ record, form }: any) => {
   const schedules = [
-    { day: "Monday", active: false, time_range: [] },
-    { day: "Tuesday", active: false, time_range: [] },
-    { day: "Wednesday", active: false, time_range: [] },
-    { day: "Thursday", active: false, time_range: [] },
-    { day: "Friday", active: false, time_range: [] },
-    { day: "Saturday", active: false, time_range: [] },
-    { day: "Sunday", active: false, time_range: [] },
+    {
+      day: "Monday",
+      active: false,
+      time_range: [],
+    },
+    {
+      day: "Tuesday",
+      active: false,
+      time_range: [],
+    },
+    {
+      day: "Wednesday",
+      active: false,
+      time_range: [],
+    },
+    {
+      day: "Thursday",
+      active: false,
+      time_range: [],
+    },
+    {
+      day: "Friday",
+      active: false,
+      time_range: [],
+    },
+    {
+      day: "Saturday",
+      active: false,
+      time_range: [],
+    },
+    {
+      day: "Sunday",
+      active: false,
+      time_range: [],
+    },
   ];
 
   dayjs.extend(weekday);

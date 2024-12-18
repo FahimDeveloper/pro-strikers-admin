@@ -43,16 +43,16 @@ const CourseForm = ({ record, onFinish, form, loading }: TProp) => {
         trainer: record?.trainer?._id,
         capacity: record?.capacity,
         start_date: record?.start_date
-          ? dayjs.tz(record?.start_date, "America/Los_Angeles")
+          ? dayjs(record?.start_date).tz("America/Los_Angeles")
           : "",
         end_date: record?.end_date
-          ? dayjs.tz(record?.end_date, "America/Los_Angeles")
+          ? dayjs(record?.end_date).tz("America/Los_Angeles")
           : "",
         start_time: record?.start_time
-          ? dayjs.tz(record?.start_time, "America/Los_Angeles")
+          ? dayjs(record?.start_time).tz("America/Los_Angeles")
           : "",
         end_time: record?.end_time
-          ? dayjs.tz(record?.end_time, "America/Los_Angeles")
+          ? dayjs(record?.end_time).tz("America/Los_Angeles")
           : "",
         description: record?.description,
         price: record?.price,

@@ -39,11 +39,13 @@ const UpdateFacilityModal = ({ record }: any) => {
     values.schedules = values.schedules.map((schedule: any) => {
       const { active, day, time_range } = schedule;
       if (time_range?.length > 0) {
+        const startDate = time_range[0].toISOString();
+        const endDate = time_range[1].toISOString();
         return {
           active,
           day,
-          start_time: californiaTime(time_range[0]?.toISOString()),
-          end_time: californiaTime(time_range[1]?.toISOString()),
+          start_time: californiaTime(startDate),
+          end_time: californiaTime(endDate),
         };
       } else {
         return {
