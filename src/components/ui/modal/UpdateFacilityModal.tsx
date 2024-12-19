@@ -39,8 +39,8 @@ const UpdateFacilityModal = ({ record }: any) => {
     values.schedules = values.schedules.map((schedule: any) => {
       const { active, day, time_range } = schedule;
       if (time_range?.length > 0) {
-        const startDate = time_range[0].toISOString();
-        const endDate = time_range[1].toISOString();
+        const startDate = time_range[0];
+        const endDate = time_range[1];
         return {
           active,
           day,
